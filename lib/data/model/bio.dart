@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
 
+import 'score.dart';
+
 part 'bio.g.dart';
 
 /// --------------------------------------------------------------------------
@@ -20,7 +22,7 @@ part 'bio.g.dart';
 /// * [colors]            : Convert [colorHexes]'s value to [Color]
 /// * [birthday]          : Convert [birthdayTimestamp] to [DateTime]
 /// --------------------------------------------------------------------------
-@JsonSerializable()
+@JsonSerializable(explicitToJson: true)
 class Bio {
   final String title;
   final String titleVi;
@@ -46,6 +48,10 @@ class Bio {
     this.scores = const [],
   });
 
+  bool get isEmpty => this == const Bio();
+
+  bool get isNotEmpty => !isEmpty;
+
   List<Color> get colors => colorHexes.map((c) => Color(c)).toList();
 
   DateTime get birthday =>
@@ -57,26 +63,35 @@ class Bio {
 
   @override
   String toString() => toJson().toString();
-}
-
-@JsonSerializable()
-class Score {
-  final String name;
-  final double score;
-  final Map<String, dynamic> customData;
-
-  const Score({
-    this.name = '',
-    this.score = 0,
-    this.customData = const <String, dynamic>{},
-  });
-
-  factory Score.fromJson(Map<String, dynamic> json) => _$ScoreFromJson(json);
-
-  Map<String, dynamic> toJson() => _$ScoreToJson(this);
 
   @override
-  String toString() => toJson().toString();
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is Bio &&
+          runtimeType == other.runtimeType &&
+          title == other.title &&
+          titleVi == other.titleVi &&
+          name == other.name &&
+          description == other.description &&
+          descriptionVi == other.descriptionVi &&
+          avatarUrl == other.avatarUrl &&
+          birthdayTimestamp == other.birthdayTimestamp &&
+          colorHexes == other.colorHexes &&
+          imageUrls == other.imageUrls &&
+          scores == other.scores;
+
+  @override
+  int get hashCode =>
+      title.hashCode ^
+      titleVi.hashCode ^
+      name.hashCode ^
+      description.hashCode ^
+      descriptionVi.hashCode ^
+      avatarUrl.hashCode ^
+      birthdayTimestamp.hashCode ^
+      colorHexes.hashCode ^
+      imageUrls.hashCode ^
+      scores.hashCode;
 }
 
 class BioData {

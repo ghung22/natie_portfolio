@@ -1,6 +1,6 @@
-import 'package:flutter/foundation.dart';
 import 'package:mobx/mobx.dart';
 import 'package:natie_portfolio/data/shared_pref/shared_pref.dart';
+import 'package:natie_portfolio/global/debug.dart';
 import 'package:natie_portfolio/global/strings.dart';
 
 part 'language_store.g.dart';
@@ -20,7 +20,7 @@ abstract class _LanguageStore with Store {
     if (await SharedPref.setLanguage(language)) {
       activeLanguage = language;
     } else {
-      if (kDebugMode) print('Failed to set language');
+      Debug.log('Failed to set language');
     }
   }
 }

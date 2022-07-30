@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:natie_portfolio/data/model/project.dart';
@@ -6,6 +5,8 @@ import 'package:natie_portfolio/main.dart';
 import 'package:natie_portfolio/widget/common/helper/snackbar.dart';
 import 'package:natie_portfolio/widget/page/home_page.dart';
 import 'package:natie_portfolio/widget/page/project_page.dart';
+
+import 'debug.dart';
 
 class Routes {
   static const home = '/';
@@ -45,7 +46,8 @@ class Router {
           return null;
       }
     } catch (e) {
-      if (kDebugMode) debugPrint('Error navigating to ${settings.name}: $e');
+      Debug.log('Error navigating to ${settings.name}: $e',
+          useDebugPrint: true);
       return null;
     }
   }

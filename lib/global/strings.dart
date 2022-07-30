@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:natie_portfolio/store/data/bio_store.dart';
 import 'package:natie_portfolio/store/global/language_store.dart';
 import 'package:provider/provider.dart';
 
@@ -30,8 +31,12 @@ class Strings {
 
   static Locale get locale => Locale(language.name);
 
-  static const titleEn = 'Gia Hưng - Mobile Developer';
-  static const titleVi = 'Gia Hưng - Lập trình viên di động';
-
-  static String get title => language == Language.en ? titleEn : titleVi;
+  static String get title {
+    try {
+      final bio = _context!.read<BioStore>().bio;
+      return language == Language.en ? bio.title : bio.titleVi;
+    } catch (e) {
+      return '';
+    }
+  }
 }

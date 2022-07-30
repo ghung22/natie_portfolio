@@ -9,6 +9,7 @@ import 'package:natie_portfolio/store/global/language_store.dart';
 import 'package:natie_portfolio/store/global/theme_store.dart';
 import 'package:provider/provider.dart';
 
+import 'content_item.dart';
 import 'image_view.dart';
 
 class IconBtn extends StatelessWidget {
@@ -176,7 +177,7 @@ class BackBtn extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Builder(builder: (context) {
-      if (!Navigator.of(context).canPop()) return Container();
+      if (!Navigator.of(context).canPop()) return const Nothing();
       return IconBtn(
         tooltipText: AppLocalizations.of(context)!.back,
         child: const Icon(Icons.arrow_back_ios_new),

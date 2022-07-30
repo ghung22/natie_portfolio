@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+import 'content_item.dart';
+
 class ImageView extends StatelessWidget {
   final String src;
   final Widget? errorWidget;
@@ -21,7 +23,7 @@ class ImageView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (Uri.tryParse(src) == null) return errorWidget ?? Container();
+    if (Uri.tryParse(src) == null) return errorWidget ?? const Nothing();
     final img = NetworkImage(src)
       ..resolve(const ImageConfiguration())
           .addListener(ImageStreamListener((_, __) {
@@ -56,7 +58,7 @@ class ImageView extends StatelessWidget {
               );
       },
       errorBuilder: (context, exception, stackTrace) {
-        return errorWidget ?? Container();
+        return errorWidget ?? const Nothing();
       },
     );
   }

@@ -5,11 +5,14 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 
+import 'data/firebase/firestore.dart';
 import 'firebase_options.dart';
 import 'global/router.dart' as rt;
 import 'global/strings.dart';
 import 'global/styles.dart';
 import 'global/vars.dart';
+import 'store/data/bio_store.dart';
+import 'store/data/project_store.dart';
 import 'store/global/language_store.dart';
 import 'store/global/theme_store.dart';
 
@@ -23,6 +26,8 @@ void main() async {
     providers: [
       Provider<ThemeStore>(create: (_) => ThemeStore()),
       Provider<LanguageStore>(create: (_) => LanguageStore()),
+      Provider<ProjectStore>(create: (_) => ProjectStore()),
+      Provider<BioStore>(create: (_) => BioStore()),
     ],
     child: const NatiePortfolio(),
   ));
@@ -32,6 +37,7 @@ class NatiePortfolio extends StatelessWidget {
   const NatiePortfolio({Key? key}) : super(key: key);
 
   static init(BuildContext context) {
+    Firestore.init(context);
     Strings.init(context);
     Styles.init(context);
     Themes.init(context);

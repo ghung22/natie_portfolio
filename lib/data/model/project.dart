@@ -82,34 +82,52 @@ class Project {
 }
 
 class Projects {
-  final List<Project> values;
+  final List<Project> _v;
 
-  Projects(this.values);
+  Projects([this._v = const []]);
 
-  List<Project> get featured => values.where((p) => p.featured).toList();
-
-  void replaceWith({List<Project>? values, Projects? projects}) {
-    if (projects != null) values = projects.values;
-    if (values == null) return;
-    this.values.clear();
-    this.values.addAll(values);
+  List<Project> get values {
+    final v = _v;
+    v.sort((a, b) => b.completionTimestamp!.compareTo(a.completionTimestamp!));
+    return v;
   }
 
-  Projects copyWith({List<Project>? values}) => Projects(values ?? this.values);
+  Project operator [](int index) => _v[index];
+
+  Project? get first => _v.isNotEmpty ? _v.first : null;
+
+  Project? get last => _v.isNotEmpty ? _v.last : null;
+
+  int get length => _v.length;
+
+  bool get isEmpty => _v.isEmpty;
+
+  bool get isNotEmpty => _v.isNotEmpty;
+
+  List<Project> get featured => _v.where((p) => p.featured).toList();
+
+  void replaceWith({List<Project>? values, Projects? projects}) {
+    if (projects != null) values = projects._v;
+    if (values == null) return;
+    _v.clear();
+    _v.addAll(values);
+  }
+
+  Projects copyWith({List<Project>? values}) => Projects(values ?? this._v);
 
   @override
-  String toString() => jsonEncode(values).toString();
+  String toString() => jsonEncode(_v).toString();
 }
 
 class ProjectData {
-  static List<Project> values = [
+  static Projects data = Projects([
     aPum,
     lms,
     nieNote,
     nieFlat,
     letTutor,
     moodleMobile,
-  ];
+  ]);
 
   static Project aPum = Project(
     id: 'a_pum',
