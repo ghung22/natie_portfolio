@@ -14,6 +14,8 @@ import 'image_view.dart';
 import 'list_view.dart';
 import 'text_view.dart';
 
+// region Cards
+
 class CardItem extends StatefulWidget {
   final Widget child;
   final EdgeInsets padding;
@@ -127,7 +129,7 @@ class _FunctionalityItemState extends State<FunctionalityItem> {
   late Project _p;
   late int _i;
 
-  Widget _contentCard = Container();
+  Widget _contentCard = const Nothing();
   final AnimationStore _visibleAni = AnimationStore();
 
   @override
@@ -149,7 +151,7 @@ class _FunctionalityItemState extends State<FunctionalityItem> {
             ? _p.functionalitiesVi
             : _p.functionalities;
       }
-      if (f.length < _i) return Container();
+      if (f.length < _i) return const Nothing();
       return SizedBox(
         width: Dimens.projectDetailsFuncWidth,
         child: CardItem(
@@ -188,4 +190,29 @@ class _FunctionalityItemState extends State<FunctionalityItem> {
       ),
     );
   }
+}
+
+// endregion
+
+/// Wrap a stateless widget for the observer to work
+class StatefulWrapper extends StatefulWidget {
+  final Widget child;
+
+  const StatefulWrapper({Key? key, required this.child}) : super(key: key);
+
+  @override
+  State<StatefulWrapper> createState() => _StatefulWrapperState();
+}
+
+class _StatefulWrapperState extends State<StatefulWrapper> {
+  @override
+  Widget build(BuildContext context) => widget.child;
+}
+
+/// An empty const widget to replace Container()
+class Nothing extends StatelessWidget {
+  const Nothing({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) => const SizedBox();
 }

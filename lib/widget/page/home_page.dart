@@ -1,15 +1,20 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:natie_portfolio/global/mixin.dart';
+import 'package:natie_portfolio/global/router.dart';
 import 'package:natie_portfolio/global/strings.dart';
 import 'package:natie_portfolio/global/vars.dart';
+import 'package:natie_portfolio/store/data/bio_store.dart';
+import 'package:natie_portfolio/store/data/project_store.dart';
 import 'package:natie_portfolio/widget/common/banner_item.dart';
 import 'package:natie_portfolio/widget/common/buttons.dart';
 import 'package:natie_portfolio/widget/common/content_item.dart';
 import 'package:natie_portfolio/widget/common/list_view.dart';
 import 'package:natie_portfolio/global/dimens.dart';
-import 'package:natie_portfolio/data/model/project.dart';
 import 'package:natie_portfolio/widget/common/text_view.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -18,13 +23,27 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<HomePage> with PostFrameMixin {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   PreferredSizeWidget _appBar = AppBar();
-  Widget _body = Container();
-  Widget _drawer = Container();
+  Widget _body = const Nothing();
+  Widget _drawer = const Nothing();
 
   final _scrollController = ScrollController();
+  ProjectStore? _projectStore;
+  BioStore? _bioStore;
+
+  @override
+  void initState() {
+    super.initState();
+    postFrame(() {
+      _projectStore = context.read<ProjectStore>();
+      _bioStore = context.read<BioStore>();
+      _initAppBar();
+      _initBody();
+      _initDrawer();
+    });
+  }
 
   void _initAppBar() {
     _appBar = AppBar(
@@ -65,18 +84,30 @@ class _HomePageState extends State<HomePage> {
       ),
       child: Align(
         alignment: Alignment.topCenter,
-        child: ConstrainedBox(
-          constraints:
-              const BoxConstraints(maxWidth: Dimens.pageContentMaxWidth),
-          child: PaddedColumn(
+        child: Observer(builder: (context) {
+          return PaddedColumn(
             padding:
                 const EdgeInsets.symmetric(vertical: Dimens.projectItemPadding),
-            children: Projects.values
-                .where((p) => p.featured)
-                .map((p) => ProjectItem(p))
-                .toList(),
-          ),
-        ),
+            paddingStartAndEnd: false,
+            children: [
+              // Welcome banner
+              BioBanner(bio: _bioStore!.bio),
+
+              // Featured projects
+              ..._projectStore!.projects.featured
+                  .map((p) => ConstrainedBox(
+                        constraints: const BoxConstraints(
+                            maxWidth: Dimens.pageContentMaxWidth),
+                        child: ProjectBanner(
+                          project: p,
+                          onAction: () => Navigator.of(context)
+                              .pushNamed(Routes.project, arguments: p),
+                        ),
+                      ))
+                  .toList(),
+            ],
+          );
+        }),
       ),
     );
   }
@@ -112,10 +143,6 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    _initAppBar();
-    _initBody();
-    _initDrawer();
-
     return Scaffold(
       key: _scaffoldKey,
       appBar: _appBar,

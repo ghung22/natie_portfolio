@@ -27,6 +27,8 @@
     }
   },
   "back": "Back",
+  "contact": "Contact me",
+  "details": "More details",
   "explore": "Explore more",
   "language": "Language",
   "navigate_to": "Navigate to",
@@ -35,7 +37,7 @@
   "search": "Search",
   "tech_used": "Technology used:",
   "theme": "Theme",
-  "welcome": "Hi! This is {name}",
+  "welcome": "Hi! This is\n{name}",
   "what_you_can_do": "With {name}, you can…",
   "z": "Z"
 }

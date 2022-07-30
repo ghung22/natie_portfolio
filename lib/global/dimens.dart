@@ -23,7 +23,7 @@ class Dimens {
 
   static const iconBtnSize = 20.0;
 
-  static const pageContentMaxWidth = 512.0;
+  static const pageContentMaxWidth = 720.0;
   static const pageContentPaddingHorizontal = 12.0;
   static const pageContentPaddingVertical = 12.0;
 

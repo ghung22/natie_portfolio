@@ -10,31 +10,15 @@ class ProjectService {
   static Future<void> setProject(Project p) async => await projects
       .doc(p.id)
       .set(p.toJson())
-      .onError((e, st) => Firestore.onError(e, st));
+      .then((v) => Firestore.onDone('setProject'))
+      .onError((e, st) => Firestore.onError('setProject', e, st));
 
-  static Future<List<Project>> getProjects() async {
+  static Future<Projects> getProjects() async {
     final data = await projects
-        .orderBy('completionDate')
         .get()
-        .onError((e, st) => Firestore.onError(e, st));
-    return data.docs.map((d) => Project.fromJson(d.data())).toList();
-  }
-
-  static Future<List<Project>> getFeaturedProjects() async {
-    final data = await projects
-        .orderBy('completionDate')
-        .where('featured', isEqualTo: true)
-        .get()
-        .onError((e, st) => Firestore.onError(e, st));
-    return data.docs.map((d) => Project.fromJson(d.data())).toList();
-  }
-
-  static Future<Project?> getProject(id) async {
-    final data = await projects
-        .doc(id)
-        .get()
-        .onError((e, st) => Firestore.onError(e, st));
-    final d = data.data();
-    return (d != null) ? Project.fromJson(d) : null;
+        .onError((e, st) => Firestore.onError('getProjects', e, st));
+    final list = data.docs.map((d) => Project.fromJson(d.data())).toList();
+    Firestore.onDone('getProjects', list);
+    return Projects(list);
   }
 }

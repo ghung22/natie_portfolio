@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:natie_portfolio/global/mixin.dart';
 import 'package:natie_portfolio/global/router.dart';
 import 'package:natie_portfolio/global/vars.dart';
 import 'package:natie_portfolio/store/common/animation_store.dart';
@@ -24,11 +25,11 @@ class ProjectPage extends StatefulWidget {
   State<ProjectPage> createState() => _ProjectPageState();
 }
 
-class _ProjectPageState extends State<ProjectPage> {
+class _ProjectPageState extends State<ProjectPage> with PostFrameMixin {
   late Project _p;
 
   PreferredSizeWidget _appBar = AppBar();
-  Widget _body = Container();
+  Widget _body = const Nothing();
 
   final AnimationStore _introAni = AnimationStore();
   final _scrollController = ScrollController();
@@ -37,7 +38,7 @@ class _ProjectPageState extends State<ProjectPage> {
   void initState() {
     super.initState();
     _p = widget.project;
-    WidgetsBinding.instance.addPostFrameCallback((_) => _introAni.start());
+    postFrame(() => _introAni.start());
   }
 
   void _initAppBar() {

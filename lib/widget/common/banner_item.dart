@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:natie_portfolio/data/model/bio.dart';
 import 'package:natie_portfolio/data/model/project.dart';
 import 'package:natie_portfolio/global/dimens.dart';
+import 'package:natie_portfolio/global/mixin.dart';
 import 'package:natie_portfolio/global/strings.dart';
 import 'package:natie_portfolio/global/styles.dart';
 import 'package:natie_portfolio/global/vars.dart';
@@ -11,6 +13,7 @@ import 'package:visibility_detector/visibility_detector.dart';
 
 import 'animated_view.dart';
 import 'buttons.dart';
+import 'content_item.dart';
 import 'image_view.dart';
 import 'list_view.dart';
 import 'text_view.dart';
@@ -37,7 +40,7 @@ class BannerItem extends StatefulWidget {
   State<BannerItem> createState() => _BannerItemState();
 }
 
-class _BannerItemState extends State<BannerItem> {
+class _BannerItemState extends State<BannerItem> with PostFrameMixin {
   late Widget _title;
   late Widget _description;
   late String _imageUrl;
@@ -45,11 +48,10 @@ class _BannerItemState extends State<BannerItem> {
   late Widget? _actionLabel;
   late VoidCallback? _onAction;
 
-  Size _screenSize = const Size(0, 0);
   Color _textColor = Colors.white;
   Color _actionColor = Colors.white;
-  Widget _leftSide = Container();
-  Widget _rightSide = Container();
+  Widget _leftSide = const Nothing();
+  Widget _rightSide = const Nothing();
 
   final AnimationStore _introAni = AnimationStore();
 
@@ -59,11 +61,11 @@ class _BannerItemState extends State<BannerItem> {
     _title = widget.title;
     _description = widget.description;
     _imageUrl = widget.imageUrl;
-    _primary = widget.primary ?? Theme.of(context).primaryColor;
+    _primary = widget.primary ?? Colors.transparent;
     _actionLabel = widget.action;
     _onAction = widget.onAction;
 
-    WidgetsBinding.instance.addPostFrameCallback((_) {
+    postFrame(() {
       _initValues();
       _initLeftSide();
       _initRightSide();
@@ -71,7 +73,6 @@ class _BannerItemState extends State<BannerItem> {
   }
 
   void _initValues() {
-    _screenSize = MediaQuery.of(context).size;
     _textColor = _primary.computeLuminance() > .5 ? Colors.black : Colors.white;
     final hsl = HSLColor.fromColor(_primary);
     _actionColor =
@@ -133,7 +134,6 @@ class _BannerItemState extends State<BannerItem> {
       alignment: Alignment.bottomRight,
       child: ImageView(
         _imageUrl,
-        errorWidget: const Icon(Icons.error),
         onFinish: () {
           if (!_introAni.willStart) _introAni.start();
         },
@@ -144,14 +144,14 @@ class _BannerItemState extends State<BannerItem> {
   @override
   Widget build(BuildContext context) {
     return VisibilityDetector(
-        key: Key('${widget.runtimeType}_${widget.hashCode}'),
-        onVisibilityChanged: (visibility) {
-          if (visibility.visibleFraction > .5) {
-            if (!_introAni.willStart) _introAni.start();
-          }
-        },
+      key: Key('${widget.runtimeType}_${widget.hashCode}'),
+      onVisibilityChanged: (visibility) {
+        if (visibility.visibleFraction > .1) {
+          if (!_introAni.willStart) _introAni.start();
+        }
+      },
       child: Container(
-        width: _screenSize.width,
+        width: double.infinity,
         height: Dimens.bannerHeight,
         color: _primary,
         child: Observer(builder: (context) {
@@ -209,6 +209,48 @@ class ProjectBanner extends StatelessWidget {
       action: Observer(builder: (context) {
         Strings.isEn;
         return TextView(text: AppLocalizations.of(context)!.explore);
+      }),
+      onAction: onAction,
+    );
+  }
+}
+
+class BioBanner extends StatelessWidget {
+  final Bio bio;
+  final VoidCallback? onAction;
+
+  const BioBanner({
+    Key? key,
+    required this.bio,
+    this.onAction,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    if (bio.isEmpty) return const Nothing();
+    return BannerItem(
+      title: Observer(
+        builder: (context) {
+          Strings.isEn;
+          return TextView(
+            text: AppLocalizations.of(context)!.welcome(bio.name),
+            softWrap: true,
+          );
+        }
+      ),
+      description: Observer(builder: (context) {
+        return TextView(
+          text: Strings.isEn ? bio.description : bio.descriptionVi,
+          spaced: true,
+          softWrap: true,
+        );
+      }),
+      imageUrl: bio.avatarUrl,
+      // primary: bio.colors,
+      primary: Colors.white,
+      action: Observer(builder: (context) {
+        Strings.isEn;
+        return TextView(text: AppLocalizations.of(context)!.details);
       }),
       onAction: onAction,
     );

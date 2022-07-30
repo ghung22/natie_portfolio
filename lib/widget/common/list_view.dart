@@ -5,6 +5,8 @@ class _ListViewConstants {
     IgnorePadding,
     PaddedColumn,
     PaddedRow,
+    Column,
+    Row,
   ];
 }
 
