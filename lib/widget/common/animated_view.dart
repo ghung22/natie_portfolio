@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:natie_portfolio/global/strings.dart';
 import 'package:natie_portfolio/global/vars.dart';
 import 'package:natie_portfolio/store/common/animation_store.dart';
+import 'package:natie_portfolio/store/global/language_store.dart';
+import 'package:provider/provider.dart';
 
 class FadeSlideAnimation extends ImplicitlyAnimatedWidget {
   const FadeSlideAnimation({
@@ -115,5 +119,23 @@ class _AnimatedHoverState extends State<AnimatedHover> {
         child: widget.child,
       ),
     );
+  }
+}
+
+class AnimatedLanguageUpdate extends StatelessWidget {
+  final Widget child;
+
+  const AnimatedLanguageUpdate({Key? key, required this.child})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Observer(builder: (context) {
+      Strings.isEn;
+      return AnimatedOpacity(
+          duration: Vars.animationFast,
+          opacity: context.read<LanguageStore>().changingLanguage ? 0 : 1,
+          child: child);
+    });
   }
 }
