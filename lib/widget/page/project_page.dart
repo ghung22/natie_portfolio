@@ -5,7 +5,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:natie_portfolio/global/router.dart';
 import 'package:natie_portfolio/global/vars.dart';
-import 'package:natie_portfolio/store/animation_store.dart';
+import 'package:natie_portfolio/store/common/animation_store.dart';
 import 'package:natie_portfolio/widget/common/banner_item.dart';
 import 'package:natie_portfolio/widget/common/buttons.dart';
 import 'package:natie_portfolio/global/dimens.dart';
@@ -113,6 +113,7 @@ class _ProjectPageState extends State<ProjectPage> {
                   fit: BoxFit.fitHeight);
             }).toList(),
           ),
+          Container(height: Dimens.projectDetailsPaddingVertical),
         ],
       ),
     );

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:natie_portfolio/global/vars.dart';
-import 'package:natie_portfolio/store/animation_store.dart';
+import 'package:natie_portfolio/store/common/animation_store.dart';
 
 class FadeSlideAnimation extends ImplicitlyAnimatedWidget {
   const FadeSlideAnimation({
@@ -25,33 +25,23 @@ class FadeSlideAnimation extends ImplicitlyAnimatedWidget {
 
 class _FadeSlideAnimationState
     extends ImplicitlyAnimatedWidgetState<FadeSlideAnimation> {
-  late Offset _offset;
-  late double _opacity;
-
-  Tween<Offset>? _offsetTween;
+  Tween<Offset>? _offset;
   late Animation<Offset> _offsetAnimation;
-  Tween<double>? _opacityTween;
+  Tween<double>? _opacity;
   late Animation<double> _opacityAnimation;
 
   @override
-  void initState() {
-    super.initState();
-    _offset = widget.offset;
-    _opacity = widget.opacity;
-  }
-
-  @override
   void forEachTween(TweenVisitor<dynamic> visitor) {
-    _offsetTween = visitor(_offsetTween, _offset,
+    _offset = visitor(_offset, widget.offset,
         (value) => Tween<Offset>(begin: value as Offset)) as Tween<Offset>?;
-    _opacityTween = visitor(_opacityTween, _opacity,
+    _opacity = visitor(_opacity, widget.opacity,
         (value) => Tween<double>(begin: value as double)) as Tween<double>?;
   }
 
   @override
   void didUpdateTweens() {
-    _offsetAnimation = animation.drive(_offsetTween!);
-    _opacityAnimation = animation.drive(_opacityTween!);
+    _offsetAnimation = animation.drive(_offset!);
+    _opacityAnimation = animation.drive(_opacity!);
   }
 
   @override

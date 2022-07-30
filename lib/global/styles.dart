@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:natie_portfolio/store/theme_store.dart';
+import 'package:natie_portfolio/store/global/theme_store.dart';
 import 'package:provider/provider.dart';
 
 import 'dimens.dart';

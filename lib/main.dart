@@ -10,8 +10,8 @@ import 'global/router.dart' as rt;
 import 'global/strings.dart';
 import 'global/styles.dart';
 import 'global/vars.dart';
-import 'store/language_store.dart';
-import 'store/theme_store.dart';
+import 'store/global/language_store.dart';
+import 'store/global/theme_store.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
