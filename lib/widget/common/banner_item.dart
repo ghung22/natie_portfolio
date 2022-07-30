@@ -6,7 +6,8 @@ import 'package:natie_portfolio/global/dimens.dart';
 import 'package:natie_portfolio/global/strings.dart';
 import 'package:natie_portfolio/global/styles.dart';
 import 'package:natie_portfolio/global/vars.dart';
-import 'package:natie_portfolio/store/animation_store.dart';
+import 'package:natie_portfolio/store/common/animation_store.dart';
+import 'package:visibility_detector/visibility_detector.dart';
 
 import 'animated_view.dart';
 import 'buttons.dart';
@@ -133,41 +134,51 @@ class _BannerItemState extends State<BannerItem> {
       child: ImageView(
         _imageUrl,
         errorWidget: const Icon(Icons.error),
-        onFinish: () => _introAni.start(),
+        onFinish: () {
+          if (!_introAni.willStart) _introAni.start();
+        },
       ),
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: _screenSize.width,
-      height: Dimens.bannerHeight,
-      color: _primary,
-      child: Observer(builder: (context) {
-        return Stack(
-          children: [
-            FadeSlideAnimation(
-              offset: _introAni.willStart
-                  ? Offset.zero
-                  : const Offset(Dimens.bannerSlideOffset, 0),
-              opacity: _introAni.willStart ? 1 : 0,
-              duration: Vars.animationSluggish,
-              curve: Curves.easeOut,
-              child: _rightSide,
-            ),
-            FadeSlideAnimation(
-              offset: _introAni.willStart
-                  ? Offset.zero
-                  : const Offset(-Dimens.bannerSlideOffset, 0),
-              opacity: _introAni.willStart ? 1 : 0,
-              duration: Vars.animationSluggish,
-              curve: Curves.easeOut,
-              child: _leftSide,
-            ),
-          ],
-        );
-      }),
+    return VisibilityDetector(
+        key: Key('${widget.runtimeType}_${widget.hashCode}'),
+        onVisibilityChanged: (visibility) {
+          if (visibility.visibleFraction > .5) {
+            if (!_introAni.willStart) _introAni.start();
+          }
+        },
+      child: Container(
+        width: _screenSize.width,
+        height: Dimens.bannerHeight,
+        color: _primary,
+        child: Observer(builder: (context) {
+          return Stack(
+            children: [
+              FadeSlideAnimation(
+                offset: _introAni.willStart
+                    ? Offset.zero
+                    : const Offset(Dimens.bannerSlideOffset, 0),
+                opacity: _introAni.willStart ? 1 : 0,
+                duration: Vars.animationSluggish,
+                curve: Curves.easeOut,
+                child: _rightSide,
+              ),
+              FadeSlideAnimation(
+                offset: _introAni.willStart
+                    ? Offset.zero
+                    : const Offset(-Dimens.bannerSlideOffset, 0),
+                opacity: _introAni.willStart ? 1 : 0,
+                duration: Vars.animationSluggish,
+                curve: Curves.easeOut,
+                child: _leftSide,
+              ),
+            ],
+          );
+        }),
+      ),
     );
   }
 }

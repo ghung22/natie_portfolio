@@ -5,7 +5,7 @@ import 'package:natie_portfolio/global/dimens.dart';
 import 'package:natie_portfolio/global/router.dart';
 import 'package:natie_portfolio/global/strings.dart';
 import 'package:natie_portfolio/data/model/project.dart';
-import 'package:natie_portfolio/store/animation_store.dart';
+import 'package:natie_portfolio/store/common/animation_store.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 
 import '../../global/vars.dart';

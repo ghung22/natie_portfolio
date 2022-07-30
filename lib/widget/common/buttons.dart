@@ -5,8 +5,8 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:natie_portfolio/global/dimens.dart';
 import 'package:natie_portfolio/global/strings.dart';
 import 'package:natie_portfolio/global/styles.dart';
-import 'package:natie_portfolio/store/language_store.dart';
-import 'package:natie_portfolio/store/theme_store.dart';
+import 'package:natie_portfolio/store/global/language_store.dart';
+import 'package:natie_portfolio/store/global/theme_store.dart';
 import 'package:provider/provider.dart';
 
 import 'image_view.dart';

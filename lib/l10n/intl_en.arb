@@ -8,6 +8,15 @@
       }
     }
   },
+  "@welcome": {
+    "description": "A welcome message for the viewer.",
+    "placeholders": {
+      "name": {
+        "type": "String",
+        "example": "Natie"
+      }
+    }
+  },
   "@what_you_can_do": {
     "description": "Header for the functionality section of Project Details.",
     "placeholders": {
@@ -26,6 +35,7 @@
   "search": "Search",
   "tech_used": "Technology used:",
   "theme": "Theme",
+  "welcome": "Hi! This is {name}",
   "what_you_can_do": "With {name}, you can…",
   "z": "Z"
 }

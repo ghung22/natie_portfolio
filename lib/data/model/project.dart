@@ -1,7 +1,7 @@
-import 'package:flutter/foundation.dart';
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
-import 'package:natie_portfolio/data/firebase/db.dart';
 
 part 'project.g.dart';
 
@@ -78,19 +78,30 @@ class Project {
   Map<String, dynamic> toJson() => _$ProjectToJson(this);
 
   @override
-  String toString() {
-    return toJson().toString();
-  }
+  String toString() => toJson().toString();
 }
 
 class Projects {
-  static Future update() async {
-    for (Project p in values) {
-      await Db.setProject(p);
-    }
-    if (kDebugMode) print('Update complete');
+  final List<Project> values;
+
+  Projects(this.values);
+
+  List<Project> get featured => values.where((p) => p.featured).toList();
+
+  void replaceWith({List<Project>? values, Projects? projects}) {
+    if (projects != null) values = projects.values;
+    if (values == null) return;
+    this.values.clear();
+    this.values.addAll(values);
   }
 
+  Projects copyWith({List<Project>? values}) => Projects(values ?? this.values);
+
+  @override
+  String toString() => jsonEncode(values).toString();
+}
+
+class ProjectData {
   static List<Project> values = [
     aPum,
     lms,
@@ -340,6 +351,24 @@ class Projects {
         'và giảng viên trong trường Đại học Khoa học tự nhiên. Ứng dụng nhắm '
         'đến sự tiện lợi, phản hồi nhanh, giao diện hiện đại, và hỗ trợ các '
         'tính năng nâng cao mới.',
+    functionalities: [
+      'Faster response time',
+      'User-friendly UI',
+      'Login multiple accounts in different programs',
+      'Record course activities',
+      'Take notes in courses',
+      'Create & vote course polls',
+      'Push notifications for events, messages, and notifications from Moodle',
+    ],
+    functionalitiesVi: [
+      'Tốc độ phản hồi được cải thiện',
+      'Giao diện thân thiện với người dùng',
+      'Đăng nhập nhiều tài khoản với các chương trình giảng dạy khác nhau',
+      'Ghi nhận hoạt động của khóa học',
+      'Tạo ghi chú trong khóa học',
+      'Tạo và bình chọn các bài khảo sát trong khóa học',
+      'Thông báo thiết bị các sự kiện, tin nhắn, và thông báo từ Moodle',
+    ],
     colorHex: Colors.green.value,
     completionTimestamp: DateTime(2022, 8).millisecondsSinceEpoch,
     featured: true,

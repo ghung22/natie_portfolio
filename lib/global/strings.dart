@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:natie_portfolio/store/language_store.dart';
+import 'package:natie_portfolio/store/global/language_store.dart';
 import 'package:provider/provider.dart';
 
 enum Language { system, en, vi }
