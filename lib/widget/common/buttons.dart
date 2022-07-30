@@ -7,6 +7,7 @@ import 'package:natie_portfolio/global/strings.dart';
 import 'package:natie_portfolio/global/styles.dart';
 import 'package:natie_portfolio/store/global/language_store.dart';
 import 'package:natie_portfolio/store/global/theme_store.dart';
+import 'package:natie_portfolio/widget/common/animated_view.dart';
 import 'package:provider/provider.dart';
 
 import 'content_item.dart';
@@ -104,19 +105,21 @@ class ElevatedBtn extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
-      style: ElevatedButton.styleFrom(
-        primary: color ?? Theme.of(context).primaryColor,
-        padding: padding,
-        shape: circular
-            ? const CircleBorder()
-            : const RoundedRectangleBorder(
-                borderRadius:
-                    BorderRadius.all(Radius.circular(Dimens.btnRadius)),
-              ),
+    return AnimatedLanguageUpdate(
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          primary: color ?? Theme.of(context).primaryColor,
+          padding: padding,
+          shape: circular
+              ? const CircleBorder()
+              : const RoundedRectangleBorder(
+                  borderRadius:
+                      BorderRadius.all(Radius.circular(Dimens.btnRadius)),
+                ),
+        ),
+        onPressed: onPressed,
+        child: child,
       ),
-      onPressed: onPressed,
-      child: child,
     );
   }
 }

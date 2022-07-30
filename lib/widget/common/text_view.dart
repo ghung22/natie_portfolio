@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:natie_portfolio/global/styles.dart';
 
+import 'animated_view.dart';
+
 /// A Text widget nested in some of the most used widgets.
 class TextView extends StatelessWidget {
   final String? text;
@@ -83,11 +85,13 @@ class TextView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: padding,
-      child: text != null
-          ? textWidget
-          : Observer(builder: (context) => textWidget),
+    return AnimatedLanguageUpdate(
+      child: Padding(
+        padding: padding,
+        child: text != null
+            ? textWidget
+            : Observer(builder: (context) => textWidget),
+      ),
     );
   }
 }

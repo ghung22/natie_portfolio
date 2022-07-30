@@ -53,16 +53,18 @@ class _HomePageState extends State<HomePage> with PostFrameMixin {
         onPressed: () => _scaffoldKey.currentState!.openDrawer(),
       ),
       centerTitle: true,
-      title: TextBtn(
-        child: TextView(textCallback: () => Strings.title),
-        textStyle: Theme.of(context).appBarTheme.titleTextStyle,
-        hoverFeedback: false,
-        onPressed: () => _scrollController.animateTo(
-          0,
-          duration: Vars.animationSlow,
-          curve: Curves.easeOut,
-        ),
-      ),
+      title: Observer(builder: (context) {
+        return TextBtn(
+          child: TextView(textCallback: () => Strings.title),
+          textStyle: Theme.of(context).appBarTheme.titleTextStyle,
+          hoverFeedback: false,
+          onPressed: () => _scrollController.animateTo(
+            0,
+            duration: Vars.animationSlow,
+            curve: Curves.easeOut,
+          ),
+        );
+      }),
       actions: [
         IconBtn(
           tooltipText: AppLocalizations.of(context)!.search,
