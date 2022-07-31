@@ -110,6 +110,8 @@ class _ProjectPageState extends State<ProjectPage> with PostFrameMixin {
                   text: AppLocalizations.of(context)!.tech_used,
                   color: _p.color,
                 ),
+                const SizedBox(
+                    height: Dimens.projectDetailsTechPaddingVertical),
                 Wrap(
                   spacing: Dimens.projectDetailsTechPaddingHorizontal,
                   runSpacing: Dimens.projectDetailsTechPaddingVertical,
@@ -121,10 +123,12 @@ class _ProjectPageState extends State<ProjectPage> with PostFrameMixin {
                         fit: BoxFit.fitHeight);
                   }).toList(),
                 ),
+                const SizedBox(
+                    height: Dimens.projectDetailsTechPaddingVertical),
               ],
             ),
           ),
-          Container(height: Dimens.projectDetailsPaddingVertical),
+          const SizedBox(height: Dimens.projectDetailsPaddingVertical),
         ],
       ),
     );
