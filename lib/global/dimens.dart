@@ -35,7 +35,7 @@ class Dimens {
   static const projectDetailsPaddingHorizontal = 36.0;
   static const projectDetailsPaddingVertical = 24.0;
   static const projectDetailsTechPaddingHorizontal = 64.0;
-  static const projectDetailsTechPaddingVertical = 24.0;
+  static const projectDetailsTechPaddingVertical = 12.0;
   static const projectDetailsTechSize = 64.0;
 
   static const projectItemPadding = 16.0;

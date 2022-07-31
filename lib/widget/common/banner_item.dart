@@ -19,6 +19,18 @@ import 'image_view.dart';
 import 'list_view.dart';
 import 'text_view.dart';
 
+/// --------------------------------------------------------------------------
+/// **A standard banner with text, image and a button**
+/// **Parameters:**
+/// * [title]       : The title widget to be shown on top left
+/// * [description] : The description widget to be shown below the title
+/// * [imageUrl]    : The image to be shown on the right side of the banner
+/// * [primary]     : Main color of the banner
+/// * [action]      : The button to be shown below the description
+/// * [onAction]    : The function to be called when the button is pressed
+/// * [leftSide]    : The left side of the banner, overrides [title] and such
+/// * [rightSide]   : The right side of the banner, overrides the image widget
+/// --------------------------------------------------------------------------
 class BannerItem extends StatefulWidget {
   final Widget title;
   final Widget description;
@@ -26,6 +38,8 @@ class BannerItem extends StatefulWidget {
   final Color? primary;
   final Widget? action;
   final VoidCallback? onAction;
+  final Widget? leftSide;
+  final Widget? rightSide;
 
   const BannerItem({
     Key? key,
@@ -35,6 +49,8 @@ class BannerItem extends StatefulWidget {
     this.primary,
     this.action,
     this.onAction,
+    this.leftSide,
+    this.rightSide,
   }) : super(key: key);
 
   @override
@@ -149,16 +165,20 @@ class _BannerItemState extends State<BannerItem> with PostFrameMixin {
         child: Observer(builder: (context) {
           return Stack(
             children: [
-              FadeSlideAnimation(
-                offset: _introAni.willStart
-                    ? Offset.zero
-                    : const Offset(Dimens.bannerSlideOffset, 0),
-                opacity: _introAni.willStart ? 1 : 0,
-                duration: Vars.animationSluggish,
-                curve: Curves.easeOut,
-                child: _rightSide,
-              ),
-              FadeSlideAnimation(
+              widget.rightSide != null
+                  ? widget.rightSide!
+                  : FadeSlideAnimation(
+                      offset: _introAni.willStart
+                          ? Offset.zero
+                          : const Offset(Dimens.bannerSlideOffset, 0),
+                      opacity: _introAni.willStart ? 1 : 0,
+                      duration: Vars.animationSluggish,
+                      curve: Curves.easeOut,
+                      child: _rightSide,
+                    ),
+              widget.leftSide != null
+                  ? widget.leftSide!
+                  : FadeSlideAnimation(
                 offset: _introAni.willStart
                     ? Offset.zero
                     : const Offset(-Dimens.bannerSlideOffset, 0),

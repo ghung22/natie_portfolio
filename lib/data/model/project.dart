@@ -12,7 +12,7 @@ part 'project.g.dart';
 /// * [id]                  : Identifier for this project
 /// * [title]               : Name of this project
 /// * [author]              : Who made this / What this is made for
-/// * [tech]            : Programming language / Framework used
+/// * [tech]                : Programming language / Framework used
 /// * [description]         : More info on this project
 /// * [functionalities]     : Functional requirements of this project
 /// * [iconUrl]             : Application icon of this project
