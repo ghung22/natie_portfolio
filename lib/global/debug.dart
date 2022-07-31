@@ -8,12 +8,12 @@ class Debug {
     bool useDebugPrint = false,
     String caller = 'App',
   }) {
-    if (!kReleaseMode) {
-      if (useDebugPrint) {
-        debugPrint('$caller: $message');
-      } else {
-        print('$caller: $message');
-      }
+    final domain = Uri.base.path;
+    if (domain.contains('natie-portfolio')) return;
+    if (useDebugPrint) {
+      debugPrint('$caller: $message');
+    } else {
+      print('$caller: $message');
     }
   }
 }

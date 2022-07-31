@@ -5,6 +5,7 @@ import 'package:natie_portfolio/data/model/bio.dart';
 import 'package:natie_portfolio/data/model/project.dart';
 import 'package:natie_portfolio/global/dimens.dart';
 import 'package:natie_portfolio/global/mixin.dart';
+import 'package:natie_portfolio/global/router.dart';
 import 'package:natie_portfolio/global/strings.dart';
 import 'package:natie_portfolio/global/styles.dart';
 import 'package:natie_portfolio/global/vars.dart';
@@ -45,11 +46,9 @@ class _BannerItemState extends State<BannerItem> with PostFrameMixin {
   late Widget _description;
   late String _imageUrl;
   late Color _primary;
-  late Widget? _actionLabel;
+  late Widget? _action;
   late VoidCallback? _onAction;
 
-  Color _textColor = Colors.white;
-  Color _actionColor = Colors.white;
   Widget _leftSide = const Nothing();
   Widget _rightSide = const Nothing();
 
@@ -62,21 +61,13 @@ class _BannerItemState extends State<BannerItem> with PostFrameMixin {
     _description = widget.description;
     _imageUrl = widget.imageUrl;
     _primary = widget.primary ?? Colors.transparent;
-    _actionLabel = widget.action;
+    _action = widget.action;
     _onAction = widget.onAction;
 
     postFrame(() {
-      _initValues();
       _initLeftSide();
       _initRightSide();
     });
-  }
-
-  void _initValues() {
-    _textColor = _primary.computeLuminance() > .5 ? Colors.black : Colors.white;
-    final hsl = HSLColor.fromColor(_primary);
-    _actionColor =
-        hsl.withLightness((hsl.lightness + .2).clamp(0, 1)).toColor();
   }
 
   void _initLeftSide() {
@@ -96,17 +87,18 @@ class _BannerItemState extends State<BannerItem> with PostFrameMixin {
               const EdgeInsets.symmetric(vertical: Dimens.bannerContentPadding),
           children: [
             Material(
-              child: _title,
               color: Colors.transparent,
-              textStyle: Styles.bannerTitleStyle.copyWith(color: _textColor),
+              textStyle: Styles.bannerTitleStyle
+                  .copyWith(color: MoreColors.onColor(_primary)),
+              child: _title,
             ),
             Material(
-              child: _description,
               color: Colors.transparent,
-              textStyle:
-                  Styles.bannerDescriptionStyle.copyWith(color: _textColor),
+              textStyle: Styles.bannerDescriptionStyle
+                  .copyWith(color: MoreColors.onColor(_primary)),
+              child: _description,
             ),
-            if (_actionLabel != null)
+            if (_action != null)
               Padding(
                 padding: const EdgeInsets.all(Dimens.bannerActionOffset),
                 child: ElevatedBtn(
@@ -114,13 +106,13 @@ class _BannerItemState extends State<BannerItem> with PostFrameMixin {
                     vertical: Dimens.bannerActionPaddingVertical,
                     horizontal: Dimens.bannerActionPaddingHorizontal,
                   ),
+                  onPressed: _onAction,
+                  color: MoreColors.lighter(_primary),
                   child: Material(
-                    child: _actionLabel,
                     color: Colors.transparent,
                     textStyle: Styles.bannerActionStyle,
+                    child: _action,
                   ),
-                  onPressed: _onAction,
-                  color: _actionColor,
                 ),
               ),
           ],
@@ -186,32 +178,45 @@ class _BannerItemState extends State<BannerItem> with PostFrameMixin {
 class ProjectBanner extends StatelessWidget {
   final Project project;
   final VoidCallback? onAction;
+  final bool isHomePage;
 
   const ProjectBanner({
     Key? key,
     required this.project,
     this.onAction,
+    this.isHomePage = false,
   }) : super(key: key);
+
+  Widget get _bannerWidget => BannerItem(
+        title: TextView(text: project.title),
+        description: Observer(builder: (context) {
+          return TextView(
+            text: Strings.isEn ? project.description : project.descriptionVi,
+            spaced: true,
+            softWrap: true,
+          );
+        }),
+        imageUrl: project.imageUrls.isNotEmpty ? project.imageUrls[0] : '',
+        primary: project.color,
+        action: onAction == null
+            ? null
+            : Observer(builder: (context) {
+                Strings.isEn;
+                return TextView(text: AppLocalizations.of(context)!.explore);
+              }),
+        onAction: onAction,
+      );
 
   @override
   Widget build(BuildContext context) {
-    return BannerItem(
-      title: TextView(text: project.title),
-      description: Observer(builder: (context) {
-        return TextView(
-          text: Strings.isEn ? project.description : project.descriptionVi,
-          spaced: true,
-          softWrap: true,
-        );
-      }),
-      imageUrl: project.imageUrls.isNotEmpty ? project.imageUrls[0] : '',
-      primary: project.color,
-      action: Observer(builder: (context) {
-        Strings.isEn;
-        return TextView(text: AppLocalizations.of(context)!.explore);
-      }),
-      onAction: onAction,
-    );
+    if (isHomePage) {
+      return Hero(
+        tag: '${Routes.project}/${project.id}/banner',
+        child: _bannerWidget,
+      );
+    } else {
+      return _bannerWidget;
+    }
   }
 }
 
@@ -229,15 +234,13 @@ class BioBanner extends StatelessWidget {
   Widget build(BuildContext context) {
     if (bio.isEmpty) return const Nothing();
     return BannerItem(
-      title: Observer(
-        builder: (context) {
-          Strings.isEn;
-          return TextView(
-            text: AppLocalizations.of(context)!.welcome(bio.name),
-            softWrap: true,
-          );
-        }
-      ),
+      title: Observer(builder: (context) {
+        Strings.isEn;
+        return TextView(
+          text: AppLocalizations.of(context)!.welcome(bio.name),
+          softWrap: true,
+        );
+      }),
       description: Observer(builder: (context) {
         return TextView(
           text: Strings.isEn ? bio.description : bio.descriptionVi,

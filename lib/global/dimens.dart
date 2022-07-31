@@ -9,6 +9,7 @@ class Dimens {
   static const bannerPaddingVertical = 28.0;
   static const bannerSlideOffset = .1;
 
+  static const btnElevation = 5.0;
   static const btnPaddingHorizontal = 24.0;
   static const btnPaddingVertical = 8.0;
   static const btnRadius = 30.0;
