@@ -5,6 +5,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:natie_portfolio/global/mixin.dart';
 import 'package:natie_portfolio/global/router.dart';
+import 'package:natie_portfolio/global/styles.dart';
 import 'package:natie_portfolio/global/vars.dart';
 import 'package:natie_portfolio/store/common/animation_store.dart';
 import 'package:natie_portfolio/widget/common/banner_item.dart';
@@ -38,7 +39,10 @@ class _ProjectPageState extends State<ProjectPage> with PostFrameMixin {
   void initState() {
     super.initState();
     _p = widget.project;
-    postFrame(() => _introAni.start());
+    postFrame(() {
+      _introAni.start();
+      setState(() {});
+    });
   }
 
   void _initAppBar() {
@@ -50,7 +54,6 @@ class _ProjectPageState extends State<ProjectPage> with PostFrameMixin {
           opacity: _introAni.willStart ? 1 : 0,
           duration: Vars.animationFast,
           child: TextBtn(
-            child: TextView(text: _p.title),
             textStyle: Theme.of(context).appBarTheme.titleTextStyle,
             hoverFeedback: false,
             onPressed: () => _scrollController.animateTo(
@@ -58,6 +61,7 @@ class _ProjectPageState extends State<ProjectPage> with PostFrameMixin {
               duration: Vars.animationSlow,
               curve: Curves.easeOut,
             ),
+            child: TextView(text: _p.title),
           ),
         );
       }),
@@ -74,14 +78,7 @@ class _ProjectPageState extends State<ProjectPage> with PostFrameMixin {
             vertical: Dimens.projectDetailsPaddingVertical),
         children: [
           // Banner
-          ProjectBanner(
-            project: _p,
-            onAction: () => _scrollController.animateTo(
-              Dimens.bannerHeight,
-              duration: Vars.animationSlow,
-              curve: Curves.easeOut,
-            ),
-          ),
+          ProjectBanner(project: _p),
 
           // Functionalities
           TextView.header(
@@ -98,21 +95,34 @@ class _ProjectPageState extends State<ProjectPage> with PostFrameMixin {
           ),
 
           // Technology used
-          // FIXME: Need a background to add visibility to the icons
-          TextView.header(
-            text: AppLocalizations.of(context)!.tech_used,
-            color: _p.color,
-          ),
-          Wrap(
-            spacing: Dimens.projectDetailsTechPaddingHorizontal,
-            runSpacing: Dimens.projectDetailsTechPaddingVertical,
-            children: _p.tech.split(',').map((tech) {
-              final src = Vars.assets[tech] ?? '';
-              return SvgImageView(src,
-                  width: Dimens.projectDetailsTechSize,
-                  height: Dimens.projectDetailsTechSize,
-                  fit: BoxFit.fitHeight);
-            }).toList(),
+          Container(
+            width: double.infinity,
+            padding: const EdgeInsets.symmetric(
+                vertical: Dimens.projectDetailsPaddingVertical),
+            color: Themes.isDarkMode
+                ? MoreColors.darker(_p.color, magnitude: 2)
+                : MoreColors.lighter(_p.color, magnitude: 2),
+            child: PaddedColumn(
+              padding: const EdgeInsets.symmetric(
+                  vertical: Dimens.projectDetailsPaddingVertical),
+              children: [
+                TextView.header(
+                  text: AppLocalizations.of(context)!.tech_used,
+                  color: _p.color,
+                ),
+                Wrap(
+                  spacing: Dimens.projectDetailsTechPaddingHorizontal,
+                  runSpacing: Dimens.projectDetailsTechPaddingVertical,
+                  children: _p.tech.split(',').map((tech) {
+                    final src = Vars.assets[tech] ?? '';
+                    return SvgImageView(src,
+                        width: Dimens.projectDetailsTechSize,
+                        height: Dimens.projectDetailsTechSize,
+                        fit: BoxFit.fitHeight);
+                  }).toList(),
+                ),
+              ],
+            ),
           ),
           Container(height: Dimens.projectDetailsPaddingVertical),
         ],
@@ -125,18 +135,44 @@ class _ProjectPageState extends State<ProjectPage> with PostFrameMixin {
     _initAppBar();
     _initBody();
 
-    return Hero(
-      tag: '${Routes.project}/${_p.id}',
-      child: Card(
-        color: Colors.transparent,
-        elevation: 0,
-        margin: EdgeInsets.zero,
-        shape: const RoundedRectangleBorder(side: BorderSide.none),
-        child: Scaffold(
-          appBar: _appBar,
-          body: _body,
+    return Stack(
+      children: [
+        Hero(
+          tag: '${Routes.project}/${_p.id}/banner',
+          child: Scaffold(
+            backgroundColor: Colors.transparent,
+            appBar: AppBar(
+              toolbarOpacity: 0,
+              backgroundColor: Colors.transparent,
+              elevation: 0,
+              leading: const Nothing(),
+            ),
+            body: Observer(builder: (context) {
+              return AnimatedOpacity(
+                opacity: _introAni.willStart ? 0 : 1,
+                duration: Vars.animationFast,
+                child: Container(
+                  height: Dimens.bannerHeight,
+                  color: _p.color,
+                ),
+              );
+            }),
+          ),
         ),
-      ),
+        Hero(
+          tag: '${Routes.project}/${_p.id}',
+          child: Card(
+            color: Colors.transparent,
+            elevation: 0,
+            margin: EdgeInsets.zero,
+            shape: const RoundedRectangleBorder(side: BorderSide.none),
+            child: Scaffold(
+              appBar: _appBar,
+              body: _body,
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

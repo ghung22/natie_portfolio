@@ -42,6 +42,7 @@ class _HomePageState extends State<HomePage> with PostFrameMixin {
       _initAppBar();
       _initBody();
       _initDrawer();
+      setState(() {});
     });
   }
 
@@ -54,8 +55,8 @@ class _HomePageState extends State<HomePage> with PostFrameMixin {
       ),
       centerTitle: true,
       title: Observer(builder: (context) {
+        Strings.isEn;
         return TextBtn(
-          child: TextView(textCallback: () => Strings.title),
           textStyle: Theme.of(context).appBarTheme.titleTextStyle,
           hoverFeedback: false,
           onPressed: () => _scrollController.animateTo(
@@ -63,6 +64,7 @@ class _HomePageState extends State<HomePage> with PostFrameMixin {
             duration: Vars.animationSlow,
             curve: Curves.easeOut,
           ),
+          child: TextView(textCallback: () => Strings.title),
         );
       }),
       actions: [
@@ -84,33 +86,31 @@ class _HomePageState extends State<HomePage> with PostFrameMixin {
         horizontal: Dimens.pageContentPaddingHorizontal,
         vertical: Dimens.pageContentPaddingVertical,
       ),
-      child: Align(
-        alignment: Alignment.topCenter,
-        child: Observer(builder: (context) {
-          return PaddedColumn(
-            padding:
-                const EdgeInsets.symmetric(vertical: Dimens.projectItemPadding),
-            paddingStartAndEnd: false,
-            children: [
-              // Welcome banner
-              BioBanner(bio: _bioStore!.bio),
+      child: Observer(builder: (context) {
+        return PaddedColumn(
+          padding:
+              const EdgeInsets.symmetric(vertical: Dimens.projectItemPadding),
+          paddingStartAndEnd: false,
+          children: [
+            // Welcome banner
+            BioBanner(bio: _bioStore!.bio),
 
-              // Featured projects
-              ..._projectStore!.projects.featured
-                  .map((p) => ConstrainedBox(
-                        constraints: const BoxConstraints(
-                            maxWidth: Dimens.pageContentMaxWidth),
-                        child: ProjectBanner(
-                          project: p,
-                          onAction: () => Navigator.of(context)
-                              .pushNamed(Routes.project, arguments: p),
-                        ),
-                      ))
-                  .toList(),
-            ],
-          );
-        }),
-      ),
+            // Featured projects
+            ..._projectStore!.projects.featured
+                .map((p) => ConstrainedBox(
+                      constraints: const BoxConstraints(
+                          maxWidth: Dimens.pageContentMaxWidth),
+                      child: ProjectBanner(
+                        project: p,
+                        onAction: () => Navigator.of(context)
+                            .pushNamed(Routes.project, arguments: p),
+                        isHomePage: true,
+                      ),
+                    ))
+                .toList(),
+          ],
+        );
+      }),
     );
   }
 

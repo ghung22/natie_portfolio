@@ -87,6 +87,7 @@ class TextBtn extends StatelessWidget {
 class ElevatedBtn extends StatelessWidget {
   final Widget child;
   final Color? color;
+  final double elevation;
   final VoidCallback? onPressed;
   final EdgeInsetsGeometry padding;
   final bool circular;
@@ -95,6 +96,7 @@ class ElevatedBtn extends StatelessWidget {
     Key? key,
     required this.child,
     this.color,
+    this.elevation = Dimens.btnElevation,
     this.onPressed,
     this.padding = const EdgeInsets.symmetric(
       horizontal: Dimens.btnPaddingHorizontal,
@@ -110,6 +112,7 @@ class ElevatedBtn extends StatelessWidget {
         style: ElevatedButton.styleFrom(
           primary: color ?? Theme.of(context).primaryColor,
           padding: padding,
+          elevation: elevation,
           shape: circular
               ? const CircleBorder()
               : const RoundedRectangleBorder(

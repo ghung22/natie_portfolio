@@ -43,6 +43,23 @@ class Styles {
   static const TextStyle iconBtnErrorStyle = TextStyle(fontFamily: 'monospace');
 }
 
+class MoreColors {
+  static Color _shade(Color color, double factor) {
+    final hsl = HSLColor.fromColor(color);
+    final lightness = (hsl.lightness + factor).clamp(0, 1);
+    return hsl.withLightness(lightness.toDouble()).toColor();
+  }
+
+  static Color lighter(Color color, {double magnitude = 1}) =>
+      _shade(color, .2 * magnitude);
+
+  static Color darker(Color color, {double magnitude = 1}) =>
+      _shade(color, -.2 * magnitude);
+
+  static Color onColor(Color color) =>
+      color.computeLuminance() > .5 ? Colors.black : Colors.white;
+}
+
 class Themes {
   static BuildContext? _context;
 

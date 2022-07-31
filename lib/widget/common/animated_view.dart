@@ -9,7 +9,7 @@ import 'package:provider/provider.dart';
 class FadeSlideAnimation extends ImplicitlyAnimatedWidget {
   const FadeSlideAnimation({
     Key? key,
-    this.child,
+    required this.child,
     required this.offset,
     required this.opacity,
     Duration duration = Vars.animationFast,
@@ -18,7 +18,7 @@ class FadeSlideAnimation extends ImplicitlyAnimatedWidget {
   })  : assert(opacity >= 0.0 && opacity <= 1.0),
         super(key: key, curve: curve, duration: duration, onEnd: onEnd);
 
-  final Widget? child;
+  final Widget child;
   final Offset offset;
   final double opacity;
 

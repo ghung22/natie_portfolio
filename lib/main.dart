@@ -1,5 +1,4 @@
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -19,7 +18,6 @@ import 'store/global/theme_store.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
-    name: kReleaseMode ? "natie-portfolio" : null,
     options: DefaultFirebaseOptions.currentPlatform,
   );
   runApp(MultiProvider(
@@ -47,27 +45,25 @@ class NatiePortfolio extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return Observer(
-      builder: (_) {
-        rt.Router.init(context);
-        context.read<ThemeStore>().getActiveTheme();
-        context.read<LanguageStore>().getActiveLanguage();
-        return MaterialApp(
-          title: Strings.title,
-          debugShowCheckedModeBanner: false,
-          // Theme
-          themeMode: context.read<ThemeStore>().activeTheme,
-          theme: Themes.light,
-          darkTheme: Themes.dark,
-          // Locale
-          locale: Strings.locale,
-          localizationsDelegates: AppLocalizations.localizationsDelegates,
-          supportedLocales: AppLocalizations.supportedLocales,
-          // Pages
-          initialRoute: rt.Routes.home,
-          onGenerateRoute: rt.Router.generateRoute,
-        );
-      },
-    );
+    return Observer(builder: (_) {
+      rt.Router.init(context);
+      context.read<ThemeStore>().getActiveTheme();
+      context.read<LanguageStore>().getActiveLanguage();
+      return MaterialApp(
+        title: Strings.title,
+        debugShowCheckedModeBanner: true,
+        // Theme
+        themeMode: context.read<ThemeStore>().activeTheme,
+        theme: Themes.light,
+        darkTheme: Themes.dark,
+        // Locale
+        locale: Strings.locale,
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
+        // Pages
+        initialRoute: rt.Routes.home,
+        onGenerateRoute: rt.Router.generateRoute,
+      );
+    });
   }
 }

@@ -214,5 +214,5 @@ class Nothing extends StatelessWidget {
   const Nothing({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) => const SizedBox();
+  Widget build(BuildContext context) => const SizedBox.shrink();
 }

@@ -25,6 +25,22 @@ mixin _$LanguageStore on _LanguageStore, Store {
     });
   }
 
+  late final _$changingLanguageAtom =
+      Atom(name: '_LanguageStore.changingLanguage', context: context);
+
+  @override
+  bool get changingLanguage {
+    _$changingLanguageAtom.reportRead();
+    return super.changingLanguage;
+  }
+
+  @override
+  set changingLanguage(bool value) {
+    _$changingLanguageAtom.reportWrite(value, super.changingLanguage, () {
+      super.changingLanguage = value;
+    });
+  }
+
   late final _$getActiveLanguageAsyncAction =
       AsyncAction('_LanguageStore.getActiveLanguage', context: context);
 
@@ -45,7 +61,8 @@ mixin _$LanguageStore on _LanguageStore, Store {
   @override
   String toString() {
     return '''
-activeLanguage: ${activeLanguage}
+activeLanguage: ${activeLanguage},
+changingLanguage: ${changingLanguage}
     ''';
   }
 }
