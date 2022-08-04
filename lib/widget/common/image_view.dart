@@ -27,7 +27,7 @@ class ImageView extends StatelessWidget {
     final img = NetworkImage(src)
       ..resolve(const ImageConfiguration())
           .addListener(ImageStreamListener((_, __) {
-        if (onFinish != null) onFinish!();
+        onFinish?.call();
       }));
     return Image(
       image: img,

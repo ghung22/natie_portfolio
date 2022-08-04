@@ -263,10 +263,9 @@ class ProjectBanner extends StatelessWidget {
 class BioBanner extends StatelessWidget {
   final Bio bio;
   final VoidCallback? onAction;
-  late final Widget _leftSide;
-  late final Widget _rightSide;
 
   final AnimationStore _introAni = AnimationStore();
+  final AnimationStore _introSecondAni = AnimationStore();
 
   BioBanner({
     Key? key,
@@ -274,35 +273,52 @@ class BioBanner extends StatelessWidget {
     this.onAction,
   }) : super(key: key);
 
-  void _initLeftSide() {
-    _leftSide = PaddedColumn(
+  @override
+  Widget build(BuildContext context) {
+    if (bio.isEmpty) return const Nothing();
+    Widget leftSide = PaddedColumn(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       padding:
-          const EdgeInsets.symmetric(vertical: Dimens.bannerContentPadding),
+      const EdgeInsets.symmetric(vertical: Dimens.bannerContentPadding),
       children: [
         Observer(builder: (context) {
           Strings.isEn;
-          return TextView(
-            text: AppLocalizations.of(context)!.welcome(bio.name),
-            style: Styles.bannerTitleStyle,
-            softWrap: true,
+          return FadeSlideAnimation(
+            offset: _introAni.willStart
+                ? Offset.zero
+                : const Offset(0, Dimens.bannerSlideOffset),
+            opacity: _introAni.willStart ? 1 : 0,
+            duration: Vars.animationSluggish,
+            curve: Curves.easeOut,
+            child: AnimatedTypingText(
+              text: AppLocalizations.of(context)!.welcome(bio.name),
+              style: Styles.bannerTitleStyle,
+              softWrap: true,
+              onDone: () => _introSecondAni.start(),
+            ),
           );
         }),
         Observer(builder: (context) {
-          return TextView(
-            text: Strings.isEn ? bio.description : bio.descriptionVi,
-            style: Styles.bannerDescriptionStyle,
-            spaced: true,
-            softWrap: true,
+          return FadeSlideAnimation(
+            offset: _introSecondAni.willStart
+                ? Offset.zero
+                : const Offset(0, Dimens.bannerSlideOffset),
+            opacity: _introSecondAni.willStart ? 1 : 0,
+            duration: Vars.animationSluggish,
+            curve: Curves.easeOut,
+            child: TextView(
+              text: Strings.isEn ? bio.description : bio.descriptionVi,
+              style: Styles.bannerDescriptionStyle,
+              spaced: true,
+              softWrap: true,
+            ),
           );
         }),
       ],
     );
-  }
 
-  void _initRightSide(BuildContext context) {
-    _rightSide = Align(
+    Widget rightSide = Align(
       alignment: Alignment.bottomRight,
       child: Padding(
         padding: const EdgeInsets.only(
@@ -313,11 +329,11 @@ class BioBanner extends StatelessWidget {
           child: DecoratedBox(
             decoration: ShapeDecoration(
                 shape: CircleBorder(
-              side: BorderSide(
-                color: Theme.of(context).scaffoldBackgroundColor,
-                width: Dimens.bioAvatarBorderSize,
-              ),
-            )),
+                  side: BorderSide(
+                    color: Theme.of(context).scaffoldBackgroundColor,
+                    width: Dimens.bioAvatarBorderSize,
+                  ),
+                )),
             child: Padding(
               padding: const EdgeInsets.all(Dimens.bioAvatarPadding),
               child: CircleImageView(
@@ -331,28 +347,12 @@ class BioBanner extends StatelessWidget {
         ),
       ),
     );
-  }
 
-  @override
-  Widget build(BuildContext context) {
-    if (bio.isEmpty) return const Nothing();
-    _initLeftSide();
-    _initRightSide(context);
     return BannerItem(
       title: null,
       description: null,
       primary: bio.colors.first,
-      leftSide: Observer(builder: (context) {
-        return FadeSlideAnimation(
-          offset: _introAni.willStart
-              ? Offset.zero
-              : const Offset(0, Dimens.bannerSlideOffset),
-          opacity: _introAni.willStart ? 1 : 0,
-          duration: Vars.animationSluggish,
-          curve: Curves.easeOut,
-          child: _leftSide,
-        );
-      }),
+      leftSide: leftSide,
       rightSide: Observer(builder: (context) {
         return FadeSlideAnimation(
           offset: _introAni.willStart
@@ -361,7 +361,7 @@ class BioBanner extends StatelessWidget {
           opacity: _introAni.willStart ? 1 : 0,
           duration: Vars.animationSluggish,
           curve: Curves.easeOut,
-          child: _rightSide,
+          child: rightSide,
         );
       }),
     );
