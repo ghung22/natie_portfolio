@@ -5,6 +5,7 @@ class Vars {
 
   static void init(BuildContext context) => _context = context;
 
+  static const animationFlash = Duration(milliseconds: 75);
   static const animationFast = Duration(milliseconds: 300);
   static const animationSlow = Duration(milliseconds: 600);
   static const animationSluggish = Duration(milliseconds: 1200);
