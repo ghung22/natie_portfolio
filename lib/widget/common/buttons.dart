@@ -38,8 +38,8 @@ class IconBtn extends StatelessWidget {
           padding: EdgeInsets.zero,
           shape: const CircleBorder(),
         ),
-        child: child,
         onPressed: onPressed,
+        child: child,
       ),
     );
   }

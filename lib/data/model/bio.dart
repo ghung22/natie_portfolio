@@ -52,7 +52,11 @@ class Bio {
 
   bool get isNotEmpty => !isEmpty;
 
-  List<Color> get colors => colorHexes.map((c) => Color(c)).toList();
+  List<Color> get colors => colorHexes.map((c) {
+    var col = Color(c);
+    if (col.opacity == 0) col = col.withOpacity(1);
+    return col;
+  }).toList();
 
   DateTime get birthday =>
       DateTime.fromMillisecondsSinceEpoch(birthdayTimestamp);

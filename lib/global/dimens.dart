@@ -9,6 +9,11 @@ class Dimens {
   static const bannerPaddingVertical = 28.0;
   static const bannerSlideOffset = .1;
 
+  static const bioAvatarBorderSize = 4.0;
+  static const bioAvatarPadding = bioAvatarBorderSize + 4;
+  static const bioRightSidePadding = bioAvatarBorderSize * 2;
+  static const bioHeight = bannerHeight / 2;
+
   static const btnElevation = 5.0;
   static const btnPaddingHorizontal = 24.0;
   static const btnPaddingVertical = 8.0;
@@ -24,7 +29,7 @@ class Dimens {
 
   static const iconBtnSize = 20.0;
 
-  static const pageContentMaxWidth = 720.0;
+  static const pageContentMaxWidth = 840.0;
   static const pageContentPaddingHorizontal = 12.0;
   static const pageContentPaddingVertical = 12.0;
 
