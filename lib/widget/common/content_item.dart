@@ -19,6 +19,7 @@ import 'text_view.dart';
 class CardItem extends StatefulWidget {
   final Widget child;
   final EdgeInsets padding;
+  final Color? color;
   final VoidCallback? onPressed;
   final bool hoverFeedback;
   final double hoverScale;
@@ -28,6 +29,7 @@ class CardItem extends StatefulWidget {
     Key? key,
     required this.child,
     this.padding = const EdgeInsets.all(Dimens.cardItemPadding),
+    this.color,
     this.onPressed,
     this.hoverFeedback = false,
     this.hoverScale = 1.2,
@@ -47,6 +49,7 @@ class _CardItemState extends State<CardItem> {
       onPressed: widget.onPressed,
       feedback: widget.hoverFeedback,
       child: Card(
+        color: widget.color,
         child: Padding(
           padding: widget.padding,
           child: widget.child,
@@ -193,21 +196,6 @@ class _FunctionalityItemState extends State<FunctionalityItem> {
 }
 
 // endregion
-
-/// Wrap a stateless widget for the observer to work
-class StatefulWrapper extends StatefulWidget {
-  final Widget child;
-
-  const StatefulWrapper({Key? key, required this.child}) : super(key: key);
-
-  @override
-  State<StatefulWrapper> createState() => _StatefulWrapperState();
-}
-
-class _StatefulWrapperState extends State<StatefulWrapper> {
-  @override
-  Widget build(BuildContext context) => widget.child;
-}
 
 /// An empty const widget to replace Container()
 class Nothing extends StatelessWidget {

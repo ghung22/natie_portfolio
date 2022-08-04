@@ -1,3 +1,5 @@
+import 'dart:html';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -82,10 +84,6 @@ class _HomePageState extends State<HomePage> with PostFrameMixin {
   void _initBody() {
     _body = SingleChildScrollView(
       controller: _scrollController,
-      padding: const EdgeInsets.symmetric(
-        horizontal: Dimens.pageContentPaddingHorizontal,
-        vertical: Dimens.pageContentPaddingVertical,
-      ),
       child: Observer(builder: (context) {
         return PaddedColumn(
           padding:
@@ -93,21 +91,35 @@ class _HomePageState extends State<HomePage> with PostFrameMixin {
           paddingStartAndEnd: false,
           children: [
             // Welcome banner
-            BioBanner(bio: _bioStore!.bio),
+            IgnorePadding(child: BioBanner(bio: _bioStore!.bio)),
+            const SizedBox(height: Dimens.projectItemPadding),
 
             // Featured projects
-            ..._projectStore!.projects.featured
-                .map((p) => ConstrainedBox(
-                      constraints: const BoxConstraints(
-                          maxWidth: Dimens.pageContentMaxWidth),
-                      child: ProjectBanner(
-                        project: p,
-                        onAction: () => Navigator.of(context)
-                            .pushNamed(Routes.project, arguments: p),
-                        isHomePage: true,
-                      ),
-                    ))
-                .toList(),
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                  horizontal: Dimens.pageContentPaddingHorizontal),
+              child: Wrap(
+                spacing: Dimens.projectItemPadding,
+                runSpacing: Dimens.projectItemPadding,
+                alignment: WrapAlignment.center,
+                children: _projectStore!.projects.featured
+                    .map((p) => CardItem(
+                          color: p.color,
+                          child: ConstrainedBox(
+                            constraints: const BoxConstraints(
+                                maxWidth: Dimens.pageContentMaxWidth),
+                            child: ProjectBanner(
+                              project: p,
+                              onAction: () => Navigator.of(context)
+                                  .pushNamed(Routes.project, arguments: p),
+                              isHomePage: true,
+                            ),
+                          ),
+                        ))
+                    .toList(),
+              ),
+            ),
+            const SizedBox(height: Dimens.pageContentPaddingHorizontal),
           ],
         );
       }),
@@ -149,7 +161,10 @@ class _HomePageState extends State<HomePage> with PostFrameMixin {
       key: _scaffoldKey,
       appBar: _appBar,
       drawer: _drawer,
-      body: _body,
+      body: SizedBox(
+        width: window.screen?.width?.toDouble(),
+        child: _body,
+      ),
     );
   }
 }

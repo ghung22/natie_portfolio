@@ -115,6 +115,7 @@ class _ProjectPageState extends State<ProjectPage> with PostFrameMixin {
                 Wrap(
                   spacing: Dimens.projectDetailsTechPaddingHorizontal,
                   runSpacing: Dimens.projectDetailsTechPaddingVertical,
+                  alignment: WrapAlignment.center,
                   children: _p.tech.split(',').map((tech) {
                     final src = Vars.assets[tech] ?? '';
                     return SvgImageView(src,

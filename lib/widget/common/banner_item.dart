@@ -32,8 +32,8 @@ import 'text_view.dart';
 /// * [rightSide]   : The right side of the banner, overrides the image widget
 /// --------------------------------------------------------------------------
 class BannerItem extends StatefulWidget {
-  final Widget title;
-  final Widget description;
+  final Widget? title;
+  final Widget? description;
   final String imageUrl;
   final Color? primary;
   final Widget? action;
@@ -58,8 +58,8 @@ class BannerItem extends StatefulWidget {
 }
 
 class _BannerItemState extends State<BannerItem> with PostFrameMixin {
-  late Widget _title;
-  late Widget _description;
+  late Widget? _title;
+  late Widget? _description;
   late String _imageUrl;
   late Color _primary;
   late Widget? _action;
@@ -81,59 +81,50 @@ class _BannerItemState extends State<BannerItem> with PostFrameMixin {
     _onAction = widget.onAction;
 
     postFrame(() {
-      _initLeftSide();
-      _initRightSide();
+      if (widget.leftSide == null) _initLeftSide();
+      if (widget.rightSide == null) _initRightSide();
     });
   }
 
   void _initLeftSide() {
-    _leftSide = Padding(
-      padding: const EdgeInsets.symmetric(
-        horizontal: Dimens.bannerPaddingHorizontal,
-        vertical: Dimens.bannerPaddingVertical,
-      ),
-      child: ConstrainedBox(
-        constraints: const BoxConstraints(
-          maxWidth: Dimens.bannerContentLeftMaxWidth,
-        ),
-        child: PaddedColumn(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          padding:
-              const EdgeInsets.symmetric(vertical: Dimens.bannerContentPadding),
-          children: [
-            Material(
-              color: Colors.transparent,
-              textStyle: Styles.bannerTitleStyle
-                  .copyWith(color: MoreColors.onColor(_primary)),
-              child: _title,
-            ),
-            Material(
-              color: Colors.transparent,
-              textStyle: Styles.bannerDescriptionStyle
-                  .copyWith(color: MoreColors.onColor(_primary)),
-              child: _description,
-            ),
-            if (_action != null)
-              Padding(
-                padding: const EdgeInsets.all(Dimens.bannerActionOffset),
-                child: ElevatedBtn(
-                  padding: const EdgeInsets.symmetric(
-                    vertical: Dimens.bannerActionPaddingVertical,
-                    horizontal: Dimens.bannerActionPaddingHorizontal,
-                  ),
-                  onPressed: _onAction,
-                  color: MoreColors.lighter(_primary),
-                  child: Material(
-                    color: Colors.transparent,
-                    textStyle: Styles.bannerActionStyle,
-                    child: _action,
-                  ),
-                ),
+    _leftSide = PaddedColumn(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      padding:
+          const EdgeInsets.symmetric(vertical: Dimens.bannerContentPadding),
+      children: [
+        if (_title != null)
+          Material(
+            color: Colors.transparent,
+            textStyle: Styles.bannerTitleStyle
+                .copyWith(color: MoreColors.onColor(_primary)),
+            child: _title,
+          ),
+        if (_description != null)
+          Material(
+            color: Colors.transparent,
+            textStyle: Styles.bannerDescriptionStyle
+                .copyWith(color: MoreColors.onColor(_primary)),
+            child: _description,
+          ),
+        if (_action != null)
+          Padding(
+            padding: const EdgeInsets.all(Dimens.bannerActionOffset),
+            child: ElevatedBtn(
+              padding: const EdgeInsets.symmetric(
+                vertical: Dimens.bannerActionPaddingVertical,
+                horizontal: Dimens.bannerActionPaddingHorizontal,
               ),
-          ],
-        ),
-      ),
+              onPressed: _onAction,
+              color: MoreColors.lighter(_primary),
+              child: Material(
+                color: Colors.transparent,
+                textStyle: Styles.bannerActionStyle,
+                child: _action,
+              ),
+            ),
+          ),
+      ],
     );
   }
 
@@ -158,16 +149,26 @@ class _BannerItemState extends State<BannerItem> with PostFrameMixin {
           if (!_introAni.willStart) _introAni.start();
         }
       },
-      child: Container(
-        width: double.infinity,
-        height: Dimens.bannerHeight,
-        color: _primary,
-        child: Observer(builder: (context) {
-          return Stack(
-            children: [
-              widget.rightSide != null
-                  ? widget.rightSide!
-                  : FadeSlideAnimation(
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          Container(
+            width: double.infinity,
+            height: Dimens.bannerHeight,
+            color: _primary,
+          ),
+          ConstrainedBox(
+            constraints: const BoxConstraints(
+                minHeight: Dimens.bannerHeight,
+                maxHeight: Dimens.bannerHeight,
+                maxWidth: Dimens.pageContentMaxWidth),
+            child: Stack(
+              children: [
+                // Right side below everything
+                Builder(builder: (context) {
+                  if (widget.rightSide != null) return widget.rightSide!;
+                  return Observer(builder: (context) {
+                    return FadeSlideAnimation(
                       offset: _introAni.willStart
                           ? Offset.zero
                           : const Offset(Dimens.bannerSlideOffset, 0),
@@ -175,21 +176,40 @@ class _BannerItemState extends State<BannerItem> with PostFrameMixin {
                       duration: Vars.animationSluggish,
                       curve: Curves.easeOut,
                       child: _rightSide,
+                    );
+                  });
+                }),
+
+                // Left side, on top of the right
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: Dimens.bannerPaddingHorizontal,
+                    vertical: Dimens.bannerPaddingVertical,
+                  ),
+                  child: ConstrainedBox(
+                    constraints: const BoxConstraints(
+                      maxWidth: Dimens.bannerContentLeftMaxWidth,
                     ),
-              widget.leftSide != null
-                  ? widget.leftSide!
-                  : FadeSlideAnimation(
-                offset: _introAni.willStart
-                    ? Offset.zero
-                    : const Offset(-Dimens.bannerSlideOffset, 0),
-                opacity: _introAni.willStart ? 1 : 0,
-                duration: Vars.animationSluggish,
-                curve: Curves.easeOut,
-                child: _leftSide,
-              ),
-            ],
-          );
-        }),
+                    child: Builder(builder: (context) {
+                      if (widget.leftSide != null) return widget.leftSide!;
+                      return Observer(builder: (context) {
+                        return FadeSlideAnimation(
+                          offset: _introAni.willStart
+                              ? Offset.zero
+                              : const Offset(-Dimens.bannerSlideOffset, 0),
+                          opacity: _introAni.willStart ? 1 : 0,
+                          duration: Vars.animationSluggish,
+                          curve: Curves.easeOut,
+                          child: _leftSide,
+                        );
+                      });
+                    }),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -243,39 +263,107 @@ class ProjectBanner extends StatelessWidget {
 class BioBanner extends StatelessWidget {
   final Bio bio;
   final VoidCallback? onAction;
+  late final Widget _leftSide;
+  late final Widget _rightSide;
 
-  const BioBanner({
+  final AnimationStore _introAni = AnimationStore();
+
+  BioBanner({
     Key? key,
     required this.bio,
     this.onAction,
   }) : super(key: key);
 
+  void _initLeftSide() {
+    _leftSide = PaddedColumn(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      padding:
+          const EdgeInsets.symmetric(vertical: Dimens.bannerContentPadding),
+      children: [
+        Observer(builder: (context) {
+          Strings.isEn;
+          return TextView(
+            text: AppLocalizations.of(context)!.welcome(bio.name),
+            style: Styles.bannerTitleStyle,
+            softWrap: true,
+          );
+        }),
+        Observer(builder: (context) {
+          return TextView(
+            text: Strings.isEn ? bio.description : bio.descriptionVi,
+            style: Styles.bannerDescriptionStyle,
+            spaced: true,
+            softWrap: true,
+          );
+        }),
+      ],
+    );
+  }
+
+  void _initRightSide(BuildContext context) {
+    _rightSide = Align(
+      alignment: Alignment.bottomRight,
+      child: Padding(
+        padding: const EdgeInsets.only(
+            right: Dimens.bioRightSidePadding,
+            bottom: Dimens.bioRightSidePadding),
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxHeight: Dimens.bioHeight),
+          child: DecoratedBox(
+            decoration: ShapeDecoration(
+                shape: CircleBorder(
+              side: BorderSide(
+                color: Theme.of(context).scaffoldBackgroundColor,
+                width: Dimens.bioAvatarBorderSize,
+              ),
+            )),
+            child: Padding(
+              padding: const EdgeInsets.all(Dimens.bioAvatarPadding),
+              child: CircleImageView(
+                bio.avatarUrl,
+                onFinish: () {
+                  if (!_introAni.willStart) _introAni.start();
+                },
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     if (bio.isEmpty) return const Nothing();
+    _initLeftSide();
+    _initRightSide(context);
     return BannerItem(
-      title: Observer(builder: (context) {
-        Strings.isEn;
-        return TextView(
-          text: AppLocalizations.of(context)!.welcome(bio.name),
-          softWrap: true,
+      title: null,
+      description: null,
+      primary: bio.colors.first,
+      leftSide: Observer(builder: (context) {
+        return FadeSlideAnimation(
+          offset: _introAni.willStart
+              ? Offset.zero
+              : const Offset(0, Dimens.bannerSlideOffset),
+          opacity: _introAni.willStart ? 1 : 0,
+          duration: Vars.animationSluggish,
+          curve: Curves.easeOut,
+          child: _leftSide,
         );
       }),
-      description: Observer(builder: (context) {
-        return TextView(
-          text: Strings.isEn ? bio.description : bio.descriptionVi,
-          spaced: true,
-          softWrap: true,
+      rightSide: Observer(builder: (context) {
+        return FadeSlideAnimation(
+          offset: _introAni.willStart
+              ? Offset.zero
+              : const Offset(-Dimens.bannerSlideOffset, 0),
+          opacity: _introAni.willStart ? 1 : 0,
+          duration: Vars.animationSluggish,
+          curve: Curves.easeOut,
+          child: _rightSide,
         );
       }),
-      imageUrl: bio.avatarUrl,
-      // primary: bio.colors,
-      primary: Colors.white,
-      action: Observer(builder: (context) {
-        Strings.isEn;
-        return TextView(text: AppLocalizations.of(context)!.details);
-      }),
-      onAction: onAction,
     );
   }
 }
