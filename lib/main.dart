@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:natie_portfolio/global/debug.dart';
 import 'package:provider/provider.dart';
 
 import 'data/firebase/firestore.dart';
@@ -20,6 +21,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  Debug.log('App started at ${DateTime.now()}');
   runApp(MultiProvider(
     providers: [
       Provider<ThemeStore>(create: (_) => ThemeStore()),
@@ -61,7 +63,7 @@ class NatiePortfolio extends StatelessWidget {
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
         // Pages
-        initialRoute: rt.Routes.home,
+        initialRoute: Debug.isProduction ? rt.Routes.home : rt.Routes.debug,
         onGenerateRoute: rt.Router.generateRoute,
       );
     });

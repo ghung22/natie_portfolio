@@ -1,3 +1,4 @@
+// ignore: avoid_web_libraries_in_flutter
 import 'dart:html';
 
 import 'package:flutter/cupertino.dart';
@@ -8,8 +9,10 @@ import 'package:natie_portfolio/global/mixin.dart';
 import 'package:natie_portfolio/global/router.dart';
 import 'package:natie_portfolio/global/strings.dart';
 import 'package:natie_portfolio/global/vars.dart';
+import 'package:natie_portfolio/store/common/animation_store.dart';
 import 'package:natie_portfolio/store/data/bio_store.dart';
 import 'package:natie_portfolio/store/data/project_store.dart';
+import 'package:natie_portfolio/widget/common/animated_view.dart';
 import 'package:natie_portfolio/widget/common/banner_item.dart';
 import 'package:natie_portfolio/widget/common/buttons.dart';
 import 'package:natie_portfolio/widget/common/content_item.dart';
@@ -32,6 +35,7 @@ class _HomePageState extends State<HomePage> with PostFrameMixin {
   Widget _drawer = const Nothing();
 
   final _scrollController = ScrollController();
+  final _introAni = AnimationStore();
   ProjectStore? _projectStore;
   BioStore? _bioStore;
 
@@ -45,6 +49,7 @@ class _HomePageState extends State<HomePage> with PostFrameMixin {
       _initBody();
       _initDrawer();
       setState(() {});
+      _introAni.start();
     });
   }
 
@@ -95,6 +100,8 @@ class _HomePageState extends State<HomePage> with PostFrameMixin {
             const SizedBox(height: Dimens.projectItemPadding),
 
             // Featured projects
+            TextView.header(
+                text: AppLocalizations.of(context)!.featured_projects),
             Padding(
               padding: const EdgeInsets.symmetric(
                   horizontal: Dimens.pageContentPaddingHorizontal),
@@ -163,7 +170,14 @@ class _HomePageState extends State<HomePage> with PostFrameMixin {
       drawer: _drawer,
       body: SizedBox(
         width: window.screen?.width?.toDouble(),
-        child: _body,
+        child: AnimatedFadeSlide(
+            offset: _introAni.willStart
+                ? Offset.zero
+                : const Offset(0, -Dimens.bannerSlideOffset),
+            opacity: _introAni.willStart ? 1 : 0,
+            duration: Vars.animationSluggish,
+            curve: Curves.easeOut,
+            child: _body),
       ),
     );
   }

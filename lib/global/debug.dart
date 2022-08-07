@@ -3,13 +3,16 @@
 import 'package:flutter/foundation.dart';
 
 class Debug {
+  static bool get isProduction => Uri.base.path.contains('natie-portfolio');
+
+  static bool get isTesting => !isProduction;
+
   static void log(
     Object message, {
     bool useDebugPrint = false,
     String caller = 'App',
   }) {
-    final domain = Uri.base.path;
-    if (domain.contains('natie-portfolio')) return;
+    if (isProduction) return;
     if (useDebugPrint) {
       debugPrint('$caller: $message');
     } else {
