@@ -168,7 +168,7 @@ class _BannerItemState extends State<BannerItem> with PostFrameMixin {
                 Builder(builder: (context) {
                   if (widget.rightSide != null) return widget.rightSide!;
                   return Observer(builder: (context) {
-                    return FadeSlideAnimation(
+                    return AnimatedFadeSlide(
                       offset: _introAni.willStart
                           ? Offset.zero
                           : const Offset(Dimens.bannerSlideOffset, 0),
@@ -193,7 +193,7 @@ class _BannerItemState extends State<BannerItem> with PostFrameMixin {
                     child: Builder(builder: (context) {
                       if (widget.leftSide != null) return widget.leftSide!;
                       return Observer(builder: (context) {
-                        return FadeSlideAnimation(
+                        return AnimatedFadeSlide(
                           offset: _introAni.willStart
                               ? Offset.zero
                               : const Offset(-Dimens.bannerSlideOffset, 0),
@@ -280,11 +280,11 @@ class BioBanner extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       padding:
-      const EdgeInsets.symmetric(vertical: Dimens.bannerContentPadding),
+          const EdgeInsets.symmetric(vertical: Dimens.bannerContentPadding),
       children: [
         Observer(builder: (context) {
           Strings.isEn;
-          return FadeSlideAnimation(
+          return AnimatedFadeSlide(
             offset: _introAni.willStart
                 ? Offset.zero
                 : const Offset(0, Dimens.bannerSlideOffset),
@@ -300,7 +300,7 @@ class BioBanner extends StatelessWidget {
           );
         }),
         Observer(builder: (context) {
-          return FadeSlideAnimation(
+          return AnimatedFadeSlide(
             offset: _introSecondAni.willStart
                 ? Offset.zero
                 : const Offset(0, Dimens.bannerSlideOffset),
@@ -312,6 +312,39 @@ class BioBanner extends StatelessWidget {
               style: Styles.bannerDescriptionStyle,
               spaced: true,
               softWrap: true,
+            ),
+          );
+        }),
+        const SizedBox(height: Dimens.bannerContentPadding),
+        Observer(builder: (context) {
+          return AnimatedFadeSlide(
+            offset: _introSecondAni.willStart
+                ? Offset.zero
+                : const Offset(0, Dimens.bannerSlideOffset),
+            opacity: _introSecondAni.willStart ? 1 : 0,
+            duration: Vars.animationSluggish,
+            curve: Curves.easeOut,
+            child: PaddedRow(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              padding: const EdgeInsets.symmetric(
+                  horizontal: Dimens.bioScorePadding),
+              paddingStartAndEnd: false,
+              children: [
+                ...bio.scores.map((s) {
+                  return AnimatedCountingText(
+                    value: s.score,
+                    color: Colors.white,
+                    dimension: Dimens.bioScoreSize,
+                    style: Styles.scoreValueStyle,
+                    spaced: true,
+                    topSide: TextView(
+                      text: s.name,
+                      style: Styles.scoreNameStyle,
+                      spaced: true,
+                    ),
+                  );
+                }),
+              ],
             ),
           );
         }),
@@ -327,13 +360,13 @@ class BioBanner extends StatelessWidget {
         child: ConstrainedBox(
           constraints: const BoxConstraints(maxHeight: Dimens.bioHeight),
           child: DecoratedBox(
-            decoration: ShapeDecoration(
+            decoration: const ShapeDecoration(
                 shape: CircleBorder(
-                  side: BorderSide(
-                    color: Theme.of(context).scaffoldBackgroundColor,
-                    width: Dimens.bioAvatarBorderSize,
-                  ),
-                )),
+              side: BorderSide(
+                color: Colors.white,
+                width: Dimens.bioAvatarBorderSize,
+              ),
+            )),
             child: Padding(
               padding: const EdgeInsets.all(Dimens.bioAvatarPadding),
               child: CircleImageView(
@@ -354,7 +387,7 @@ class BioBanner extends StatelessWidget {
       primary: bio.colors.first,
       leftSide: leftSide,
       rightSide: Observer(builder: (context) {
-        return FadeSlideAnimation(
+        return AnimatedFadeSlide(
           offset: _introAni.willStart
               ? Offset.zero
               : const Offset(-Dimens.bannerSlideOffset, 0),

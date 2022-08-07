@@ -6,8 +6,8 @@ import 'package:natie_portfolio/store/common/animation_store.dart';
 import 'package:natie_portfolio/store/global/language_store.dart';
 import 'package:provider/provider.dart';
 
-class FadeSlideAnimation extends ImplicitlyAnimatedWidget {
-  const FadeSlideAnimation({
+class AnimatedFadeSlide extends ImplicitlyAnimatedWidget {
+  const AnimatedFadeSlide({
     Key? key,
     required this.child,
     required this.offset,
@@ -23,12 +23,12 @@ class FadeSlideAnimation extends ImplicitlyAnimatedWidget {
   final double opacity;
 
   @override
-  ImplicitlyAnimatedWidgetState<FadeSlideAnimation> createState() =>
-      _FadeSlideAnimationState();
+  ImplicitlyAnimatedWidgetState<AnimatedFadeSlide> createState() =>
+      _AnimatedFadeSlideState();
 }
 
-class _FadeSlideAnimationState
-    extends ImplicitlyAnimatedWidgetState<FadeSlideAnimation> {
+class _AnimatedFadeSlideState
+    extends ImplicitlyAnimatedWidgetState<AnimatedFadeSlide> {
   Tween<Offset>? _offset;
   late Animation<Offset> _offsetAnimation;
   Tween<double>? _opacity;

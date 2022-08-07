@@ -28,7 +28,7 @@ class CardItem extends StatefulWidget {
   const CardItem({
     Key? key,
     required this.child,
-    this.padding = const EdgeInsets.all(Dimens.cardItemPadding),
+    this.padding = const EdgeInsets.all(Dimens.cardPadding),
     this.color,
     this.onPressed,
     this.hoverFeedback = false,
@@ -183,7 +183,7 @@ class _FunctionalityItemState extends State<FunctionalityItem> {
           if (!_visibleAni.willStart) _visibleAni.start();
         }
       },
-      child: FadeSlideAnimation(
+      child: AnimatedFadeSlide(
         offset: _visibleAni.willStart
             ? Offset.zero
             : const Offset(0, -Dimens.projectDetailsFuncOffset),

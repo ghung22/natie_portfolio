@@ -41,6 +41,17 @@ class Styles {
   static const TextStyle bannerActionStyle = TextStyle(fontSize: 16);
 
   static const TextStyle iconBtnErrorStyle = TextStyle(fontFamily: 'monospace');
+
+  // Content styles
+  static const TextStyle scoreNameStyle = TextStyle(
+    fontFamily: Themes.fontDisplay,
+    fontSize: 16,
+    fontWeight: FontWeight.w900,
+  );
+  static const TextStyle scoreValueStyle = TextStyle(
+    fontFamily: Themes.fontDisplay,
+    fontSize: 32,
+  );
 }
 
 class MoreColors {
