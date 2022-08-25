@@ -30,7 +30,7 @@ class ProjectPage extends StatefulWidget {
 class _ProjectPageState extends State<ProjectPage> with PostFrameMixin {
   late Project _p;
 
-  PreferredSizeWidget _appBar = WebAppBar();
+  PreferredSizeWidget _appBar = const WebAppBar();
   Widget _body = const Nothing();
 
   final AnimationStore _introAni = AnimationStore();

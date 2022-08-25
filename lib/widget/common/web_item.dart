@@ -36,7 +36,7 @@ class WebAppBar extends StatelessWidget implements PreferredSizeWidget {
         return Stack(
           children: [
             AppBar(
-              leading: Dimens.isSmall ? leading : null,
+              leading: Dimens.isMedium ? leading : null,
               automaticallyImplyLeading: automaticallyImplyLeading,
               title: title,
               actions: actions,
@@ -47,7 +47,7 @@ class WebAppBar extends StatelessWidget implements PreferredSizeWidget {
               bottomOpacity: bottomOpacity,
               leadingWidth: leadingWidth,
             ),
-            if (!Dimens.isSmall && leading != null)
+            if (!Dimens.isMedium && leading != null)
               Align(
                 alignment: Alignment.centerLeft,
                 child: ConstrainedBox(

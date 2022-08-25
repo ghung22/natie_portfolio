@@ -43,7 +43,7 @@ class Bio {
     this.descriptionVi = '',
     this.avatarUrl = '',
     this.birthdayTimestamp = 0,
-    this.colorHexes = const [0x000000],
+    this.colorHexes = const [0x00000000],
     this.imageUrls = const [],
     this.scores = const [],
   });
@@ -52,11 +52,7 @@ class Bio {
 
   bool get isNotEmpty => !isEmpty;
 
-  List<Color> get colors => colorHexes.map((c) {
-    var col = Color(c);
-    if (col.opacity == 0) col = col.withOpacity(1);
-    return col;
-  }).toList();
+  List<Color> get colors => colorHexes.map((c) => Color(c)).toList();
 
   DateTime get birthday =>
       DateTime.fromMillisecondsSinceEpoch(birthdayTimestamp);
