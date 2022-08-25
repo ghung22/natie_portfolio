@@ -31,7 +31,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> with PostFrameMixin {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
-  PreferredSizeWidget _appBar = WebAppBar();
+  PreferredSizeWidget _appBar = const WebAppBar();
   Widget _body = const Nothing();
   Widget _drawer = const Nothing();
 

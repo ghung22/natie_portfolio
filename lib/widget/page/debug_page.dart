@@ -28,7 +28,7 @@ class DebugPage extends StatefulWidget {
 }
 
 class _DebugPageState extends State<DebugPage> with PostFrameMixin {
-  PreferredSizeWidget _appBar = WebAppBar();
+  PreferredSizeWidget _appBar = const WebAppBar();
   Widget _body = const Nothing();
 
   ProjectStore? _projectStore;

@@ -17,7 +17,7 @@ Bio _$BioFromJson(Map<String, dynamic> json) => Bio(
       colorHexes: (json['colorHexes'] as List<dynamic>?)
               ?.map((e) => e as int)
               .toList() ??
-          const [0x000000],
+          const [0x00000000],
       imageUrls: (json['imageUrls'] as List<dynamic>?)
               ?.map((e) => e as String)
               .toList() ??

@@ -113,7 +113,7 @@ class Projects {
     _v.addAll(values);
   }
 
-  Projects copyWith({List<Project>? values}) => Projects(values ?? this._v);
+  Projects copyWith({List<Project>? values}) => Projects(values ?? _v);
 
   @override
   String toString() => jsonEncode(_v).toString();
