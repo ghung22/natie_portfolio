@@ -1,4 +1,34 @@
+import 'package:flutter/material.dart';
+import 'package:natie_portfolio/store/global/dimen_store.dart';
+import 'package:provider/provider.dart';
+
+enum ScreenSize {
+  small,
+  medium,
+  large,
+}
+
 class Dimens {
+  static BuildContext? _context;
+
+  static void init(BuildContext context) => _context = context;
+
+  static ScreenSize get _screenSize {
+    if (_context == null) return ScreenSize.large;
+    final dimenStore = _context!.read<DimenStore>();
+    final size = dimenStore.size;
+    if (size.width < smallScreenWidth) return ScreenSize.small;
+    if (size.width < mediumScreenWidth) return ScreenSize.medium;
+    return ScreenSize.large;
+  }
+
+  static const smallScreenWidth = 600.0;
+  static const mediumScreenWidth = 900.0;
+
+  static bool get isSmall => _screenSize == ScreenSize.small;
+  static bool get isMedium => _screenSize == ScreenSize.medium;
+  static bool get isLarge => _screenSize == ScreenSize.large;
+
   static const bannerActionOffset = 16.0;
   static const bannerActionPaddingHorizontal = 36.0;
   static const bannerActionPaddingVertical = 24.0;
@@ -17,6 +47,7 @@ class Dimens {
   static const bioScorePadding = 24.0;
 
   static const btnElevation = 5.0;
+  static const btnIconPaddingHorizontal = btnPaddingHorizontal / 2;
   static const btnPaddingHorizontal = btnPaddingVertical * 3;
   static const btnPaddingVertical = 8.0;
   static const btnRadius = 30.0;

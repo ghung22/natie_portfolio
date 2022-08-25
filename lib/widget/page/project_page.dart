@@ -16,6 +16,7 @@ import 'package:natie_portfolio/widget/common/content_item.dart';
 import 'package:natie_portfolio/widget/common/image_view.dart';
 import 'package:natie_portfolio/widget/common/list_view.dart';
 import 'package:natie_portfolio/widget/common/text_view.dart';
+import 'package:natie_portfolio/widget/common/web_item.dart';
 
 class ProjectPage extends StatefulWidget {
   final Project project;
@@ -29,7 +30,7 @@ class ProjectPage extends StatefulWidget {
 class _ProjectPageState extends State<ProjectPage> with PostFrameMixin {
   late Project _p;
 
-  PreferredSizeWidget _appBar = AppBar();
+  PreferredSizeWidget _appBar = WebAppBar();
   Widget _body = const Nothing();
 
   final AnimationStore _introAni = AnimationStore();
@@ -46,9 +47,8 @@ class _ProjectPageState extends State<ProjectPage> with PostFrameMixin {
   }
 
   void _initAppBar() {
-    _appBar = AppBar(
+    _appBar = WebAppBar(
       leading: const BackBtn(),
-      centerTitle: true,
       title: Observer(builder: (context) {
         return AnimatedOpacity(
           opacity: _introAni.willStart ? 1 : 0,

@@ -8,6 +8,7 @@ import 'package:natie_portfolio/global/styles.dart';
 import 'package:natie_portfolio/store/global/language_store.dart';
 import 'package:natie_portfolio/store/global/theme_store.dart';
 import 'package:natie_portfolio/widget/common/animated_view.dart';
+import 'package:natie_portfolio/widget/common/text_view.dart';
 import 'package:provider/provider.dart';
 
 import 'content_item.dart';
@@ -18,6 +19,7 @@ class IconBtn extends StatelessWidget {
   final Color? color;
   final String tooltipText;
   final VoidCallback? onPressed;
+  final bool ignoreScreenSize;
 
   const IconBtn({
     Key? key,
@@ -25,23 +27,42 @@ class IconBtn extends StatelessWidget {
     this.color,
     this.tooltipText = '',
     this.onPressed,
+    this.ignoreScreenSize = true,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Tooltip(
-      message: tooltipText,
-      waitDuration: const Duration(seconds: 1),
-      child: TextButton(
+    return Observer(builder: (context) {
+      if (Dimens.isSmall || ignoreScreenSize) {
+        return Tooltip(
+          message: tooltipText,
+          waitDuration: const Duration(seconds: 1),
+          child: TextButton(
+            style: TextButton.styleFrom(
+              primary: color ?? Theme.of(context).colorScheme.onSurface,
+              padding: EdgeInsets.zero,
+              shape: const CircleBorder(),
+            ),
+            onPressed: onPressed,
+            child: child,
+          ),
+        );
+      }
+      return TextButton.icon(
         style: TextButton.styleFrom(
           primary: color ?? Theme.of(context).colorScheme.onSurface,
-          padding: EdgeInsets.zero,
-          shape: const CircleBorder(),
+          padding: const EdgeInsets.symmetric(
+              horizontal: Dimens.btnIconPaddingHorizontal),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(Dimens.btnRadius),
+          ),
+          textStyle: Styles.iconBtnLabelStyle,
         ),
         onPressed: onPressed,
-        child: child,
-      ),
-    );
+        icon: child,
+        label: TextView(text: tooltipText),
+      );
+    });
   }
 }
 
@@ -75,8 +96,9 @@ class TextBtn extends StatelessWidget {
         )),
         textStyle: MaterialStateProperty.all(textStyle),
         splashFactory: hoverFeedback ? null : NoSplash.splashFactory,
-        overlayColor:
-            hoverFeedback ? null : MaterialStateProperty.all(Colors.transparent),
+        overlayColor: hoverFeedback
+            ? null
+            : MaterialStateProperty.all(Colors.transparent),
       ),
       onPressed: onPressed,
       child: child,
@@ -126,6 +148,45 @@ class ElevatedBtn extends StatelessWidget {
     );
   }
 }
+
+// region Leading buttons
+
+class BackBtn extends StatelessWidget {
+  const BackBtn({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Builder(builder: (context) {
+      if (!Navigator.of(context).canPop()) return const Nothing();
+      return IconBtn(
+        tooltipText: AppLocalizations.of(context)!.back,
+        onPressed: () => Navigator.of(context).pop(),
+        ignoreScreenSize: false,
+        child: const Icon(Icons.arrow_back_ios_new),
+      );
+    });
+  }
+}
+
+class NavBtn extends StatelessWidget {
+  final GlobalKey<ScaffoldState> scaffoldKey;
+
+  const NavBtn({Key? key, required this.scaffoldKey}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return IconBtn(
+      tooltipText: AppLocalizations.of(context)!.navigation,
+      onPressed: () => scaffoldKey.currentState!.openDrawer(),
+      ignoreScreenSize: false,
+      child: const Icon(Icons.menu_rounded),
+    );
+  }
+}
+
+// endregion
+
+// region Trailing buttons
 
 class LanguageBtn extends StatelessWidget {
   final enImageUrl = 'https://flagcdn.com/w20/us.png';
@@ -177,18 +238,4 @@ class ThemeBtn extends StatelessWidget {
   }
 }
 
-class BackBtn extends StatelessWidget {
-  const BackBtn({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Builder(builder: (context) {
-      if (!Navigator.of(context).canPop()) return const Nothing();
-      return IconBtn(
-        tooltipText: AppLocalizations.of(context)!.back,
-        child: const Icon(Icons.arrow_back_ios_new),
-        onPressed: () => Navigator.of(context).pop(),
-      );
-    });
-  }
-}
+// endregion

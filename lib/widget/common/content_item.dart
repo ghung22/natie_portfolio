@@ -197,10 +197,21 @@ class _FunctionalityItemState extends State<FunctionalityItem> {
 
 // endregion
 
-/// An empty const widget to replace Container()
+/// An empty widget
 class Nothing extends StatelessWidget {
   const Nothing({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) => const SizedBox.shrink();
+}
+
+/// A container with red background (for testing)
+class RedContainer extends StatelessWidget {
+  final Widget child;
+
+  const RedContainer({Key? key, required this.child}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) =>
+      Container(color: Colors.red, child: child);
 }
