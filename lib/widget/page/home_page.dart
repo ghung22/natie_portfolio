@@ -19,6 +19,7 @@ import 'package:natie_portfolio/widget/common/content_item.dart';
 import 'package:natie_portfolio/widget/common/list_view.dart';
 import 'package:natie_portfolio/global/dimens.dart';
 import 'package:natie_portfolio/widget/common/text_view.dart';
+import 'package:natie_portfolio/widget/common/web_item.dart';
 import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
@@ -30,7 +31,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> with PostFrameMixin {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
-  PreferredSizeWidget _appBar = AppBar();
+  PreferredSizeWidget _appBar = WebAppBar();
   Widget _body = const Nothing();
   Widget _drawer = const Nothing();
 
@@ -54,13 +55,8 @@ class _HomePageState extends State<HomePage> with PostFrameMixin {
   }
 
   void _initAppBar() {
-    _appBar = AppBar(
-      leading: IconBtn(
-        tooltipText: AppLocalizations.of(context)!.navigation,
-        child: const Icon(Icons.menu_rounded),
-        onPressed: () => _scaffoldKey.currentState!.openDrawer(),
-      ),
-      centerTitle: true,
+    _appBar = WebAppBar(
+      leading: NavBtn(scaffoldKey: _scaffoldKey),
       title: Observer(builder: (context) {
         Strings.isEn;
         return TextBtn(

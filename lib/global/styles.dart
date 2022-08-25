@@ -41,6 +41,10 @@ class Styles {
   static const TextStyle bannerActionStyle = TextStyle(fontSize: 16);
 
   static const TextStyle iconBtnErrorStyle = TextStyle(fontFamily: 'monospace');
+  static const TextStyle iconBtnLabelStyle = TextStyle(
+    fontSize: 18,
+    fontWeight: FontWeight.bold,
+  );
 
   // Content styles
   static const TextStyle scoreNameStyle = TextStyle(

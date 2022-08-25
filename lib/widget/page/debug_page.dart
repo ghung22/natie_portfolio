@@ -12,10 +12,12 @@ import 'package:natie_portfolio/global/strings.dart';
 import 'package:natie_portfolio/global/styles.dart';
 import 'package:natie_portfolio/store/data/bio_store.dart';
 import 'package:natie_portfolio/store/data/project_store.dart';
+import 'package:natie_portfolio/store/global/dimen_store.dart';
 import 'package:natie_portfolio/widget/common/buttons.dart';
 import 'package:natie_portfolio/widget/common/content_item.dart';
 import 'package:natie_portfolio/widget/common/list_view.dart';
 import 'package:natie_portfolio/widget/common/text_view.dart';
+import 'package:natie_portfolio/widget/common/web_item.dart';
 import 'package:provider/provider.dart';
 
 class DebugPage extends StatefulWidget {
@@ -26,7 +28,7 @@ class DebugPage extends StatefulWidget {
 }
 
 class _DebugPageState extends State<DebugPage> with PostFrameMixin {
-  PreferredSizeWidget _appBar = AppBar();
+  PreferredSizeWidget _appBar = WebAppBar();
   Widget _body = const Nothing();
 
   ProjectStore? _projectStore;
@@ -45,12 +47,10 @@ class _DebugPageState extends State<DebugPage> with PostFrameMixin {
   }
 
   void _initAppBar() {
-    _appBar = AppBar(
+    _appBar = WebAppBar(
       leading: const BackBtn(),
-      centerTitle: true,
       title: Observer(builder: (context) {
-        Strings.isEn;
-        return TextView(textCallback: () => Strings.title);
+        return TextView(textCallback: () => '${context.read<DimenStore>().size}');
       }),
       actions: const [LanguageBtn(), ThemeBtn()],
     );
