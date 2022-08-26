@@ -123,6 +123,7 @@ class AnimatedTypingText extends StatefulWidget {
   final bool softWrap;
 
   // Animation
+  final bool disableAnimation;
   final bool showCursor;
   final bool blinkingCursor;
   final Duration stepDuration;
@@ -138,6 +139,7 @@ class AnimatedTypingText extends StatefulWidget {
     this.padding = EdgeInsets.zero,
     this.textAlign = TextAlign.start,
     this.softWrap = false,
+    this.disableAnimation = false,
     this.showCursor = true,
     this.blinkingCursor = true,
     this.stepDuration = Vars.animationFlash,
@@ -173,6 +175,7 @@ class _AnimatedTypingTextState extends State<AnimatedTypingText>
       lowerLimit: 0,
       upperLimit: _txt.length,
     );
+    if (widget.disableAnimation) _ani.setData(_txt.length);
     postFrame(() {
       _ani.start();
       Timer.periodic(widget.stepDuration, (timer) {
@@ -215,6 +218,7 @@ class AnimatedCountingText extends StatefulWidget {
   final EdgeInsets padding;
 
   // Animation
+  final bool disableAnimation;
   final double? dimension;
   final Duration duration;
   final Duration? stepDuration;
@@ -231,6 +235,7 @@ class AnimatedCountingText extends StatefulWidget {
     this.style,
     this.spaced = false,
     this.padding = EdgeInsets.zero,
+    this.disableAnimation = false,
     this.dimension,
     this.duration = const Duration(seconds: 2),
     this.stepDuration,
@@ -276,6 +281,7 @@ class _AnimatedCountingTextState extends State<AnimatedCountingText>
       lowerLimit: 0,
       upperLimit: _value.countValue,
     );
+    if (widget.disableAnimation) _ani.setData(_value.countValue);
     final stepValue =
         (_value.countValue / 100).ceil().clamp(1, double.infinity).toInt();
     _stepDuration = widget.stepDuration ??
@@ -284,7 +290,7 @@ class _AnimatedCountingTextState extends State<AnimatedCountingText>
                 _value.countValue ~/
                 stepValue);
     Debug.log(
-        'Step: $stepValue/'
+        'Step: $stepValue ticks/'
         '${_stepDuration.inMicroseconds}μs/'
         '${widget.duration.inMilliseconds}ms',
         caller: 'AnimatedCountingText');

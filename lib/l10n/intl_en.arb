@@ -36,6 +36,7 @@
   "navigation": "Navigation",
   "route_unknown": "No route found for {route}",
   "search": "Search",
+  "see_more": "Press me to see more",
   "tech_used": "Technology used:",
   "theme": "Theme",
   "welcome": "Hi! This is\n{name}",
