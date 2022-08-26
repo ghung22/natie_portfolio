@@ -10,6 +10,7 @@ import 'package:natie_portfolio/global/strings.dart';
 import 'package:natie_portfolio/global/styles.dart';
 import 'package:natie_portfolio/global/vars.dart';
 import 'package:natie_portfolio/store/common/animation_store.dart';
+import 'package:speech_bubble/speech_bubble.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 
 import 'animated_view.dart';
@@ -262,7 +263,7 @@ class ProjectBanner extends StatelessWidget {
 
 class BioBanner extends StatelessWidget {
   final Bio bio;
-  final VoidCallback? onAction;
+  final bool skipIntro;
 
   final AnimationStore _introAni = AnimationStore();
   final AnimationStore _introSecondAni = AnimationStore();
@@ -270,12 +271,16 @@ class BioBanner extends StatelessWidget {
   BioBanner({
     Key? key,
     required this.bio,
-    this.onAction,
+    this.skipIntro = false,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     if (bio.isEmpty) return const Nothing();
+    if (skipIntro) {
+      _introAni.start();
+      _introSecondAni.start();
+    }
     Widget leftSide = PaddedColumn(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -295,6 +300,7 @@ class BioBanner extends StatelessWidget {
               text: AppLocalizations.of(context)!.welcome(bio.name),
               style: Styles.bannerTitleStyle,
               softWrap: true,
+              disableAnimation: skipIntro,
               onDone: () => _introSecondAni.start(),
             ),
           );
@@ -337,6 +343,7 @@ class BioBanner extends StatelessWidget {
                     dimension: Dimens.bioScoreSize,
                     style: Styles.scoreValueStyle,
                     spaced: true,
+                    disableAnimation: skipIntro,
                     topSide: TextView(
                       text: s.name,
                       style: Styles.scoreNameStyle,
@@ -357,26 +364,55 @@ class BioBanner extends StatelessWidget {
         padding: const EdgeInsets.only(
             right: Dimens.bioRightSidePadding,
             bottom: Dimens.bioRightSidePadding),
-        child: ConstrainedBox(
-          constraints: const BoxConstraints(maxHeight: Dimens.bioHeight),
-          child: DecoratedBox(
-            decoration: const ShapeDecoration(
-                shape: CircleBorder(
-              side: BorderSide(
-                color: Colors.white,
-                width: Dimens.bioAvatarBorderSize,
-              ),
-            )),
-            child: Padding(
-              padding: const EdgeInsets.all(Dimens.bioAvatarPadding),
-              child: CircleImageView(
-                bio.avatarUrl,
-                onFinish: () {
-                  if (!_introAni.willStart) _introAni.start();
-                },
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Observer(builder: (context) {
+              return AnimatedFadeSlide(
+                offset: _introSecondAni.willStart
+                    ? Offset.zero
+                    : const Offset(0, Dimens.bannerSlideOffset),
+                opacity: _introSecondAni.willStart ? 1 : 0,
+                duration: Vars.animationFast,
+                curve: Curves.easeOut,
+                child: SpeechBubble(
+                  color: Colors.white,
+                  child: Padding(
+                    padding: const EdgeInsets.all(Dimens.cardPadding),
+                    child:
+                        TextView(text: AppLocalizations.of(context)!.see_more),
+                  ),
+                ),
+              );
+            }),
+            const SizedBox(height: Dimens.bioScorePadding),
+            ConstrainedBox(
+              constraints: const BoxConstraints(maxHeight: Dimens.bioHeight),
+              child: AnimatedHover(
+                scaleOnHover: 1.2,
+                duration: Vars.animationFast,
+                onPressed: () => Navigator.of(context).pushNamed(Routes.about),
+                child: DecoratedBox(
+                  decoration: const ShapeDecoration(
+                      shape: CircleBorder(
+                    side: BorderSide(
+                      color: Colors.white,
+                      width: Dimens.bioAvatarBorderSize,
+                    ),
+                  )),
+                  child: Padding(
+                    padding: const EdgeInsets.all(Dimens.bioAvatarPadding),
+                    child: CircleImageView(
+                      bio.avatarUrl,
+                      onFinish: () {
+                        if (!_introAni.willStart) _introAni.start();
+                      },
+                    ),
+                  ),
+                ),
               ),
             ),
-          ),
+          ],
         ),
       ),
     );

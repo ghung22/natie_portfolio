@@ -6,6 +6,8 @@ import 'package:natie_portfolio/store/common/animation_store.dart';
 import 'package:natie_portfolio/store/global/language_store.dart';
 import 'package:provider/provider.dart';
 
+// TODO: Add disableAnimation & fix animation repeat bug
+// TODO: (When change lang + When returned from ProjectPage)
 class AnimatedFadeSlide extends ImplicitlyAnimatedWidget {
   const AnimatedFadeSlide({
     Key? key,

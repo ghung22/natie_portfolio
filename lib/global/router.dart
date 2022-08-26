@@ -3,6 +3,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:natie_portfolio/data/model/project.dart';
 import 'package:natie_portfolio/main.dart';
 import 'package:natie_portfolio/widget/common/helper/snackbar.dart';
+import 'package:natie_portfolio/widget/page/about_page.dart';
 import 'package:natie_portfolio/widget/page/debug_page.dart';
 import 'package:natie_portfolio/widget/page/home_page.dart';
 import 'package:natie_portfolio/widget/page/project_page.dart';
@@ -33,6 +34,9 @@ class Router {
                     NatiePortfolio.init(context);
                     return const HomePage();
                   }));
+        case Routes.about:
+          return AnimatedPageRoute(
+              builder: (_) => Builder(builder: (context) => const AboutPage()));
         case Routes.project:
           if (settings.arguments is! Project) {
             throw 'Type ${settings.arguments.runtimeType} is not Project';
