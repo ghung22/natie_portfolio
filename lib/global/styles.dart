@@ -73,6 +73,9 @@ class MoreColors {
 
   static Color onColor(Color color) =>
       color.computeLuminance() > .5 ? Colors.black : Colors.white;
+
+  static Color onColorShadow(Color color) =>
+      color.computeLuminance() > .5 ? Colors.white : Colors.black;
 }
 
 class Themes {

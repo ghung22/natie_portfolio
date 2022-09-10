@@ -85,10 +85,9 @@ class _ProjectPageState extends State<ProjectPage> with PostFrameMixin {
             text: AppLocalizations.of(context)!.what_you_can_do(_p.title),
             color: _p.color,
           ),
-          PaddedColumn(
-            paddingStartAndEnd: false,
-            padding: const EdgeInsets.symmetric(
-                vertical: Dimens.projectDetailsFuncPadding),
+          Wrap(
+            spacing: Dimens.projectDetailsFuncPadding,
+            runSpacing: Dimens.projectDetailsFuncPadding,
             children: List.generate(
                 max(_p.functionalities.length, _p.functionalitiesVi.length),
                 (i) => FunctionalityItem(_p, i)),

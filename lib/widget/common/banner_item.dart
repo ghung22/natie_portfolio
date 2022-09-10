@@ -1,3 +1,4 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -25,7 +26,7 @@ import 'text_view.dart';
 /// **Parameters:**
 /// * [title]       : The title widget to be shown on top left
 /// * [description] : The description widget to be shown below the title
-/// * [imageUrl]    : The image to be shown on the right side of the banner
+/// * [imageUrls]    : The images to be shown on the right side of the banner
 /// * [primary]     : Main color of the banner
 /// * [action]      : The button to be shown below the description
 /// * [onAction]    : The function to be called when the button is pressed
@@ -35,7 +36,7 @@ import 'text_view.dart';
 class BannerItem extends StatefulWidget {
   final Widget? title;
   final Widget? description;
-  final String imageUrl;
+  final List<String> imageUrls;
   final Color? primary;
   final Widget? action;
   final VoidCallback? onAction;
@@ -46,7 +47,7 @@ class BannerItem extends StatefulWidget {
     Key? key,
     required this.title,
     required this.description,
-    this.imageUrl = '',
+    this.imageUrls = const [],
     this.primary,
     this.action,
     this.onAction,
@@ -61,7 +62,7 @@ class BannerItem extends StatefulWidget {
 class _BannerItemState extends State<BannerItem> with PostFrameMixin {
   late Widget? _title;
   late Widget? _description;
-  late String _imageUrl;
+  late List<String> _imageUrls;
   late Color _primary;
   late Widget? _action;
   late VoidCallback? _onAction;
@@ -76,7 +77,7 @@ class _BannerItemState extends State<BannerItem> with PostFrameMixin {
     super.initState();
     _title = widget.title;
     _description = widget.description;
-    _imageUrl = widget.imageUrl;
+    _imageUrls = widget.imageUrls;
     _primary = widget.primary ?? Colors.transparent;
     _action = widget.action;
     _onAction = widget.onAction;
@@ -97,15 +98,31 @@ class _BannerItemState extends State<BannerItem> with PostFrameMixin {
         if (_title != null)
           Material(
             color: Colors.transparent,
-            textStyle: Styles.bannerTitleStyle
-                .copyWith(color: MoreColors.onColor(_primary)),
+            textStyle: Styles.bannerTitleStyle.copyWith(
+              color: MoreColors.onColor(_primary),
+              shadows: [
+                Shadow(
+                  color: MoreColors.onColorShadow(_primary),
+                  offset: const Offset(2, 2),
+                  blurRadius: 4,
+                ),
+              ],
+            ),
             child: _title,
           ),
         if (_description != null)
           Material(
             color: Colors.transparent,
-            textStyle: Styles.bannerDescriptionStyle
-                .copyWith(color: MoreColors.onColor(_primary)),
+            textStyle: Styles.bannerDescriptionStyle.copyWith(
+              color: MoreColors.onColor(_primary),
+              shadows: [
+                Shadow(
+                  color: MoreColors.onColorShadow(_primary),
+                  offset: const Offset(2, 2),
+                  blurRadius: 4,
+                ),
+              ],
+            ),
             child: _description,
           ),
         if (_action != null)
@@ -132,12 +149,24 @@ class _BannerItemState extends State<BannerItem> with PostFrameMixin {
   void _initRightSide() {
     _rightSide = Align(
       alignment: Alignment.bottomRight,
-      child: ImageView(
-        _imageUrl,
-        onFinish: () {
-          if (!_introAni.willStart) _introAni.start();
-        },
-      ),
+      child: CarouselSlider(
+          items: _imageUrls.map((url) {
+            if (_imageUrls.first == url) {
+              return ImageView(url, onFinish: () {
+                if (!_introAni.willStart) _introAni.start();
+              });
+            }
+            return ImageView(url);
+          }).toList(),
+          options: CarouselOptions(
+            aspectRatio: 9 / 16,
+            autoPlay: true,
+            autoPlayInterval: const Duration(seconds: 5),
+            autoPlayAnimationDuration: Vars.animationFast,
+            disableCenter: true,
+            viewportFraction: 1,
+            enlargeCenterPage: true,
+          )),
     );
   }
 
@@ -237,7 +266,7 @@ class ProjectBanner extends StatelessWidget {
             softWrap: true,
           );
         }),
-        imageUrl: project.imageUrls.isNotEmpty ? project.imageUrls[0] : '',
+        imageUrls: project.imageUrls,
         primary: project.color,
         action: onAction == null
             ? null
