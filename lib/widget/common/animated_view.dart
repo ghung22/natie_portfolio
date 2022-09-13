@@ -14,11 +14,16 @@ class AnimatedFadeSlide extends ImplicitlyAnimatedWidget {
     required this.child,
     required this.offset,
     required this.opacity,
+    bool disableAnimation = false,
     Duration duration = Vars.animationFast,
     Curve curve = Curves.linear,
     VoidCallback? onEnd,
   })  : assert(opacity >= 0.0 && opacity <= 1.0),
-        super(key: key, curve: curve, duration: duration, onEnd: onEnd);
+        super(
+            key: key,
+            curve: curve,
+            duration: !disableAnimation ? duration : Duration.zero,
+            onEnd: onEnd);
 
   final Widget child;
   final Offset offset;
@@ -67,6 +72,7 @@ class AnimatedHover extends StatefulWidget {
   final double scaleOnHover;
   final Duration duration;
   final VoidCallback? onPressed;
+  final VoidCallback? onHover;
   final bool feedback;
 
   const AnimatedHover({
@@ -75,6 +81,7 @@ class AnimatedHover extends StatefulWidget {
     required this.scaleOnHover,
     required this.duration,
     this.onPressed,
+    this.onHover,
     this.feedback = true,
   }) : super(key: key);
 
@@ -82,7 +89,8 @@ class AnimatedHover extends StatefulWidget {
   State<AnimatedHover> createState() => _AnimatedHoverState();
 }
 
-class _AnimatedHoverState extends State<AnimatedHover> {
+class _AnimatedHoverState extends State<AnimatedHover>
+    with SingleTickerProviderStateMixin {
   late double _scaleOnHover;
   late VoidCallback? _onPressed;
   late bool _feedback;
@@ -111,6 +119,7 @@ class _AnimatedHoverState extends State<AnimatedHover> {
         if (!_feedback) return;
         if (isHover) {
           _ani.start();
+          widget.onHover?.call();
         } else {
           _ani.stop();
         }

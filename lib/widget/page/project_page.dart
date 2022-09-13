@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -8,6 +9,7 @@ import 'package:natie_portfolio/global/router.dart';
 import 'package:natie_portfolio/global/styles.dart';
 import 'package:natie_portfolio/global/vars.dart';
 import 'package:natie_portfolio/store/common/animation_store.dart';
+import 'package:natie_portfolio/store/global/dimen_store.dart';
 import 'package:natie_portfolio/widget/common/banner_item.dart';
 import 'package:natie_portfolio/widget/common/buttons.dart';
 import 'package:natie_portfolio/global/dimens.dart';
@@ -17,6 +19,8 @@ import 'package:natie_portfolio/widget/common/image_view.dart';
 import 'package:natie_portfolio/widget/common/list_view.dart';
 import 'package:natie_portfolio/widget/common/text_view.dart';
 import 'package:natie_portfolio/widget/common/web_item.dart';
+import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class ProjectPage extends StatefulWidget {
   final Project project;
@@ -80,6 +84,56 @@ class _ProjectPageState extends State<ProjectPage> with PostFrameMixin {
           // Banner
           ProjectBanner(project: _p),
 
+          // Time, author & images
+          Container(
+            width: double.infinity,
+            padding: const EdgeInsets.symmetric(
+                vertical: Dimens.projectDetailsPaddingVertical),
+            color: Themes.isDarkMode
+                ? MoreColors.darker(_p.color, magnitude: 1)
+                : MoreColors.lighter(_p.color, magnitude: 2),
+            child: Column(
+              children: [
+                Wrap(
+                  spacing: Dimens.projectDetailsFuncPadding,
+                  runSpacing: Dimens.projectDetailsFuncPadding,
+                  children: [
+                    ProjectTimestampItem(_p),
+                    ProjectAuthorItem(_p),
+                  ],
+                ),
+                const SizedBox(height: Dimens.projectDetailsPaddingVertical),
+                Center(child: HostUrlItem(_p)),
+                const SizedBox(height: Dimens.projectDetailsPaddingVertical),
+                Observer(builder: (context) {
+                  final dimenStore = context.read<DimenStore>();
+                  return CarouselSlider(
+                      items: _p.imageUrls.map((url) {
+                        return InkWell(
+                          onTap: () => launchUrlString(url,
+                              mode: LaunchMode.externalApplication),
+                          child: RoundedImageView(url),
+                        );
+                      }).toList(),
+                      options: CarouselOptions(
+                        height: Dimens.projectDetailsImgHeight,
+                        pageSnapping: false,
+                        viewportFraction: (Dimens.projectDetailsImgWidth +
+                                Dimens.projectDetailsImgPadding) /
+                            dimenStore.width,
+                        enableInfiniteScroll: false,
+                        padEnds: false,
+                        autoPlay: true,
+                        autoPlayInterval: const Duration(seconds: 5),
+                        autoPlayAnimationDuration: Vars.animationFast,
+                        pauseAutoPlayOnManualNavigate: true,
+                        pauseAutoPlayOnTouch: true,
+                      ));
+                }),
+              ],
+            ),
+          ),
+
           // Functionalities
           TextView.header(
             text: AppLocalizations.of(context)!.what_you_can_do(_p.title),
@@ -89,8 +143,20 @@ class _ProjectPageState extends State<ProjectPage> with PostFrameMixin {
             spacing: Dimens.projectDetailsFuncPadding,
             runSpacing: Dimens.projectDetailsFuncPadding,
             children: List.generate(
-                max(_p.functionalities.length, _p.functionalitiesVi.length),
+                min(_p.functionalities.length, _p.functionalitiesVi.length),
                 (i) => FunctionalityItem(_p, i)),
+          ),
+
+          // Learned
+          TextView.header(
+            text: AppLocalizations.of(context)!.what_i_learned(_p.title),
+            color: _p.color,
+          ),
+          Wrap(
+            spacing: Dimens.projectDetailsFuncPadding,
+            runSpacing: Dimens.projectDetailsFuncPadding,
+            children: List.generate(min(_p.learned.length, _p.learnedVi.length),
+                (i) => LearnedItem(_p, i)),
           ),
 
           // Technology used
@@ -99,7 +165,7 @@ class _ProjectPageState extends State<ProjectPage> with PostFrameMixin {
             padding: const EdgeInsets.symmetric(
                 vertical: Dimens.projectDetailsPaddingVertical),
             color: Themes.isDarkMode
-                ? MoreColors.darker(_p.color, magnitude: 2)
+                ? MoreColors.darker(_p.color, magnitude: 1)
                 : MoreColors.lighter(_p.color, magnitude: 2),
             child: PaddedColumn(
               padding: const EdgeInsets.symmetric(
@@ -116,11 +182,7 @@ class _ProjectPageState extends State<ProjectPage> with PostFrameMixin {
                   runSpacing: Dimens.projectDetailsTechPaddingVertical,
                   alignment: WrapAlignment.center,
                   children: _p.tech.split(',').map((tech) {
-                    final src = Vars.assets[tech] ?? '';
-                    return SvgImageView(src,
-                        width: Dimens.projectDetailsTechSize,
-                        height: Dimens.projectDetailsTechSize,
-                        fit: BoxFit.fitHeight);
+                    return TechItem(tech);
                   }).toList(),
                 ),
                 const SizedBox(

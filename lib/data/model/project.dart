@@ -15,6 +15,7 @@ part 'project.g.dart';
 /// * [tech]                : Programming language / Framework used
 /// * [description]         : More info on this project
 /// * [functionalities]     : Functional requirements of this project
+/// * [learned]             : What was learned from this project
 /// * [iconUrl]             : Application icon of this project
 /// * [imageUrls]           : Screenshots of this project
 /// * [colorHex]            : The main color representing this application
@@ -36,6 +37,8 @@ class Project {
   String descriptionVi;
   List<String> functionalities;
   List<String> functionalitiesVi;
+  List<String> learned;
+  List<String> learnedVi;
   String hostUrl;
   String iconUrl;
   List<String> imageUrls;
@@ -53,6 +56,8 @@ class Project {
     this.descriptionVi = '',
     this.functionalities = const <String>[],
     this.functionalitiesVi = const <String>[],
+    this.learned = const <String>[],
+    this.learnedVi = const <String>[],
     this.hostUrl = '',
     this.iconUrl = '',
     this.imageUrls = const <String>[

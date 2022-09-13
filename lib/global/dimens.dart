@@ -26,7 +26,9 @@ class Dimens {
   static const mediumScreenWidth = 900.0;
 
   static bool get isSmall => _screenSize == ScreenSize.small;
+
   static bool get isMedium => _screenSize == ScreenSize.medium;
+
   static bool get isLarge => _screenSize == ScreenSize.large;
 
   static const bannerActionOffset = 16.0;
@@ -70,13 +72,19 @@ class Dimens {
   static const projectDetailsFuncOffset = .1;
   static const projectDetailsFuncPadding = 8.0;
   static const projectDetailsFuncWidth = 360.0;
+  static const projectDetailsImgHeight = bannerHeight;
+  static const projectDetailsImgWidth = 250;
+  static const projectDetailsImgPadding = 16.0;
   static const projectDetailsPaddingHorizontal = 36.0;
   static const projectDetailsPaddingVertical = 24.0;
   static const projectDetailsTechPaddingHorizontal = 64.0;
+  static const projectDetailsTechPaddingInternal = 12.0;
   static const projectDetailsTechPaddingVertical = 12.0;
   static const projectDetailsTechSize = 64.0;
 
   static const projectItemPadding = 16.0;
   static const projectItemContentPadding = 4.0;
   static const projectItemImageWidth = 160.0;
+
+  static const roundedImageRadius = cardRadius;
 }
