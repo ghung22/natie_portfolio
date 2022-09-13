@@ -17,6 +17,15 @@
       }
     }
   },
+  "@what_i_learned": {
+    "description": "Header for the learned section of Project Details.",
+    "placeholders": {
+      "name": {
+        "type": "String",
+        "example": "Natie Portfolio"
+      }
+    }
+  },
   "@what_you_can_do": {
     "description": "Header for the functionality section of Project Details.",
     "placeholders": {
@@ -26,11 +35,14 @@
       }
     }
   },
+  "author": "Made by",
   "back": "Back",
+  "completion_date": "Completion date",
   "contact": "Contact me",
   "details": "More details",
   "explore": "Explore more",
   "featured_projects": "Featured Projects",
+  "host": "Reference",
   "language": "Language",
   "navigate_to": "Navigate to",
   "navigation": "Navigation",
@@ -40,6 +52,7 @@
   "tech_used": "Technology used:",
   "theme": "Theme",
   "welcome": "Hi! This is\n{name}",
+  "what_i_learned": "Thanks to {name}, I have learned to…",
   "what_you_can_do": "With {name}, you can…",
   "z": "Z"
 }

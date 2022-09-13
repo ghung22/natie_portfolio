@@ -22,6 +22,14 @@ Project _$ProjectFromJson(Map<String, dynamic> json) => Project(
               ?.map((e) => e as String)
               .toList() ??
           const <String>[],
+      learned: (json['learned'] as List<dynamic>?)
+              ?.map((e) => e as String)
+              .toList() ??
+          const <String>[],
+      learnedVi: (json['learnedVi'] as List<dynamic>?)
+              ?.map((e) => e as String)
+              .toList() ??
+          const <String>[],
       hostUrl: json['hostUrl'] as String? ?? '',
       iconUrl: json['iconUrl'] as String? ?? '',
       imageUrls: (json['imageUrls'] as List<dynamic>?)
@@ -45,6 +53,8 @@ Map<String, dynamic> _$ProjectToJson(Project instance) => <String, dynamic>{
       'descriptionVi': instance.descriptionVi,
       'functionalities': instance.functionalities,
       'functionalitiesVi': instance.functionalitiesVi,
+      'learned': instance.learned,
+      'learnedVi': instance.learnedVi,
       'hostUrl': instance.hostUrl,
       'iconUrl': instance.iconUrl,
       'imageUrls': instance.imageUrls,

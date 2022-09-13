@@ -48,7 +48,8 @@ class Router {
 
         case Routes.debug:
           if (Debug.isProduction) {
-            throw 'Debug page is not available in production';
+            debugPrint('Debug page is not available in production');
+            return generateRoute(settings.copyWith(name: Routes.home));
           }
           return AnimatedPageRoute(
               builder: (_) => Builder(builder: (context) {

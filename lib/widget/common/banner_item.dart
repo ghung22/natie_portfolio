@@ -37,22 +37,28 @@ class BannerItem extends StatefulWidget {
   final Widget? title;
   final Widget? description;
   final List<String> imageUrls;
+  final bool imageRounded;
   final Color? primary;
   final Widget? action;
   final VoidCallback? onAction;
   final Widget? leftSide;
   final Widget? rightSide;
+  final bool disableAnimation;
+  final Function()? onAnimationDone;
 
   const BannerItem({
     Key? key,
     required this.title,
     required this.description,
     this.imageUrls = const [],
+    this.imageRounded = false,
     this.primary,
     this.action,
     this.onAction,
     this.leftSide,
     this.rightSide,
+    this.disableAnimation = false,
+    this.onAnimationDone,
   }) : super(key: key);
 
   @override
@@ -151,12 +157,21 @@ class _BannerItemState extends State<BannerItem> with PostFrameMixin {
       alignment: Alignment.bottomRight,
       child: CarouselSlider(
           items: _imageUrls.map((url) {
-            if (_imageUrls.first == url) {
-              return ImageView(url, onFinish: () {
-                if (!_introAni.willStart) _introAni.start();
-              });
+            if (!widget.imageRounded) {
+              if (_imageUrls.first == url) {
+                return ImageView(url, onFinish: () {
+                  if (!_introAni.willStart) _introAni.start();
+                });
+              }
+              return ImageView(url);
+            } else {
+              if (_imageUrls.first == url) {
+                return RoundedImageView(url, onFinish: () {
+                  if (!_introAni.willStart) _introAni.start();
+                });
+              }
+              return RoundedImageView(url);
             }
-            return ImageView(url);
           }).toList(),
           options: CarouselOptions(
             aspectRatio: 9 / 16,
@@ -205,6 +220,8 @@ class _BannerItemState extends State<BannerItem> with PostFrameMixin {
                       opacity: _introAni.willStart ? 1 : 0,
                       duration: Vars.animationSluggish,
                       curve: Curves.easeOut,
+                      onEnd: widget.onAnimationDone,
+                      disableAnimation: widget.disableAnimation,
                       child: _rightSide,
                     );
                   });
@@ -230,6 +247,7 @@ class _BannerItemState extends State<BannerItem> with PostFrameMixin {
                           opacity: _introAni.willStart ? 1 : 0,
                           duration: Vars.animationSluggish,
                           curve: Curves.easeOut,
+                          disableAnimation: widget.disableAnimation,
                           child: _leftSide,
                         );
                       });
@@ -249,12 +267,16 @@ class ProjectBanner extends StatelessWidget {
   final Project project;
   final VoidCallback? onAction;
   final bool isHomePage;
+  final bool skipIntro;
+  final Function()? onIntroDone;
 
   const ProjectBanner({
     Key? key,
     required this.project,
     this.onAction,
     this.isHomePage = false,
+    this.skipIntro = false,
+    this.onIntroDone,
   }) : super(key: key);
 
   Widget get _bannerWidget => BannerItem(
@@ -267,6 +289,7 @@ class ProjectBanner extends StatelessWidget {
           );
         }),
         imageUrls: project.imageUrls,
+        imageRounded: true,
         primary: project.color,
         action: onAction == null
             ? null
@@ -275,24 +298,26 @@ class ProjectBanner extends StatelessWidget {
                 return TextView(text: AppLocalizations.of(context)!.explore);
               }),
         onAction: onAction,
+        disableAnimation: skipIntro,
+        onAnimationDone: onIntroDone,
       );
 
   @override
   Widget build(BuildContext context) {
-    if (isHomePage) {
-      return Hero(
-        tag: '${Routes.project}/${project.id}/banner',
-        child: _bannerWidget,
-      );
-    } else {
+    if (!isHomePage) {
       return _bannerWidget;
     }
+    return Hero(
+      tag: '${Routes.project}/${project.id}/banner',
+      child: _bannerWidget,
+    );
   }
 }
 
 class BioBanner extends StatelessWidget {
   final Bio bio;
   final bool skipIntro;
+  final Function()? onIntroDone;
 
   final AnimationStore _introAni = AnimationStore();
   final AnimationStore _introSecondAni = AnimationStore();
@@ -301,15 +326,12 @@ class BioBanner extends StatelessWidget {
     Key? key,
     required this.bio,
     this.skipIntro = false,
+    this.onIntroDone,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     if (bio.isEmpty) return const Nothing();
-    if (skipIntro) {
-      _introAni.start();
-      _introSecondAni.start();
-    }
     Widget leftSide = PaddedColumn(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -462,6 +484,8 @@ class BioBanner extends StatelessWidget {
           child: rightSide,
         );
       }),
+      disableAnimation: skipIntro,
+      onAnimationDone: onIntroDone,
     );
   }
 }

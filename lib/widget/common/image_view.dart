@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:natie_portfolio/global/dimens.dart';
 
 import 'content_item.dart';
 
@@ -114,7 +115,8 @@ class RoundedImageView extends StatelessWidget {
     this.height,
     this.fit = BoxFit.contain,
     this.onFinish,
-    this.borderRadius = const BorderRadius.all(Radius.circular(12)),
+    this.borderRadius =
+        const BorderRadius.all(Radius.circular(Dimens.roundedImageRadius)),
   }) : super(key: key);
 
   @override
