@@ -88,11 +88,15 @@ class _ProjectPageState extends State<ProjectPage> with PostFrameMixin {
           Container(
             width: double.infinity,
             padding: const EdgeInsets.symmetric(
+                horizontal: Dimens.projectDetailsPaddingHorizontal,
                 vertical: Dimens.projectDetailsPaddingVertical),
             color: Themes.isDarkMode
                 ? MoreColors.darker(_p.color, magnitude: 1)
                 : MoreColors.lighter(_p.color, magnitude: 2),
-            child: Column(
+            child: PaddedColumn(
+              padding: const EdgeInsets.symmetric(
+                  vertical: Dimens.projectDetailsPaddingVertical),
+              paddingStartAndEnd: false,
               children: [
                 Wrap(
                   spacing: Dimens.projectDetailsFuncPadding,
@@ -102,11 +106,10 @@ class _ProjectPageState extends State<ProjectPage> with PostFrameMixin {
                     ProjectAuthorItem(_p),
                   ],
                 ),
-                const SizedBox(height: Dimens.projectDetailsPaddingVertical),
                 Center(child: HostUrlItem(_p)),
-                const SizedBox(height: Dimens.projectDetailsPaddingVertical),
                 Observer(builder: (context) {
                   final dimenStore = context.read<DimenStore>();
+                  dimenStore.size;
                   return CarouselSlider(
                       items: _p.imageUrls.map((url) {
                         return InkWell(
@@ -163,6 +166,7 @@ class _ProjectPageState extends State<ProjectPage> with PostFrameMixin {
           Container(
             width: double.infinity,
             padding: const EdgeInsets.symmetric(
+                horizontal: Dimens.projectDetailsPaddingHorizontal,
                 vertical: Dimens.projectDetailsPaddingVertical),
             color: Themes.isDarkMode
                 ? MoreColors.darker(_p.color, magnitude: 1)
@@ -170,13 +174,12 @@ class _ProjectPageState extends State<ProjectPage> with PostFrameMixin {
             child: PaddedColumn(
               padding: const EdgeInsets.symmetric(
                   vertical: Dimens.projectDetailsPaddingVertical),
+              paddingStartAndEnd: false,
               children: [
                 TextView.header(
                   text: AppLocalizations.of(context)!.tech_used,
                   color: _p.color,
                 ),
-                const SizedBox(
-                    height: Dimens.projectDetailsTechPaddingVertical),
                 Wrap(
                   spacing: Dimens.projectDetailsTechPaddingHorizontal,
                   runSpacing: Dimens.projectDetailsTechPaddingVertical,
@@ -185,12 +188,9 @@ class _ProjectPageState extends State<ProjectPage> with PostFrameMixin {
                     return TechItem(tech);
                   }).toList(),
                 ),
-                const SizedBox(
-                    height: Dimens.projectDetailsTechPaddingVertical),
               ],
             ),
           ),
-          const SizedBox(height: Dimens.projectDetailsPaddingVertical),
         ],
       ),
     );

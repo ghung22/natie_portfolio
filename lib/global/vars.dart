@@ -12,18 +12,24 @@ class Vars {
   static const animationSlow = Duration(milliseconds: 600);
   static const animationSluggish = Duration(milliseconds: 1200);
 
+  static const assetRoot = 'assets';
+  static const assetBrand = '$assetRoot/brand';
+  static const assetContact = '$assetRoot/contact';
+  static const assetTech = '$assetRoot/tech';
   static const assets = {
-    'android': 'assets/tech/android.svg',
-    'firebase': 'assets/tech/firebase.svg',
-    'fit': 'assets/brand/fit.png',
-    'flutter': 'assets/tech/flutter.svg',
-    'hcmus': 'assets/brand/hcmus.svg',
-    'java': 'assets/tech/java.svg',
-    'jitsi': 'assets/tech/jitsi.svg',
-    'markdown': 'assets/tech/markdown.svg',
-    'ml_kit': 'assets/tech/ml_kit.png',
-    'mongodb': 'assets/tech/mongodb.svg',
-    'moodle': 'assets/tech/moodle.svg',
-    'sqlite': 'assets/tech/sqlite.svg',
+    'android': '$assetTech/android.svg',
+    'firebase': '$assetTech/firebase.svg',
+    'fit': '$assetBrand/fit.png',
+    'flutter': '$assetTech/flutter.svg',
+    'github': '$assetContact/github.svg',
+    'gmail': '$assetContact/gmail.svg',
+    'hcmus': '$assetBrand/hcmus.svg',
+    'java': '$assetTech/java.svg',
+    'jitsi': '$assetTech/jitsi.svg',
+    'markdown': '$assetTech/markdown.svg',
+    'ml_kit': '$assetTech/ml_kit.png',
+    'mongodb': '$assetTech/mongodb.svg',
+    'moodle': '$assetTech/moodle.svg',
+    'sqlite': '$assetTech/sqlite.svg',
   };
 }

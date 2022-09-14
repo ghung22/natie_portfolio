@@ -70,19 +70,14 @@ class _DebugPageState extends State<DebugPage> with PostFrameMixin {
     _body = SingleChildScrollView(
       child: PaddedColumn(
         padding:
-            const EdgeInsets.symmetric(vertical: Dimens.projectItemPadding),
+            const EdgeInsets.symmetric(vertical: Dimens.pageContentPaddingHorizontal),
         children: [
           // Navigation
           _navSect,
-          const SizedBox(height: Dimens.pageContentPaddingHorizontal),
-
           // Debug information
           _infoSect,
-          const SizedBox(height: Dimens.pageContentPaddingHorizontal),
-
           // Testing grounds
           _testSect,
-          const SizedBox(height: Dimens.pageContentPaddingHorizontal),
         ],
       ),
     );

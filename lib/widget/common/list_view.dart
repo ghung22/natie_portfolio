@@ -28,7 +28,7 @@ class PaddedColumn extends StatelessWidget {
     this.mainAxisAlignment = MainAxisAlignment.start,
     this.mainAxisSize = MainAxisSize.max,
     this.crossAxisAlignment = CrossAxisAlignment.center,
-    this.paddingStartAndEnd = false,
+    this.paddingStartAndEnd = true,
     this.children = const <Widget>[],
   }) : super(key: key);
 
@@ -67,7 +67,7 @@ class PaddedRow extends StatelessWidget {
     this.mainAxisAlignment = MainAxisAlignment.start,
     this.mainAxisSize = MainAxisSize.max,
     this.crossAxisAlignment = CrossAxisAlignment.center,
-    this.paddingStartAndEnd = false,
+    this.paddingStartAndEnd = true,
     this.children = const <Widget>[],
   }) : super(key: key);
 

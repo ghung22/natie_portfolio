@@ -443,21 +443,24 @@ class BioBanner extends StatelessWidget {
                 scaleOnHover: 1.2,
                 duration: Vars.animationFast,
                 onPressed: () => Navigator.of(context).pushNamed(Routes.about),
-                child: DecoratedBox(
-                  decoration: const ShapeDecoration(
-                      shape: CircleBorder(
-                    side: BorderSide(
-                      color: Colors.white,
-                      width: Dimens.bioAvatarBorderSize,
-                    ),
-                  )),
-                  child: Padding(
-                    padding: const EdgeInsets.all(Dimens.bioAvatarPadding),
-                    child: CircleImageView(
-                      bio.avatarUrl,
-                      onFinish: () {
-                        if (!_introAni.willStart) _introAni.start();
-                      },
+                child: Hero(
+                  tag: '${Routes.about}/avatar',
+                  child: DecoratedBox(
+                    decoration: const ShapeDecoration(
+                        shape: CircleBorder(
+                      side: BorderSide(
+                        color: Colors.white,
+                        width: Dimens.bioAvatarBorderSize,
+                      ),
+                    )),
+                    child: Padding(
+                      padding: const EdgeInsets.all(Dimens.bioAvatarPadding),
+                      child: CircleImageView(
+                        bio.avatarUrl,
+                        onFinish: () {
+                          if (!_introAni.willStart) _introAni.start();
+                        },
+                      ),
                     ),
                   ),
                 ),

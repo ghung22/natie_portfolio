@@ -78,6 +78,7 @@ flutter:
   assets:
     - assets/
     - assets/brand/
+    - assets/contact/
     - assets/fonts/
     - assets/tech/
 

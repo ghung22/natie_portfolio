@@ -2,10 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:intl/intl.dart';
+import 'package:natie_portfolio/data/model/experience.dart';
+import 'package:natie_portfolio/data/model/score.dart';
 import 'package:natie_portfolio/global/dimens.dart';
 import 'package:natie_portfolio/global/router.dart';
 import 'package:natie_portfolio/global/strings.dart';
 import 'package:natie_portfolio/data/model/project.dart';
+import 'package:natie_portfolio/global/styles.dart';
 import 'package:natie_portfolio/store/common/animation_store.dart';
 import 'package:natie_portfolio/widget/common/buttons.dart';
 import 'package:url_launcher/url_launcher_string.dart';
@@ -458,6 +461,173 @@ class TechItem extends StatelessWidget {
             fit: BoxFit.fitHeight),
       ),
     );
+  }
+}
+
+// endregion
+
+// region Bio items
+
+class BioScoreItem extends StatefulWidget {
+  final Score score;
+  final Color? color;
+
+  const BioScoreItem(this.score, {Key? key, this.color}) : super(key: key);
+
+  @override
+  State<BioScoreItem> createState() => _BioScoreItemState();
+}
+
+class _BioScoreItemState extends State<BioScoreItem> {
+  late Score _s;
+  late Color? _c;
+
+  @override
+  void initState() {
+    super.initState();
+    _s = widget.score;
+    _c = widget.color;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Observer(builder: (context) {
+      Strings.isEn;
+      return SizedBox(
+        width: Dimens.bioDetailsScoreSize,
+        child: CardItem(
+          hoverFeedback: true,
+          child: PaddedColumn(
+            padding:
+                const EdgeInsets.all(Dimens.bioDetailsScorePaddingVertical),
+            children: [
+              TextView.header(
+                text: _s.name,
+                color: _c ?? Theme.of(context).primaryColor,
+              ),
+              TextView.subheader(
+                text: '${_s.score}'
+                    '${(_s.customData['alt'] != null) ? ' (${_s.customData['alt']!})' : ''}',
+                color: Theme.of(context).colorScheme.onSurface,
+                spaced: true,
+              ),
+              if (_s.customData['ref'] != null)
+                ElevatedBtn(
+                  child:
+                      TextView(text: AppLocalizations.of(context)!.scoreboard),
+                  onPressed: () => launchUrlString(_s.customData['ref']!,
+                      mode: LaunchMode.externalApplication),
+                ),
+            ],
+          ),
+        ),
+      );
+    });
+  }
+}
+
+class BioExperienceItem extends StatefulWidget {
+  final Experience exp;
+  final Color? color;
+
+  const BioExperienceItem(this.exp, {Key? key, this.color}) : super(key: key);
+
+  @override
+  State<BioExperienceItem> createState() => _BioExperienceItemState();
+}
+
+class _BioExperienceItemState extends State<BioExperienceItem> {
+  late Experience _e;
+  late Color? _c;
+
+  @override
+  void initState() {
+    super.initState();
+    _e = widget.exp;
+    _c = widget.color;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Observer(builder: (context) {
+      var name = _e.nameVi ?? _e.name;
+      if (Strings.isEn) name = _e.name ?? _e.nameVi;
+      var major = _e.majorVi ?? _e.major;
+      if (Strings.isEn) major = _e.major ?? _e.majorVi;
+      return CardItem(
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(
+            minHeight: Dimens.bioDetailsExpSize,
+          ),
+          child: Stack(
+            alignment: Alignment.centerLeft,
+            children: [
+              if (_e.imageUrls != null)
+                if (_e.imageUrls!.length > 1)
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: ShaderMask(
+                      blendMode: BlendMode.dstOut,
+                      shaderCallback: (Rect rect) => const LinearGradient(
+                        colors: [Colors.white, Colors.transparent],
+                        begin: Alignment.centerLeft,
+                        end: Alignment.centerRight,
+                      ).createShader(rect),
+                      child: RoundedImageView(
+                        _e.imageUrls![1],
+                        height: Dimens.bioDetailsExpSize,
+                        fit: BoxFit.fitHeight,
+                      ),
+                    ),
+                  ),
+              PaddedRow(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                padding: const EdgeInsets.symmetric(
+                    horizontal: Dimens.bioDetailsExpPaddingHorizontal),
+                children: [
+                  if (_e.imageUrls != null)
+                    if (_e.imageUrls!.isNotEmpty)
+                      ImageView(
+                        _e.imageUrls![0],
+                        width: Dimens.bioDetailsExpSize * .75,
+                        height: Dimens.bioDetailsExpSize * .75,
+                        fit: BoxFit.scaleDown,
+                      ),
+                  PaddedColumn(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    padding: const EdgeInsets.symmetric(
+                        vertical: Dimens.bioDetailsExpPaddingVertical),
+                    children: [
+                      TextView(
+                        text: name,
+                        style: Styles.headerStyle.copyWith(
+                          color: _c ?? Theme.of(context).primaryColor,
+                        ),
+                      ),
+                      TextView(
+                        text: _e.time,
+                        style: Styles.subheaderStyle.copyWith(
+                          color: (_c ?? Theme.of(context).colorScheme.onSurface)
+                              .withOpacity(.8),
+                          fontWeight: FontWeight.bold,
+                        ),
+                        spaced: true,
+                      ),
+                      TextView(
+                        text: major,
+                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                          color: Theme.of(context).colorScheme.onSurface,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      );
+    });
   }
 }
 
