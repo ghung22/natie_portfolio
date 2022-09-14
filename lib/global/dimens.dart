@@ -48,6 +48,18 @@ class Dimens {
   static const bioScoreSize = 116.0;
   static const bioScorePadding = 24.0;
 
+  static const bioDetailsContactPadding = bioDetailsContactSize / 4;
+  static const bioDetailsContactSize = 48.0;
+  static const bioDetailsExpPaddingHorizontal = 32.0;
+  static const bioDetailsExpPaddingVertical = bioDetailsScorePaddingVertical;
+  static const bioDetailsExpSize = 160.0;
+  static const bioDetailsPaddingVertical = projectDetailsPaddingVertical / 2;
+  static const bioDetailsPaddingHorizontal =
+      projectDetailsPaddingHorizontal / 2;
+  static const bioDetailsScorePaddingHorizontal = 64.0;
+  static const bioDetailsScorePaddingVertical = 12.0;
+  static const bioDetailsScoreSize = bioScoreSize * 2;
+
   static const btnElevation = 5.0;
   static const btnIconPaddingHorizontal = btnPaddingHorizontal / 2;
   static const btnPaddingHorizontal = btnPaddingVertical * 3;

@@ -47,6 +47,15 @@ class Styles {
   );
 
   // Content styles
+  static const TextStyle bioNameStyle = TextStyle(
+    fontSize: 40,
+    fontWeight: FontWeight.bold,
+  );
+  static const TextStyle bioDescriptionStyle = TextStyle(
+    fontSize: 16,
+    height: 1.5,
+  );
+
   static const TextStyle scoreNameStyle = TextStyle(
     fontFamily: Themes.fontDisplay,
     fontSize: 16,

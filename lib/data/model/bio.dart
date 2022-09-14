@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:natie_portfolio/data/model/experience.dart';
 
 import 'score.dart';
 
@@ -14,9 +15,11 @@ part 'bio.g.dart';
 /// * [description]       : WWho am I
 /// * [avatarUrl]         : My avatar picture
 /// * [birthdayTimestamp] : The timestamp of my birthday
+/// * [contact]           : My contact information
 /// * [colorHexes]        : Colors representing my style
 /// * [imageUrls]         : More photos of me in real life
 /// * [scores]            : A list of certificates and skills
+/// * [experience]        : A list of past education and work experiences
 ///
 /// **Getters:**
 /// * [colors]            : Convert [colorHexes]'s value to [Color]
@@ -31,9 +34,11 @@ class Bio {
   final String descriptionVi;
   final String avatarUrl;
   final int birthdayTimestamp;
+  final Map<String, String> contact;
   final List<int> colorHexes;
   final List<String> imageUrls;
   final List<Score> scores;
+  final List<Experience> experience;
 
   const Bio({
     this.title = '',
@@ -43,9 +48,11 @@ class Bio {
     this.descriptionVi = '',
     this.avatarUrl = '',
     this.birthdayTimestamp = 0,
+    this.contact = const {},
     this.colorHexes = const [0x00000000],
     this.imageUrls = const [],
     this.scores = const [],
+    this.experience = const [],
   });
 
   bool get isEmpty => this == const Bio();
