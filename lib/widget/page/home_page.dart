@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:natie_portfolio/data/model/project.dart';
 import 'package:natie_portfolio/global/mixin.dart';
 import 'package:natie_portfolio/global/router.dart';
 import 'package:natie_portfolio/global/strings.dart';
@@ -56,7 +57,7 @@ class _HomePageState extends State<HomePage> with PostFrameMixin {
 
   void _initAppBar() {
     _appBar = WebAppBar(
-      leading: NavBtn(scaffoldKey: _scaffoldKey),
+      // leading: NavBtn(scaffoldKey: _scaffoldKey),
       title: Observer(builder: (context) {
         Strings.isEn;
         return TextBtn(
@@ -70,14 +71,9 @@ class _HomePageState extends State<HomePage> with PostFrameMixin {
           child: TextView(textCallback: () => Strings.title),
         );
       }),
-      actions: [
-        IconBtn(
-          tooltipText: AppLocalizations.of(context)!.search,
-          child: const Icon(CupertinoIcons.search),
-          onPressed: () {},
-        ),
-        const LanguageBtn(),
-        const ThemeBtn(),
+      actions: const [
+        LanguageBtn(),
+        ThemeBtn(),
       ],
     );
   }
@@ -134,25 +130,35 @@ class _HomePageState extends State<HomePage> with PostFrameMixin {
       child: Padding(
         padding: const EdgeInsets.all(Dimens.drawerPadding),
         child: CardItem(
-          child: ListView(
-            children: [
-              DrawerHeader(
-                child: PaddedColumn(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  padding: const EdgeInsets.symmetric(
-                      vertical: Dimens.drawerItemPadding),
-                  children: [
-                    // App icon
-                    TextView.header(
-                      text: AppLocalizations.of(context)!.navigate_to,
-                      color: Theme.of(context).primaryColor,
-                    ),
-                  ],
+          child: Observer(builder: (context) {
+            final p = _projectStore?.projects ?? Projects();
+            return ListView(
+              children: [
+                DrawerHeader(
+                  child: PaddedColumn(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    padding: const EdgeInsets.symmetric(
+                        vertical: Dimens.drawerItemPadding),
+                    children: [
+                      // App icon
+                      TextView.header(
+                        text: AppLocalizations.of(context)!.navigate_to,
+                        color: Theme.of(context).primaryColor,
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            ],
-          ),
+                ...p.values.map((p) {
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: Dimens.drawerItemPadding),
+                    child: ProjectMiniItem(p),
+                  );
+                }),
+              ],
+            );
+          }),
         ),
       ),
     );

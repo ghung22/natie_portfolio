@@ -7,6 +7,7 @@ import 'package:natie_portfolio/widget/page/about_page.dart';
 import 'package:natie_portfolio/widget/page/debug_page.dart';
 import 'package:natie_portfolio/widget/page/home_page.dart';
 import 'package:natie_portfolio/widget/page/project_page.dart';
+import 'package:natie_portfolio/widget/page/projects_page.dart';
 
 import 'debug.dart';
 import 'vars.dart';
@@ -46,6 +47,10 @@ class Router {
               builder: (_) => Builder(builder: (context) {
                     return ProjectPage(project: settings.arguments as Project);
                   }));
+        case Routes.projects:
+          return AnimatedPageRoute(
+              builder: (_) =>
+                  Builder(builder: (context) => const ProjectsPage()));
 
         case Routes.debug:
           if (Debug.isProduction) {

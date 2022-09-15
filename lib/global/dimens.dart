@@ -97,9 +97,10 @@ class Dimens {
   static const projectDetailsTechPaddingVertical = 12.0;
   static const projectDetailsTechSize = 64.0;
 
-  static const projectItemPadding = 16.0;
   static const projectItemContentPadding = 4.0;
+  static const projectItemIconSize = 48.0;
   static const projectItemImageWidth = 160.0;
+  static const projectItemPadding = 16.0;
 
   static const roundedImageRadius = cardRadius;
 }

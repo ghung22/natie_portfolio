@@ -168,59 +168,73 @@ class RedContainer extends StatelessWidget {
 
 // region Project items
 
-class ProjectItem extends StatelessWidget {
+class ProjectMiniItem extends StatelessWidget {
   final Project project;
 
-  const ProjectItem(this.project, {Key? key}) : super(key: key);
+  const ProjectMiniItem(this.project, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Hero(
-      tag: '${Routes.project}/${project.id}',
-      child: CardItem(
-        onPressed: () =>
-            Navigator.of(context).pushNamed(Routes.project, arguments: project),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Expanded(
-              child: PaddedColumn(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                padding: const EdgeInsets.symmetric(
-                    vertical: Dimens.projectItemContentPadding),
-                children: [
-                  TextView.header(
-                    text: project.title,
-                    color: project.color,
-                  ),
-                  if (project.completionDate != null)
-                    TextView.subheader(
-                        textCallback: () =>
-                            DateFormat.yMMMMd(Strings.language.name)
-                                .format(project.completionDate!),
-                        color: project.color),
-                  Observer(builder: (context) {
-                    return TextView(
-                      text: Strings.isEn
-                          ? project.description
-                          : project.descriptionVi,
-                      spaced: true,
-                      textAlign: TextAlign.justify,
-                      softWrap: true,
-                    );
-                  }),
-                ],
+    return CardItem(
+      onPressed: () =>
+          Navigator.of(context).pushNamed(Routes.project, arguments: project),
+      color: project.color,
+      child: PaddedRow(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        padding: const EdgeInsets.symmetric(
+            horizontal: Dimens.projectItemContentPadding),
+        children: [
+          Builder(builder: (context) {
+            if (project.iconUrl.isEmpty) {
+              return const SizedBox(
+                width: Dimens.projectItemIconSize,
+                height: Dimens.projectItemIconSize,
+              );
+            }
+            return Container(
+              color: Colors.white,
+              decoration: const BoxDecoration(
+                shape: BoxShape.circle,
+                color: Colors.white,
               ),
+              child: RoundedImageView(
+                project.iconUrl,
+                width: Dimens.projectItemIconSize,
+                height: Dimens.projectItemIconSize,
+              ),
+            );
+          }),
+          Expanded(
+            child: PaddedColumn(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              padding: const EdgeInsets.symmetric(
+                  vertical: Dimens.projectItemContentPadding),
+              children: [
+                TextView.header(
+                  text: project.title,
+                  color: Colors.white,
+                ),
+                Observer(builder: (context) {
+                  Strings.isEn;
+                  if (project.author.isEmpty && project.authorVi.isEmpty) {
+                    return const Nothing();
+                  }
+                  var author =
+                      Strings.isEn ? project.author : project.authorVi;
+                  if (author.isEmpty) {
+                    author = Strings.isEn ? project.authorVi : project.author;
+                  }
+                  return TextView.subheader(
+                      text: author,
+                      color: Colors.white);
+                }),
+              ],
             ),
-            if (project.imageUrls.isNotEmpty)
-              RoundedImageView(
-                project.imageUrls[0],
-                width: Dimens.projectItemImageWidth,
-              ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -617,8 +631,8 @@ class _BioExperienceItemState extends State<BioExperienceItem> {
                       TextView(
                         text: major,
                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          color: Theme.of(context).colorScheme.onSurface,
-                        ),
+                              color: Theme.of(context).colorScheme.onSurface,
+                            ),
                       ),
                     ],
                   ),

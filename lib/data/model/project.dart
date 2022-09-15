@@ -111,6 +111,8 @@ class Projects {
 
   List<Project> get featured => _v.where((p) => p.featured).toList();
 
+  List<Project> get others => _v.where((p) => !p.featured).toList();
+
   void replaceWith({List<Project>? values, Projects? projects}) {
     if (projects != null) values = projects._v;
     if (values == null) return;
