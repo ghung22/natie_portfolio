@@ -82,6 +82,11 @@ class _AboutPageState extends State<AboutPage> with PostFrameMixin {
           _header,
           _scores,
           _experience,
+          IgnorePadding(
+            child: Observer(builder: (context) {
+              return WebFooter(color: _bioStore?.bio.colors.first);
+            }),
+          ),
         ],
       ),
     );
@@ -158,11 +163,12 @@ class _AboutPageState extends State<AboutPage> with PostFrameMixin {
                               SizedBox(
                                 width: Dimens.bioDetailsContactSize,
                                 height: Dimens.bioDetailsContactSize,
-                                child: IconBtn(
-                                  tooltipText: k,
-                                  onPressed: () => launchUrlString(v,
-                                      mode: LaunchMode.externalApplication),
-                                  child: Padding(
+                                child: Tooltip(
+                                  message: k,
+                                  child: ElevatedBtn(
+                                    color: Theme.of(context).colorScheme.surface,
+                                    onPressed: () => launchUrlString(v,
+                                        mode: LaunchMode.externalApplication),
                                     padding: const EdgeInsets.all(
                                         Dimens.cardPadding),
                                     child: SvgImageView(

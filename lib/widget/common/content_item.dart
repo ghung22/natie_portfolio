@@ -403,6 +403,7 @@ class _HostUrlItemState extends State<HostUrlItem> {
                   ),
                   const SizedBox(height: Dimens.projectDetailsFuncPadding),
                   TextBtn(
+                    hoverFeedback: false,
                     textStyle: TextStyle(color: _p.color),
                     onPressed: () => launchUrlString(_p.hostUrl,
                         mode: LaunchMode.externalApplication),

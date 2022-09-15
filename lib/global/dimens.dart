@@ -80,13 +80,16 @@ class Dimens {
   static const pageContentPaddingHorizontal = pageContentPaddingVertical;
   static const pageContentPaddingVertical = 12.0;
 
+  static const pageFooterPaddingHorizontal = 16.0;
+  static const pageFooterPaddingVertical = pageFooterPaddingHorizontal * 2;
+
   static const projectDetailsFuncHeight = 64.0;
   static const projectDetailsFuncOffset = .1;
   static const projectDetailsFuncPadding = 8.0;
   static const projectDetailsFuncWidth = 360.0;
   static const projectDetailsImgHeight = bannerHeight;
   static const projectDetailsImgWidth = 250;
-  static const projectDetailsImgPadding = 16.0;
+  static const projectDetailsImgPadding = 32.0;
   static const projectDetailsPaddingHorizontal = 36.0;
   static const projectDetailsPaddingVertical = 24.0;
   static const projectDetailsTechPaddingHorizontal = 64.0;

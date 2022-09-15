@@ -35,6 +35,7 @@
       }
     }
   },
+  "about_me": "About me",
   "author": "Made by",
   "back": "Back",
   "completion_date": "Completion date",
@@ -43,10 +44,12 @@
   "explore": "Explore more",
   "experience": "Work experience & Education",
   "featured_projects": "Featured Projects",
+  "home": "Home",
   "host": "Reference",
   "language": "Language",
   "navigate_to": "Navigate to",
   "navigation": "Navigation",
+  "projects": "My projects",
   "route_unknown": "No route found for {route}",
   "scoreboard": "See scoreboard",
   "scores": "Academic grades",

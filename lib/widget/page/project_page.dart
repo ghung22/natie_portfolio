@@ -109,7 +109,7 @@ class _ProjectPageState extends State<ProjectPage> with PostFrameMixin {
                 Center(child: HostUrlItem(_p)),
                 Observer(builder: (context) {
                   final dimenStore = context.read<DimenStore>();
-                  dimenStore.size;
+                  final w = dimenStore.width;
                   return CarouselSlider(
                       items: _p.imageUrls.map((url) {
                         return InkWell(
@@ -123,7 +123,7 @@ class _ProjectPageState extends State<ProjectPage> with PostFrameMixin {
                         pageSnapping: false,
                         viewportFraction: (Dimens.projectDetailsImgWidth +
                                 Dimens.projectDetailsImgPadding) /
-                            dimenStore.width,
+                            w,
                         enableInfiniteScroll: false,
                         padEnds: false,
                         autoPlay: true,
@@ -148,18 +148,6 @@ class _ProjectPageState extends State<ProjectPage> with PostFrameMixin {
             children: List.generate(
                 min(_p.functionalities.length, _p.functionalitiesVi.length),
                 (i) => FunctionalityItem(_p, i)),
-          ),
-
-          // Learned
-          TextView.header(
-            text: AppLocalizations.of(context)!.what_i_learned(_p.title),
-            color: _p.color,
-          ),
-          Wrap(
-            spacing: Dimens.projectDetailsFuncPadding,
-            runSpacing: Dimens.projectDetailsFuncPadding,
-            children: List.generate(min(_p.learned.length, _p.learnedVi.length),
-                (i) => LearnedItem(_p, i)),
           ),
 
           // Technology used
@@ -191,6 +179,19 @@ class _ProjectPageState extends State<ProjectPage> with PostFrameMixin {
               ],
             ),
           ),
+
+          // Learned
+          TextView.header(
+            text: AppLocalizations.of(context)!.what_i_learned(_p.title),
+            color: _p.color,
+          ),
+          Wrap(
+            spacing: Dimens.projectDetailsFuncPadding,
+            runSpacing: Dimens.projectDetailsFuncPadding,
+            children: List.generate(min(_p.learned.length, _p.learnedVi.length),
+                (i) => LearnedItem(_p, i)),
+          ),
+          WebFooter(color: _p.color),
         ],
       ),
     );

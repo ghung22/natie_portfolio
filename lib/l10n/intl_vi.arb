@@ -1,4 +1,5 @@
 {
+  "about_me": "Về tôi",
   "author": "Thực hiện bởi",
   "back": "Quay lại",
   "completion_date": "Ngày hoàn thành",
@@ -7,10 +8,12 @@
   "explore": "Khám phá thêm",
   "experience": "Kinh nghiệm làm việc & Học tập",
   "featured_projects": "Các đề tài Nổi bật",
+  "home": "Trang chủ",
   "host": "Tham khảo",
   "language": "Ngôn ngữ",
   "navigate_to": "Đi đến trang",
   "navigation": "Điều hướng",
+  "projects": "Các đề tài của tôi",
   "route_unknown": "Không tìm thấy đường dẫn {route}",
   "scoreboard": "Xem bảng điểm",
   "scores": "Điểm số học tập",

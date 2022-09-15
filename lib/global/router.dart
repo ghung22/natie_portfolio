@@ -16,8 +16,9 @@ class Routes {
   static const about = '/about';
   static const debug = '/debug';
   static const project = '/project';
+  static const projects = '/projects';
 
-  static const list = [home, about, debug, project];
+  static const list = [home, about, debug, project, projects];
 }
 
 class Router {
