@@ -78,6 +78,8 @@ class _DebugPageState extends State<DebugPage> with PostFrameMixin {
           _infoSect,
           // Testing grounds
           _testSect,
+          // Footer
+          const IgnorePadding(child: WebFooter()),
         ],
       ),
     );

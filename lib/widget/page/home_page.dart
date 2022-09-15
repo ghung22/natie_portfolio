@@ -122,7 +122,7 @@ class _HomePageState extends State<HomePage> with PostFrameMixin {
                     .toList(),
               ),
             ),
-            const SizedBox(height: Dimens.pageContentPaddingHorizontal),
+            const WebFooter(),
           ],
         );
       }),
