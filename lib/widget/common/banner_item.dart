@@ -430,8 +430,10 @@ class BioBanner extends StatelessWidget {
                   color: Colors.white,
                   child: Padding(
                     padding: const EdgeInsets.all(Dimens.cardPadding),
-                    child:
-                        TextView(text: AppLocalizations.of(context)!.see_more),
+                    child: TextView(
+                      text: AppLocalizations.of(context)!.see_more,
+                      color: Colors.black,
+                    ),
                   ),
                 ),
               );
