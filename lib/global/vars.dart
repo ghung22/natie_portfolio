@@ -17,19 +17,19 @@ class Vars {
   static const assetContact = '$assetRoot/contact';
   static const assetTech = '$assetRoot/tech';
   static const assets = {
-    'android': '$assetTech/android.svg',
-    'firebase': '$assetTech/firebase.svg',
+    'android': '$assetTech/android.png',
+    'firebase': '$assetTech/firebase.png',
     'fit': '$assetBrand/fit.png',
-    'flutter': '$assetTech/flutter.svg',
-    'github': '$assetContact/github.svg',
-    'gmail': '$assetContact/gmail.svg',
-    'hcmus': '$assetBrand/hcmus.svg',
-    'java': '$assetTech/java.svg',
-    'jitsi': '$assetTech/jitsi.svg',
-    'markdown': '$assetTech/markdown.svg',
+    'flutter': '$assetTech/flutter.png',
+    'github': '$assetContact/github.png',
+    'gmail': '$assetContact/gmail.png',
+    'hcmus': '$assetBrand/hcmus.png',
+    'java': '$assetTech/java.png',
+    'jitsi': '$assetTech/jitsi.png',
+    'markdown': '$assetTech/markdown.png',
     'ml_kit': '$assetTech/ml_kit.png',
-    'mongodb': '$assetTech/mongodb.svg',
-    'moodle': '$assetTech/moodle.svg',
-    'sqlite': '$assetTech/sqlite.svg',
+    'mongodb': '$assetTech/mongodb.png',
+    'moodle': '$assetTech/moodle.png',
+    'sqlite': '$assetTech/sqlite.png',
   };
 }
