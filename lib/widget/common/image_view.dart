@@ -164,7 +164,11 @@ class SvgImageView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return ImageView(src,
+        errorWidget: errorWidget, width: width, height: height, fit: fit);
     try {
+      if (src.endsWith('svg')) {
+      }
       if (Uri.tryParse(src) == null) {
         return SvgPicture.asset(src,
             width: width,

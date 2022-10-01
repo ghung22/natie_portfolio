@@ -471,7 +471,6 @@ class TechItem extends StatelessWidget {
         color: Colors.white,
         padding: const EdgeInsets.all(Dimens.projectDetailsTechPaddingInternal),
         child: SvgImageView(src,
-            width: Dimens.projectDetailsTechSize,
             height: Dimens.projectDetailsTechSize,
             fit: BoxFit.fitHeight),
       ),
