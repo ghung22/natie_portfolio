@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:natie_portfolio/global/dimens.dart';
 
 import 'content_item.dart';
@@ -24,12 +23,15 @@ class ImageView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (Uri.tryParse(src) == null) return errorWidget ?? const Nothing();
-    final img = NetworkImage(src)
-      ..resolve(const ImageConfiguration())
-          .addListener(ImageStreamListener((_, __) {
-        onFinish?.call();
-      }));
+    ImageProvider img;
+    if (src.startsWith('http')) {
+      img = NetworkImage(src);
+    } else {
+      img = AssetImage(src);
+    }
+    img
+        .resolve(const ImageConfiguration())
+        .addListener(ImageStreamListener((_, __) => onFinish?.call()));
     return Image(
       image: img,
       width: width,
@@ -151,40 +153,9 @@ class SvgImageView extends StatelessWidget {
     this.fit = BoxFit.contain,
   }) : super(key: key);
 
-  Widget _placeholderBuilder(context) => SizedBox(
-        width: width,
-        height: height,
-        child: const Center(
-          child: Padding(
-            padding: EdgeInsets.all(12),
-            child: CircularProgressIndicator(),
-          ),
-        ),
-      );
-
   @override
   Widget build(BuildContext context) {
     return ImageView(src,
         errorWidget: errorWidget, width: width, height: height, fit: fit);
-    try {
-      if (src.endsWith('svg')) {
-      }
-      if (Uri.tryParse(src) == null) {
-        return SvgPicture.asset(src,
-            width: width,
-            height: height,
-            fit: fit,
-            placeholderBuilder: _placeholderBuilder);
-      } else {
-        return SvgPicture.network(src,
-            width: width,
-            height: height,
-            fit: fit,
-            placeholderBuilder: _placeholderBuilder);
-      }
-    } catch (e) {
-      return ImageView(src,
-          errorWidget: errorWidget, width: width, height: height, fit: fit);
-    }
   }
 }
