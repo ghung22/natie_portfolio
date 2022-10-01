@@ -3,9 +3,7 @@
 import 'package:flutter/foundation.dart';
 
 class Debug {
-  static bool get isProduction => true;
-
-  //static bool get isProduction => Uri.base.path.contains('natie-portfolio');
+  static bool get isProduction => Uri.base.path.contains('natie-portfolio');
 
   static bool get isTesting => !isProduction;
 

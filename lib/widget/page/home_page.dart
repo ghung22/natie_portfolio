@@ -1,7 +1,6 @@
 // ignore: avoid_web_libraries_in_flutter
 import 'dart:html';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -57,7 +56,7 @@ class _HomePageState extends State<HomePage> with PostFrameMixin {
 
   void _initAppBar() {
     _appBar = WebAppBar(
-      // leading: NavBtn(scaffoldKey: _scaffoldKey),
+      leading: NavBtn(scaffoldKey: _scaffoldKey),
       title: Observer(builder: (context) {
         Strings.isEn;
         return TextBtn(
@@ -135,20 +134,29 @@ class _HomePageState extends State<HomePage> with PostFrameMixin {
             final p = _projectStore?.projects ?? Projects();
             return ListView(
               children: [
-                DrawerHeader(
-                  child: PaddedColumn(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    padding: const EdgeInsets.symmetric(
-                        vertical: Dimens.drawerItemPadding),
-                    children: [
-                      // App icon
-                      TextView.header(
-                        text: AppLocalizations.of(context)!.navigate_to,
-                        color: Theme.of(context).primaryColor,
+                Stack(
+                  children: [
+                    DrawerHeader(
+                      child: PaddedColumn(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        padding: const EdgeInsets.symmetric(
+                            vertical: Dimens.drawerItemPadding),
+                        children: [
+                          // App icon
+                          TextView.header(
+                            text: AppLocalizations.of(context)!.projects,
+                            color: Theme.of(context).primaryColor,
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.symmetric(
+                          vertical: Dimens.drawerItemPadding),
+                      child: BioMiniItem(),
+                    ),
+                  ],
                 ),
                 ...p.values.map((p) {
                   return Padding(

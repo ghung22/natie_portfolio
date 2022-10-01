@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:natie_portfolio/global/debug.dart';
 import 'package:natie_portfolio/global/mixin.dart';
 import 'package:natie_portfolio/global/router.dart';
 import 'package:natie_portfolio/global/strings.dart';
@@ -20,7 +19,9 @@ import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 class AboutPage extends StatefulWidget {
-  const AboutPage({Key? key}) : super(key: key);
+  final bool disableAnimation;
+
+  const AboutPage({Key? key, this.disableAnimation = false}) : super(key: key);
 
   @override
   State<AboutPage> createState() => _AboutPageState();
@@ -107,16 +108,15 @@ class _AboutPageState extends State<AboutPage> with PostFrameMixin {
             children: [
               ConstrainedBox(
                 constraints: const BoxConstraints(maxHeight: Dimens.bioHeight),
-                child: Hero(
-                  tag: '${Routes.about}/avatar',
-                  child: DecoratedBox(
+                child: Builder(builder: (context) {
+                  final ava = DecoratedBox(
                     decoration: ShapeDecoration(
                         shape: CircleBorder(
-                      side: BorderSide(
-                        color: bio.colors.first,
-                        width: Dimens.bioAvatarBorderSize,
-                      ),
-                    )),
+                          side: BorderSide(
+                            color: bio.colors.first,
+                            width: Dimens.bioAvatarBorderSize,
+                          ),
+                        )),
                     child: Padding(
                       padding: const EdgeInsets.all(Dimens.bioAvatarPadding),
                       child: FittedBox(
@@ -128,8 +128,13 @@ class _AboutPageState extends State<AboutPage> with PostFrameMixin {
                         ),
                       ),
                     ),
-                  ),
-                ),
+                  );
+                  if (widget.disableAnimation) return ava;
+                  return Hero(
+                    tag: '${Routes.about}/avatar',
+                    child: ava,
+                  );
+                }),
               ),
               PaddedColumn(
                 padding: const EdgeInsets.symmetric(
@@ -166,7 +171,8 @@ class _AboutPageState extends State<AboutPage> with PostFrameMixin {
                                 child: Tooltip(
                                   message: k,
                                   child: ElevatedBtn(
-                                    color: Theme.of(context).colorScheme.surface,
+                                    color:
+                                        Theme.of(context).colorScheme.surface,
                                     onPressed: () => launchUrlString(v,
                                         mode: LaunchMode.externalApplication),
                                     padding: const EdgeInsets.all(
