@@ -11,6 +11,7 @@ class _Constants {
     Column,
     Row,
     ListView,
+    Expanded,
   ];
 }
 

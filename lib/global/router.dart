@@ -38,14 +38,31 @@ class Router {
                   }));
         case Routes.about:
           return AnimatedPageRoute(
-              builder: (_) => Builder(builder: (context) => const AboutPage()));
+              builder: (_) => Builder(builder: (context) {
+                if (settings.arguments != null) {
+                  return AboutPage(
+                    disableAnimation: settings.arguments as bool,
+                  );
+                }
+                return const AboutPage();
+              }));
         case Routes.project:
-          if (settings.arguments is! Project) {
-            throw 'Type ${settings.arguments.runtimeType} is not Project';
+          if (settings.arguments is! Project &&
+              settings.arguments is! Map<String, dynamic>) {
+            throw 'Type ${settings.arguments.runtimeType} is not valid';
           }
           return AnimatedPageRoute(
               builder: (_) => Builder(builder: (context) {
-                    return ProjectPage(project: settings.arguments as Project);
+                    if (settings.arguments is Project) {
+                      return ProjectPage(
+                          project: settings.arguments as Project);
+                    } else {
+                      final args = settings.arguments as Map<String, dynamic>;
+                      return ProjectPage(
+                        project: args['project'],
+                        disableAnimation: args['disableAnimation'],
+                      );
+                    }
                   }));
         case Routes.projects:
           return AnimatedPageRoute(

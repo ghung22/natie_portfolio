@@ -24,8 +24,13 @@ import 'package:url_launcher/url_launcher_string.dart';
 
 class ProjectPage extends StatefulWidget {
   final Project project;
+  final bool disableAnimation;
 
-  const ProjectPage({Key? key, required this.project}) : super(key: key);
+  const ProjectPage({
+    Key? key,
+    required this.project,
+    this.disableAnimation = false,
+  }) : super(key: key);
 
   @override
   State<ProjectPage> createState() => _ProjectPageState();
@@ -202,44 +207,52 @@ class _ProjectPageState extends State<ProjectPage> with PostFrameMixin {
     _initAppBar();
     _initBody();
 
-    return Stack(
-      children: [
-        Hero(
-          tag: '${Routes.project}/${_p.id}/banner',
-          child: Scaffold(
-            backgroundColor: Colors.transparent,
-            appBar: AppBar(
-              toolbarOpacity: 0,
-              backgroundColor: Colors.transparent,
-              elevation: 0,
-              leading: const Nothing(),
-            ),
-            body: Observer(builder: (context) {
-              return AnimatedOpacity(
-                opacity: _introAni.willStart ? 0 : 1,
-                duration: Vars.animationFast,
-                child: Container(
-                  height: Dimens.bannerHeight,
-                  color: _p.color,
-                ),
-              );
-            }),
-          ),
-        ),
-        Hero(
-          tag: '${Routes.project}/${_p.id}',
-          child: Card(
-            color: Colors.transparent,
-            elevation: 0,
-            margin: EdgeInsets.zero,
-            shape: const RoundedRectangleBorder(side: BorderSide.none),
+    return Builder(builder: (context) {
+      if (widget.disableAnimation) {
+        return Scaffold(
+          appBar: _appBar,
+          body: _body,
+        );
+      }
+      return Stack(
+        children: [
+          Hero(
+            tag: '${Routes.project}/${_p.id}/banner',
             child: Scaffold(
-              appBar: _appBar,
-              body: _body,
+              backgroundColor: Colors.transparent,
+              appBar: AppBar(
+                toolbarOpacity: 0,
+                backgroundColor: Colors.transparent,
+                elevation: 0,
+                leading: const Nothing(),
+              ),
+              body: Observer(builder: (context) {
+                return AnimatedOpacity(
+                  opacity: _introAni.willStart ? 0 : 1,
+                  duration: Vars.animationFast,
+                  child: Container(
+                    height: Dimens.bannerHeight,
+                    color: _p.color,
+                  ),
+                );
+              }),
             ),
           ),
-        ),
-      ],
-    );
+          Hero(
+            tag: '${Routes.project}/${_p.id}',
+            child: Card(
+              color: Colors.transparent,
+              elevation: 0,
+              margin: EdgeInsets.zero,
+              shape: const RoundedRectangleBorder(side: BorderSide.none),
+              child: Scaffold(
+                appBar: _appBar,
+                body: _body,
+              ),
+            ),
+          ),
+        ],
+      );
+    });
   }
 }

@@ -73,6 +73,7 @@ class Dimens {
   static const drawerPadding = 16.0;
   static const drawerWidth = 400.0;
   static const drawerItemPadding = 4.0;
+  static const drawerAvatarSize = 64.0;
 
   static const iconBtnSize = 20.0;
 

@@ -4,8 +4,6 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:natie_portfolio/global/mixin.dart';
 import 'package:natie_portfolio/global/router.dart';
-import 'package:natie_portfolio/global/strings.dart';
-import 'package:natie_portfolio/global/styles.dart';
 import 'package:natie_portfolio/global/vars.dart';
 import 'package:natie_portfolio/store/common/animation_store.dart';
 import 'package:natie_portfolio/store/data/project_store.dart';
@@ -13,12 +11,10 @@ import 'package:natie_portfolio/widget/common/banner_item.dart';
 import 'package:natie_portfolio/widget/common/buttons.dart';
 import 'package:natie_portfolio/global/dimens.dart';
 import 'package:natie_portfolio/widget/common/content_item.dart';
-import 'package:natie_portfolio/widget/common/image_view.dart';
 import 'package:natie_portfolio/widget/common/list_view.dart';
 import 'package:natie_portfolio/widget/common/text_view.dart';
 import 'package:natie_portfolio/widget/common/web_item.dart';
 import 'package:provider/provider.dart';
-import 'package:url_launcher/url_launcher_string.dart';
 
 class ProjectsPage extends StatefulWidget {
   const ProjectsPage({Key? key}) : super(key: key);
@@ -108,7 +104,12 @@ class _ProjectsPageState extends State<ProjectsPage> with PostFrameMixin {
               child: ConstrainedBox(
                 constraints:
                     const BoxConstraints(maxWidth: Dimens.pageContentMaxWidth),
-                child: ProjectBanner(project: p),
+                child: ProjectBanner(
+                  project: p,
+                  onAction: () => Navigator.of(context)
+                      .pushNamed(Routes.project, arguments: p),
+                  isHomePage: true,
+                ),
               ),
             );
           }),
@@ -131,8 +132,13 @@ class _ProjectsPageState extends State<ProjectsPage> with PostFrameMixin {
               color: p.color,
               child: ConstrainedBox(
                 constraints:
-                const BoxConstraints(maxWidth: Dimens.pageContentMaxWidth),
-                child: ProjectBanner(project: p, isHomePage: true),
+                    const BoxConstraints(maxWidth: Dimens.pageContentMaxWidth),
+                child: ProjectBanner(
+                  project: p,
+                  onAction: () => Navigator.of(context)
+                      .pushNamed(Routes.project, arguments: p),
+                  isHomePage: true,
+                ),
               ),
             );
           }),

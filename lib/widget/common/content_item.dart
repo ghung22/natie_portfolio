@@ -10,7 +10,9 @@ import 'package:natie_portfolio/global/strings.dart';
 import 'package:natie_portfolio/data/model/project.dart';
 import 'package:natie_portfolio/global/styles.dart';
 import 'package:natie_portfolio/store/common/animation_store.dart';
+import 'package:natie_portfolio/store/data/bio_store.dart';
 import 'package:natie_portfolio/widget/common/buttons.dart';
+import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 
@@ -176,41 +178,49 @@ class ProjectMiniItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CardItem(
-      onPressed: () =>
-          Navigator.of(context).pushNamed(Routes.project, arguments: project),
+      onPressed: () {
+        Navigator.of(context).pushNamed(
+          Routes.project,
+          arguments: <String, dynamic>{
+            'project': project,
+            'disableAnimation': true,
+          },
+        );
+      },
       color: project.color,
       child: PaddedRow(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         padding: const EdgeInsets.symmetric(
             horizontal: Dimens.projectItemContentPadding),
         children: [
-          Builder(builder: (context) {
-            if (project.iconUrl.isEmpty) {
-              return const SizedBox(
-                width: Dimens.projectItemIconSize,
-                height: Dimens.projectItemIconSize,
-              );
-            }
-            return Container(
+          Container(
+            decoration: const BoxDecoration(
+              shape: BoxShape.circle,
               color: Colors.white,
-              decoration: const BoxDecoration(
-                shape: BoxShape.circle,
-                color: Colors.white,
-              ),
-              child: RoundedImageView(
+            ),
+            child: Builder(builder: (context) {
+              if (project.iconUrl.isEmpty) {
+                return Container(
+                  color: Colors.white,
+                  width: Dimens.projectItemIconSize,
+                  height: Dimens.projectItemIconSize,
+                );
+              }
+              return RoundedImageView(
                 project.iconUrl,
                 width: Dimens.projectItemIconSize,
                 height: Dimens.projectItemIconSize,
-              ),
-            );
-          }),
+              );
+            }),
+          ),
           Expanded(
             child: PaddedColumn(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               padding: const EdgeInsets.symmetric(
+                  horizontal: Dimens.projectItemContentPadding,
                   vertical: Dimens.projectItemContentPadding),
               children: [
                 TextView.header(
@@ -222,14 +232,11 @@ class ProjectMiniItem extends StatelessWidget {
                   if (project.author.isEmpty && project.authorVi.isEmpty) {
                     return const Nothing();
                   }
-                  var author =
-                      Strings.isEn ? project.author : project.authorVi;
+                  var author = Strings.isEn ? project.author : project.authorVi;
                   if (author.isEmpty) {
                     author = Strings.isEn ? project.authorVi : project.author;
                   }
-                  return TextView.subheader(
-                      text: author,
-                      color: Colors.white);
+                  return TextView.subheader(text: author, color: Colors.white);
                 }),
               ],
             ),
@@ -471,8 +478,7 @@ class TechItem extends StatelessWidget {
         color: Colors.white,
         padding: const EdgeInsets.all(Dimens.projectDetailsTechPaddingInternal),
         child: SvgImageView(src,
-            height: Dimens.projectDetailsTechSize,
-            fit: BoxFit.fitHeight),
+            height: Dimens.projectDetailsTechSize, fit: BoxFit.fitHeight),
       ),
     );
   }
@@ -481,6 +487,104 @@ class TechItem extends StatelessWidget {
 // endregion
 
 // region Bio items
+
+class BioMiniItem extends StatelessWidget {
+  const BioMiniItem({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Observer(builder: (context) {
+      final bioStore = context.read<BioStore>();
+      final bio = bioStore.bio;
+      return PaddedRow(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        padding: const EdgeInsets.symmetric(horizontal: Dimens.drawerPadding),
+        children: [
+          InkWell(
+            splashFactory: NoSplash.splashFactory,
+            hoverColor: Colors.transparent,
+            highlightColor: Colors.transparent,
+            onTap: () =>
+                Navigator.of(context).pushNamed(Routes.about, arguments: true),
+            child: DecoratedBox(
+              decoration: ShapeDecoration(
+                  shape: CircleBorder(
+                side: BorderSide(
+                  color: bio.colors.first,
+                  width: Dimens.bioAvatarBorderSize,
+                ),
+              )),
+              child: Padding(
+                padding: const EdgeInsets.all(Dimens.bioAvatarPadding),
+                child: FittedBox(
+                  child: CircleImageView(
+                    bio.avatarUrl,
+                    width: Dimens.drawerAvatarSize,
+                    height: Dimens.drawerAvatarSize,
+                  ),
+                ),
+              ),
+            ),
+          ),
+          Expanded(
+            child: PaddedColumn(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              padding: const EdgeInsets.symmetric(
+                  horizontal: Dimens.projectItemContentPadding,
+                  vertical: Dimens.projectItemContentPadding),
+              children: [
+                TextBtn(
+                  hoverFeedback: false,
+                  onPressed: () => Navigator.of(context)
+                      .pushNamed(Routes.about, arguments: true),
+                  padding: EdgeInsets.zero,
+                  child: TextView.header(
+                    text: bio.name,
+                    color: bio.colors.first,
+                  ),
+                ),
+                Wrap(
+                  spacing: Dimens.bioDetailsContactPadding,
+                  runSpacing: Dimens.bioDetailsContactPadding,
+                  children: bio.contact
+                      .map((k, v) {
+                        return MapEntry(
+                          k,
+                          SizedBox(
+                            width: Dimens.bioDetailsContactSize,
+                            height: Dimens.bioDetailsContactSize,
+                            child: Tooltip(
+                              message: k,
+                              child: ElevatedBtn(
+                                color: Theme.of(context).colorScheme.surface,
+                                padding:
+                                    const EdgeInsets.all(Dimens.cardPadding),
+                                onPressed: () => launchUrlString(v,
+                                    mode: LaunchMode.externalApplication),
+                                child: SvgImageView(
+                                  Vars.assets[k.toLowerCase()] ?? '',
+                                  width: Dimens.bioDetailsContactSize,
+                                  height: Dimens.bioDetailsContactSize,
+                                ),
+                              ),
+                            ),
+                          ),
+                        );
+                      })
+                      .values
+                      .toList(),
+                ),
+              ],
+            ),
+          ),
+        ],
+      );
+    });
+  }
+}
 
 class BioScoreItem extends StatefulWidget {
   final Score score;
