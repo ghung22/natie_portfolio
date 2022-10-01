@@ -82,6 +82,7 @@ class _HomePageState extends State<HomePage> with PostFrameMixin {
     _body = SingleChildScrollView(
       controller: _scrollController,
       child: Observer(builder: (context) {
+        if (_projectStore!.projects.isEmpty) return const Nothing();
         return PaddedColumn(
           padding:
               const EdgeInsets.symmetric(vertical: Dimens.projectItemPadding),

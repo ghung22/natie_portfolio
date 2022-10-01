@@ -116,29 +116,38 @@ class _WebFooterState extends State<WebFooter> with PostFrameMixin {
     _initNavigation();
     _initProjects();
     _initContact();
-    _body = Observer(builder: (context) {
-      if (Dimens.isSmall) {
-        return Wrap(
-          children: [
-            _navigation,
-            _projects,
-            _contact,
-          ],
-        );
-      }
-      return Padding(
-        padding: const EdgeInsets.symmetric(
-            horizontal: Dimens.pageFooterPaddingHorizontal),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Expanded(child: _navigation),
-            Expanded(child: _projects),
-            Expanded(child: _contact),
-          ],
+    _body = Column(
+      children: [
+        Observer(builder: (context) {
+          if (Dimens.isSmall) {
+            return Wrap(
+              children: [
+                _navigation,
+                _projects,
+                _contact,
+              ],
+            );
+          }
+          return Padding(
+            padding: const EdgeInsets.symmetric(
+                horizontal: Dimens.pageFooterPaddingHorizontal),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(child: _navigation),
+                Expanded(child: _projects),
+                Expanded(child: _contact),
+              ],
+            ),
+          );
+        }),
+        const SizedBox(height: Dimens.pageContentPaddingVertical),
+        TextView.footer(
+          text: AppLocalizations.of(context)!.copyright,
+          softWrap: true,
         ),
-      );
-    });
+      ],
+    );
   }
 
   void _initNavigation() {
@@ -190,6 +199,7 @@ class _WebFooterState extends State<WebFooter> with PostFrameMixin {
   void _initProjects() {
     _projects = Observer(builder: (context) {
       final p = _projectStore?.projects ?? Projects();
+      if (p.isEmpty) return const Nothing();
       return PaddedColumn(
         crossAxisAlignment: CrossAxisAlignment.start,
         padding: const EdgeInsets.symmetric(
