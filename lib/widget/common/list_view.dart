@@ -24,14 +24,14 @@ class PaddedColumn extends StatelessWidget {
   final List<Widget> children;
 
   const PaddedColumn({
-    Key? key,
+    super.key,
     required this.padding,
     this.mainAxisAlignment = MainAxisAlignment.start,
     this.mainAxisSize = MainAxisSize.max,
     this.crossAxisAlignment = CrossAxisAlignment.center,
     this.paddingStartAndEnd = true,
     this.children = const <Widget>[],
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -63,14 +63,14 @@ class PaddedRow extends StatelessWidget {
   final List<Widget> children;
 
   const PaddedRow({
-    Key? key,
+    super.key,
     required this.padding,
     this.mainAxisAlignment = MainAxisAlignment.start,
     this.mainAxisSize = MainAxisSize.max,
     this.crossAxisAlignment = CrossAxisAlignment.center,
     this.paddingStartAndEnd = true,
     this.children = const <Widget>[],
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -95,7 +95,7 @@ class PaddedRow extends StatelessWidget {
 class IgnorePadding extends StatelessWidget {
   final Widget child;
 
-  const IgnorePadding({Key? key, required this.child}) : super(key: key);
+  const IgnorePadding({super.key, required this.child});
 
   @override
   Widget build(BuildContext context) => child;

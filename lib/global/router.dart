@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:natie_portfolio/data/model/project.dart';
 import 'package:natie_portfolio/main.dart';
 import 'package:natie_portfolio/widget/common/helper/snackbar.dart';
@@ -9,6 +8,7 @@ import 'package:natie_portfolio/widget/page/home_page.dart';
 import 'package:natie_portfolio/widget/page/project_page.dart';
 import 'package:natie_portfolio/widget/page/projects_page.dart';
 
+import '../l10n/app_localizations.dart';
 import 'debug.dart';
 import 'vars.dart';
 
@@ -72,7 +72,7 @@ class Router {
         case Routes.debug:
           if (Debug.isProduction) {
             debugPrint('Debug page is not available in production');
-            return generateRoute(settings.copyWith(name: Routes.home));
+            return generateRoute(RouteSettings(name: Routes.home, arguments: settings.arguments));
           }
           return AnimatedPageRoute(
               builder: (_) => Builder(builder: (context) {
@@ -100,9 +100,9 @@ class AnimatedPageRoute extends MaterialPageRoute {
   final Duration duration;
 
   AnimatedPageRoute({
-    required WidgetBuilder builder,
+    required super.builder,
     this.duration = Vars.animationSluggish,
-  }) : super(builder: builder);
+  });
 
   @override
   Duration get transitionDuration => duration;

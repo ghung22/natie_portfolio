@@ -11,13 +11,13 @@ class BioService {
       .doc('bio')
       .set(b.toJson())
       .then((v) => Firestore.onDone('setBio'))
-      .onError((e, st) => Firestore.onError('setBio', e, st));
+      .onError((e, st) => Firestore.onQueryError('setBio', e, st));
 
   static Future<Bio> getBio() async {
     final data = await bio
         .doc('bio')
         .get()
-        .onError((e, st) => Firestore.onError('getBio', e, st));
+        .onError((e, st) => Firestore.onDocumentError('getBio', e, st));
     final d = data.data();
     if (d == null) throw 'Bio not exist in Firestore';
     Firestore.onDone('getBio', d);

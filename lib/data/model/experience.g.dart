@@ -7,15 +7,15 @@ part of 'experience.dart';
 // **************************************************************************
 
 Experience _$ExperienceFromJson(Map<String, dynamic> json) => Experience(
-      name: json['name'] as String?,
-      nameVi: json['nameVi'] as String?,
-      time: json['time'] as String?,
-      major: json['major'] as String?,
-      majorVi: json['majorVi'] as String?,
-      imageUrls: (json['imageUrls'] as List<dynamic>?)
-          ?.map((e) => e as String)
-          .toList(),
-    );
+  name: json['name'] as String?,
+  nameVi: json['nameVi'] as String?,
+  time: json['time'] as String?,
+  major: json['major'] as String?,
+  majorVi: json['majorVi'] as String?,
+  imageUrls: (json['imageUrls'] as List<dynamic>?)
+      ?.map((e) => e as String)
+      .toList(),
+);
 
 Map<String, dynamic> _$ExperienceToJson(Experience instance) =>
     <String, dynamic>{

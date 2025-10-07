@@ -1,6 +1,5 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:natie_portfolio/global/debug.dart';
 import 'package:natie_portfolio/store/global/dimen_store.dart';
@@ -13,6 +12,7 @@ import 'global/router.dart' as rt;
 import 'global/strings.dart';
 import 'global/styles.dart';
 import 'global/vars.dart';
+import 'l10n/app_localizations.dart';
 import 'store/data/bio_store.dart';
 import 'store/data/project_store.dart';
 import 'store/global/language_store.dart';
@@ -37,9 +37,9 @@ void main() async {
 }
 
 class NatiePortfolio extends StatelessWidget {
-  const NatiePortfolio({Key? key}) : super(key: key);
+  const NatiePortfolio({super.key});
 
-  static init(BuildContext context) {
+  static void init(BuildContext context) {
     Dimens.init(context);
     Firestore.init(context);
     Strings.init(context);

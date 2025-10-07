@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:natie_portfolio/data/model/bio.dart';
 import 'package:natie_portfolio/data/model/project.dart';
@@ -13,6 +12,7 @@ import 'package:natie_portfolio/store/data/project_store.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
+import '../../l10n/app_localizations.dart';
 import 'buttons.dart';
 import 'content_item.dart';
 import 'image_view.dart';
@@ -32,7 +32,7 @@ class WebAppBar extends StatelessWidget implements PreferredSizeWidget {
   final double? leadingWidth;
 
   const WebAppBar({
-    Key? key,
+    super.key,
     this.leading,
     this.automaticallyImplyLeading = false,
     this.title,
@@ -43,7 +43,7 @@ class WebAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.toolbarOpacity = 1.0,
     this.bottomOpacity = 1.0,
     this.leadingWidth,
-  }) : super(key: key);
+  });
 
   @override
   PreferredSizeWidget build(BuildContext context) {
@@ -85,7 +85,7 @@ class WebAppBar extends StatelessWidget implements PreferredSizeWidget {
 class WebFooter extends StatefulWidget {
   final Color? color;
 
-  const WebFooter({Key? key, this.color}) : super(key: key);
+  const WebFooter({super.key, this.color});
 
   @override
   State<WebFooter> createState() => _WebFooterState();

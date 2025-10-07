@@ -10,20 +10,17 @@ import 'package:provider/provider.dart';
 // TODO: (When change lang + When returned from ProjectPage)
 class AnimatedFadeSlide extends ImplicitlyAnimatedWidget {
   const AnimatedFadeSlide({
-    Key? key,
+    super.key,
     required this.child,
     required this.offset,
     required this.opacity,
     bool disableAnimation = false,
     Duration duration = Vars.animationFast,
-    Curve curve = Curves.linear,
-    VoidCallback? onEnd,
+    super.curve,
+    super.onEnd,
   })  : assert(opacity >= 0.0 && opacity <= 1.0),
         super(
-            key: key,
-            curve: curve,
-            duration: !disableAnimation ? duration : Duration.zero,
-            onEnd: onEnd);
+            duration: !disableAnimation ? duration : Duration.zero);
 
   final Widget child;
   final Offset offset;
@@ -76,14 +73,14 @@ class AnimatedHover extends StatefulWidget {
   final bool feedback;
 
   const AnimatedHover({
-    Key? key,
+    super.key,
     required this.child,
     required this.scaleOnHover,
     required this.duration,
     this.onPressed,
     this.onHover,
     this.feedback = true,
-  }) : super(key: key);
+  });
 
   @override
   State<AnimatedHover> createState() => _AnimatedHoverState();
@@ -136,8 +133,7 @@ class _AnimatedHoverState extends State<AnimatedHover>
 class AnimatedLanguageUpdate extends StatelessWidget {
   final Widget child;
 
-  const AnimatedLanguageUpdate({Key? key, required this.child})
-      : super(key: key);
+  const AnimatedLanguageUpdate({super.key, required this.child});
 
   @override
   Widget build(BuildContext context) {

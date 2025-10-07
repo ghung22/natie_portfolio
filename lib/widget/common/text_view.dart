@@ -39,7 +39,7 @@ class TextView extends StatelessWidget {
       );
 
   const TextView({
-    Key? key,
+    super.key,
     this.text,
     this.textCallback,
     this.color,
@@ -49,11 +49,10 @@ class TextView extends StatelessWidget {
     this.textAlign = TextAlign.start,
     this.softWrap = false,
   })  : assert(text != null && textCallback == null ||
-            textCallback != null && text == null),
-        super(key: key);
+            textCallback != null && text == null);
 
   TextView.header({
-    Key? key,
+    super.key,
     this.text,
     this.textCallback,
     this.color,
@@ -63,11 +62,10 @@ class TextView extends StatelessWidget {
     this.softWrap = false,
   })  : style = Styles.headerStyle,
         assert(text != null && textCallback == null ||
-            textCallback != null && text == null),
-        super(key: key);
+            textCallback != null && text == null);
 
   TextView.subheader({
-    Key? key,
+    super.key,
     this.text,
     this.textCallback,
     this.color,
@@ -77,11 +75,10 @@ class TextView extends StatelessWidget {
     this.softWrap = false,
   })  : style = Styles.subheaderStyle,
         assert(text != null && textCallback == null ||
-            textCallback != null && text == null),
-        super(key: key);
+            textCallback != null && text == null);
 
   TextView.footer({
-    Key? key,
+    super.key,
     this.text,
     this.textCallback,
     this.color,
@@ -91,8 +88,7 @@ class TextView extends StatelessWidget {
     this.softWrap = false,
   })  : style = Styles.footerStyle,
         assert(text != null && textCallback == null ||
-            textCallback != null && text == null),
-        super(key: key);
+            textCallback != null && text == null);
 
   @override
   Widget build(BuildContext context) {
@@ -130,7 +126,7 @@ class AnimatedTypingText extends StatefulWidget {
   final VoidCallback? onDone;
 
   const AnimatedTypingText({
-    Key? key,
+    super.key,
     this.text,
     this.textCallback,
     this.color,
@@ -145,8 +141,7 @@ class AnimatedTypingText extends StatefulWidget {
     this.stepDuration = Vars.animationFlash,
     this.onDone,
   })  : assert(text != null && textCallback == null ||
-            textCallback != null && text == null),
-        super(key: key);
+            textCallback != null && text == null);
 
   @override
   State<AnimatedTypingText> createState() => _AnimatedTypingTextState();
@@ -229,7 +224,7 @@ class AnimatedCountingText extends StatefulWidget {
   final VoidCallback? onDone;
 
   const AnimatedCountingText({
-    Key? key,
+    super.key,
     required this.value,
     this.color,
     this.style,
@@ -244,7 +239,7 @@ class AnimatedCountingText extends StatefulWidget {
     this.topSide,
     this.bottomSide,
     this.onDone,
-  }) : super(key: key);
+  });
 
   @override
   State<AnimatedCountingText> createState() => _AnimatedCountingTextState();

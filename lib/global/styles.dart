@@ -123,21 +123,20 @@ class Themes {
     );
     return initialTheme.copyWith(
       // Global style
-      backgroundColor: from.backgroundColor,
       brightness: from.brightness,
       colorScheme: initialTheme.colorScheme.copyWith(
         surface: from.colorScheme.surface,
         onSurface: from.colorScheme.onSurface,
-        surfaceVariant: from.colorScheme.surfaceVariant,
+        surfaceContainerHighest: from.colorScheme.surfaceContainerHighest,
         onSurfaceVariant: from.colorScheme.onSurfaceVariant,
         inverseSurface: from.colorScheme.inverseSurface,
         onInverseSurface: from.colorScheme.onInverseSurface,
       ),
-      dialogBackgroundColor: from.dialogBackgroundColor,
+      dialogTheme: DialogThemeData(backgroundColor: from.dialogTheme.backgroundColor),
       dividerTheme: from.dividerTheme.copyWith(
-        color: from.colorScheme.onSurface.withOpacity(.25),
+        color: from.colorScheme.onSurface.withValues(alpha: .25),
       ),
-      hintColor: from.colorScheme.onSurface.withOpacity(.25),
+      hintColor: from.colorScheme.onSurface.withValues(alpha: .25),
       scaffoldBackgroundColor: from.scaffoldBackgroundColor,
       textTheme: initialTheme.textTheme.copyWith(
         displayLarge: initialTheme.textTheme.displayLarge
@@ -154,7 +153,7 @@ class Themes {
         foregroundColor: from.colorScheme.onSurface,
         centerTitle: true,
         titleTextStyle: TextStyle(
-          color: from.colorScheme.onSurface.withOpacity(.75),
+          color: from.colorScheme.onSurface.withValues(alpha: .75),
           fontSize: 20,
           fontWeight: FontWeight.bold,
         ),
@@ -167,9 +166,9 @@ class Themes {
         ),
         selectedItemColor: initialTheme.primaryColor,
         unselectedIconTheme: IconThemeData(
-          color: from.colorScheme.onSurface.withOpacity(.5),
+          color: from.colorScheme.onSurface.withValues(alpha: .5),
         ),
-        unselectedItemColor: from.colorScheme.onSurface.withOpacity(.5),
+        unselectedItemColor: from.colorScheme.onSurface.withValues(alpha: .5),
       ),
       bottomSheetTheme: BottomSheetThemeData(
         backgroundColor: from.colorScheme.surface,
@@ -180,12 +179,12 @@ class Themes {
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(Dimens.cardRadius)),
         ),
-      ),
+      ).data,
       chipTheme: ChipThemeData(
         shape:
             StadiumBorder(side: BorderSide(color: initialTheme.primaryColor)),
-        backgroundColor: initialTheme.primaryColor.withOpacity(.25),
-        selectedColor: initialTheme.primaryColor.withOpacity(.75),
+        backgroundColor: initialTheme.primaryColor.withValues(alpha: .25),
+        selectedColor: initialTheme.primaryColor.withValues(alpha: .75),
       ),
       drawerTheme: from.drawerTheme.copyWith(
         backgroundColor: Colors.transparent,

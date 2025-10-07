@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:natie_portfolio/global/dimens.dart';
 import 'package:natie_portfolio/global/strings.dart';
@@ -11,6 +10,7 @@ import 'package:natie_portfolio/widget/common/animated_view.dart';
 import 'package:natie_portfolio/widget/common/text_view.dart';
 import 'package:provider/provider.dart';
 
+import '../../l10n/app_localizations.dart';
 import 'content_item.dart';
 import 'image_view.dart';
 
@@ -22,13 +22,13 @@ class IconBtn extends StatelessWidget {
   final bool ignoreScreenSize;
 
   const IconBtn({
-    Key? key,
+    super.key,
     required this.child,
     this.color,
     this.tooltipText = '',
     this.onPressed,
     this.ignoreScreenSize = true,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +39,7 @@ class IconBtn extends StatelessWidget {
           waitDuration: const Duration(seconds: 1),
           child: TextButton(
             style: TextButton.styleFrom(
-              primary: color ?? Theme.of(context).colorScheme.onSurface,
+              foregroundColor: color ?? Theme.of(context).colorScheme.onSurface,
               padding: EdgeInsets.zero,
               shape: const CircleBorder(),
             ),
@@ -50,7 +50,7 @@ class IconBtn extends StatelessWidget {
       }
       return TextButton.icon(
         style: TextButton.styleFrom(
-          primary: color ?? Theme.of(context).colorScheme.onSurface,
+          foregroundColor: color ?? Theme.of(context).colorScheme.onSurface,
           padding: const EdgeInsets.symmetric(
               horizontal: Dimens.btnIconPaddingHorizontal),
           shape: RoundedRectangleBorder(
@@ -74,7 +74,7 @@ class TextBtn extends StatelessWidget {
   final EdgeInsetsGeometry padding;
 
   const TextBtn({
-    Key? key,
+    super.key,
     required this.child,
     this.textStyle,
     this.hoverFeedback = true,
@@ -83,22 +83,22 @@ class TextBtn extends StatelessWidget {
       horizontal: Dimens.btnPaddingHorizontal,
       vertical: Dimens.btnPaddingVertical,
     ),
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
     return TextButton(
       style: ButtonStyle(
-        foregroundColor: MaterialStateProperty.all(textStyle?.color),
-        padding: MaterialStateProperty.all(padding),
-        shape: MaterialStateProperty.all(const RoundedRectangleBorder(
+        foregroundColor: WidgetStateProperty.all(textStyle?.color),
+        padding: WidgetStateProperty.all(padding),
+        shape: WidgetStateProperty.all(const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(Dimens.btnRadius)),
         )),
-        textStyle: MaterialStateProperty.all(textStyle),
+        textStyle: WidgetStateProperty.all(textStyle),
         splashFactory: hoverFeedback ? null : NoSplash.splashFactory,
         overlayColor: hoverFeedback
             ? null
-            : MaterialStateProperty.all(Colors.transparent),
+            : WidgetStateProperty.all(Colors.transparent),
       ),
       onPressed: onPressed,
       child: child,
@@ -115,7 +115,7 @@ class ElevatedBtn extends StatelessWidget {
   final bool circular;
 
   const ElevatedBtn({
-    Key? key,
+    super.key,
     required this.child,
     this.color,
     this.elevation = Dimens.btnElevation,
@@ -125,14 +125,14 @@ class ElevatedBtn extends StatelessWidget {
       vertical: Dimens.btnPaddingVertical,
     ),
     this.circular = false,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
     return AnimatedLanguageUpdate(
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
-          primary: color ?? Theme.of(context).primaryColor,
+          backgroundColor: color ?? Theme.of(context).primaryColor,
           padding: padding,
           elevation: elevation,
           shape: circular
@@ -152,7 +152,7 @@ class ElevatedBtn extends StatelessWidget {
 // region Leading buttons
 
 class BackBtn extends StatelessWidget {
-  const BackBtn({Key? key}) : super(key: key);
+  const BackBtn({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -171,7 +171,7 @@ class BackBtn extends StatelessWidget {
 class NavBtn extends StatelessWidget {
   final GlobalKey<ScaffoldState> scaffoldKey;
 
-  const NavBtn({Key? key, required this.scaffoldKey}) : super(key: key);
+  const NavBtn({super.key, required this.scaffoldKey});
 
   @override
   Widget build(BuildContext context) {
@@ -192,7 +192,7 @@ class LanguageBtn extends StatelessWidget {
   final enImageUrl = 'https://flagcdn.com/w20/us.png';
   final viImageUrl = 'https://flagcdn.com/w20/vn.png';
 
-  const LanguageBtn({Key? key}) : super(key: key);
+  const LanguageBtn({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -219,7 +219,7 @@ class LanguageBtn extends StatelessWidget {
 }
 
 class ThemeBtn extends StatelessWidget {
-  const ThemeBtn({Key? key}) : super(key: key);
+  const ThemeBtn({super.key});
 
   @override
   Widget build(BuildContext context) {

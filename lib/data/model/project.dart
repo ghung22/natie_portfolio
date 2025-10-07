@@ -180,7 +180,7 @@ class ProjectData {
       'Xem ảnh từ khuôn mặt đã nhận dạng',
     ],
     hostUrl: 'https://github.com/nateclint/aPum',
-    colorHex: Colors.teal.value,
+    colorHex: Colors.teal.toARGB32(),
     completionTimestamp: DateTime(2021, 5).millisecondsSinceEpoch,
     featured: false,
   );
@@ -221,7 +221,7 @@ class ProjectData {
       'Tạo bài quiz với 5 loại câu hỏi khác nhau',
       'Chơi bài quiz và xem điểm sau khi chơi',
     ],
-    colorHex: Colors.pink.value,
+    colorHex: Colors.pink.toARGB32(),
     completionTimestamp: DateTime(2021, 9).millisecondsSinceEpoch,
     featured: false,
   );
@@ -263,7 +263,7 @@ class ProjectData {
           'nhiều hơn nữa…',
     ],
     hostUrl: 'https://github.com/nateclint/nienote',
-    colorHex: Colors.grey.value,
+    colorHex: Colors.grey.toARGB32(),
     completionTimestamp: DateTime(2021, 10).millisecondsSinceEpoch,
     featured: true,
   );
@@ -315,7 +315,7 @@ class ProjectData {
       '[Admin] Quản lý cư dân: Tìm kiếm & thêm cư dân, vô hiệu hoá tài khoản',
       '[Admin] Sửa thông tin trợ giúp/cứu trợ',
     ],
-    colorHex: Colors.amber.value,
+    colorHex: Colors.amber.toARGB32(),
     completionTimestamp: DateTime(2021, 12).millisecondsSinceEpoch,
     featured: true,
   );
@@ -356,7 +356,7 @@ class ProjectData {
       'Cập nhật thông tin cá nhân',
       'Cài đặt: chủ đề app và ngôn ngữ',
     ],
-    colorHex: Colors.indigo.value,
+    colorHex: Colors.indigo.toARGB32(),
     completionTimestamp: DateTime(2022, 5).millisecondsSinceEpoch,
     featured: true,
   );
@@ -394,7 +394,7 @@ class ProjectData {
       'Tạo và bình chọn các bài khảo sát trong khóa học',
       'Thông báo thiết bị các sự kiện, tin nhắn, và thông báo từ Moodle',
     ],
-    colorHex: Colors.green.value,
+    colorHex: Colors.green.toARGB32(),
     completionTimestamp: DateTime(2022, 8).millisecondsSinceEpoch,
     featured: true,
   );

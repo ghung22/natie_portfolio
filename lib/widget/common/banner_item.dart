@@ -1,6 +1,5 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:natie_portfolio/data/model/bio.dart';
 import 'package:natie_portfolio/data/model/project.dart';
@@ -14,6 +13,7 @@ import 'package:natie_portfolio/store/common/animation_store.dart';
 import 'package:speech_bubble/speech_bubble.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 
+import '../../l10n/app_localizations.dart';
 import 'animated_view.dart';
 import 'buttons.dart';
 import 'content_item.dart';
@@ -47,7 +47,7 @@ class BannerItem extends StatefulWidget {
   final Function()? onAnimationDone;
 
   const BannerItem({
-    Key? key,
+    super.key,
     required this.title,
     required this.description,
     this.imageUrls = const [],
@@ -59,7 +59,7 @@ class BannerItem extends StatefulWidget {
     this.rightSide,
     this.disableAnimation = false,
     this.onAnimationDone,
-  }) : super(key: key);
+  });
 
   @override
   State<BannerItem> createState() => _BannerItemState();
@@ -271,13 +271,13 @@ class ProjectBanner extends StatelessWidget {
   final Function()? onIntroDone;
 
   const ProjectBanner({
-    Key? key,
+    super.key,
     required this.project,
     this.onAction,
     this.isHomePage = false,
     this.skipIntro = false,
     this.onIntroDone,
-  }) : super(key: key);
+  });
 
   Widget get _bannerWidget => BannerItem(
         title: TextView(text: project.title),
@@ -323,11 +323,11 @@ class BioBanner extends StatelessWidget {
   final AnimationStore _introSecondAni = AnimationStore();
 
   BioBanner({
-    Key? key,
+    super.key,
     required this.bio,
     this.skipIntro = false,
     this.onIntroDone,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

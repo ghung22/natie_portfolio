@@ -1,9 +1,6 @@
 // ignore: avoid_web_libraries_in_flutter
-import 'dart:html';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:natie_portfolio/global/dimens.dart';
 import 'package:natie_portfolio/global/mixin.dart';
@@ -20,9 +17,12 @@ import 'package:natie_portfolio/widget/common/list_view.dart';
 import 'package:natie_portfolio/widget/common/text_view.dart';
 import 'package:natie_portfolio/widget/common/web_item.dart';
 import 'package:provider/provider.dart';
+import 'package:web/web.dart' hide Navigator;
+
+import '../../l10n/app_localizations.dart';
 
 class DebugPage extends StatefulWidget {
-  const DebugPage({Key? key}) : super(key: key);
+  const DebugPage({super.key});
 
   @override
   State<DebugPage> createState() => _DebugPageState();
@@ -176,7 +176,7 @@ class _DebugPageState extends State<DebugPage> with PostFrameMixin {
                   TextView.subheader(text: 'States'),
                   TextView(
                       text: 'Screen size:'
-                          '${window.screen?.width}x${window.screen?.height}'),
+                          '${window.screen.width}x${window.screen.height}'),
                   Observer(builder: (context) {
                     return TextView(text: 'Language: ${Strings.language}');
                   }),
@@ -240,7 +240,7 @@ class _DebugPageState extends State<DebugPage> with PostFrameMixin {
     return Scaffold(
       appBar: _appBar,
       body: SizedBox(
-        width: window.screen?.width?.toDouble(),
+        width: window.screen.width.toDouble(),
         child: _body,
       ),
     );

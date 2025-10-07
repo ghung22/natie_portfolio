@@ -2,7 +2,6 @@ import 'dart:math';
 
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:natie_portfolio/global/mixin.dart';
 import 'package:natie_portfolio/global/router.dart';
@@ -22,15 +21,17 @@ import 'package:natie_portfolio/widget/common/web_item.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
+import '../../l10n/app_localizations.dart';
+
 class ProjectPage extends StatefulWidget {
   final Project project;
   final bool disableAnimation;
 
   const ProjectPage({
-    Key? key,
+    super.key,
     required this.project,
     this.disableAnimation = false,
-  }) : super(key: key);
+  });
 
   @override
   State<ProjectPage> createState() => _ProjectPageState();

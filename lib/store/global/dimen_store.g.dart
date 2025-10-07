@@ -12,15 +12,17 @@ mixin _$DimenStore on _DimenStore, Store {
   Computed<double>? _$widthComputed;
 
   @override
-  double get width => (_$widthComputed ??=
-          Computed<double>(() => super.width, name: '_DimenStore.width'))
-      .value;
+  double get width => (_$widthComputed ??= Computed<double>(
+    () => super.width,
+    name: '_DimenStore.width',
+  )).value;
   Computed<double>? _$heightComputed;
 
   @override
-  double get height => (_$heightComputed ??=
-          Computed<double>(() => super.height, name: '_DimenStore.height'))
-      .value;
+  double get height => (_$heightComputed ??= Computed<double>(
+    () => super.height,
+    name: '_DimenStore.height',
+  )).value;
 
   late final _$sizeAtom = Atom(name: '_DimenStore.size', context: context);
 
@@ -37,13 +39,16 @@ mixin _$DimenStore on _DimenStore, Store {
     });
   }
 
-  late final _$_DimenStoreActionController =
-      ActionController(name: '_DimenStore', context: context);
+  late final _$_DimenStoreActionController = ActionController(
+    name: '_DimenStore',
+    context: context,
+  );
 
   @override
   void updateScreenSize(Size size) {
     final _$actionInfo = _$_DimenStoreActionController.startAction(
-        name: '_DimenStore.updateScreenSize');
+      name: '_DimenStore.updateScreenSize',
+    );
     try {
       return super.updateScreenSize(size);
     } finally {
