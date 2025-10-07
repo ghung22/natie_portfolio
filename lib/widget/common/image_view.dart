@@ -13,13 +13,13 @@ class ImageView extends StatelessWidget {
 
   const ImageView(
     this.src, {
-    Key? key,
+    super.key,
     this.errorWidget,
     this.width,
     this.height,
     this.fit = BoxFit.contain,
     this.onFinish,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +31,7 @@ class ImageView extends StatelessWidget {
     }
     img
         .resolve(const ImageConfiguration())
-        .addListener(ImageStreamListener((_, __) => onFinish?.call()));
+        .addListener(ImageStreamListener((_, _) => onFinish?.call()));
     return Image(
       image: img,
       width: width,
@@ -77,13 +77,13 @@ class CircleImageView extends StatelessWidget {
 
   const CircleImageView(
     this.src, {
-    Key? key,
+    super.key,
     this.errorWidget,
     this.width,
     this.height,
     this.fit = BoxFit.contain,
     this.onFinish,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -111,7 +111,7 @@ class RoundedImageView extends StatelessWidget {
 
   const RoundedImageView(
     this.src, {
-    Key? key,
+    super.key,
     this.errorWidget,
     this.width,
     this.height,
@@ -119,7 +119,7 @@ class RoundedImageView extends StatelessWidget {
     this.onFinish,
     this.borderRadius =
         const BorderRadius.all(Radius.circular(Dimens.roundedImageRadius)),
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -146,12 +146,12 @@ class SvgImageView extends StatelessWidget {
 
   const SvgImageView(
     this.src, {
-    Key? key,
+    super.key,
     this.errorWidget,
     this.width,
     this.height,
     this.fit = BoxFit.contain,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

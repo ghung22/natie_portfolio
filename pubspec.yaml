@@ -15,10 +15,10 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 1.0.0+1
+version: 2025.10.1+1
 
 environment:
-  sdk: ">=2.16.2 <3.0.0"
+  sdk: ">=3.8.0"
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -37,16 +37,18 @@ dependencies:
   cupertino_icons: ^1.0.5
   flutter_mobx: ^2.0.6+1
   json_serializable: ^6.3.1
-  firebase_core: ^1.20.0
-  cloud_firestore: ^3.4.2
-  intl: ^0.17.0
+  json_annotation: ^4.9.0
+  firebase_core: ^4.1.1
+  cloud_firestore: ^6.0.2
+  intl: ^0.20.2
   provider: ^6.0.3
   shared_preferences: ^2.0.15
-  flutter_svg: ^1.1.1+1
-  visibility_detector: ^0.3.3
+  flutter_svg: ^2.2.1
+  visibility_detector: ^0.4.0+2
   speech_bubble: ^0.0.9
-  carousel_slider: ^4.1.1
+  carousel_slider: ^5.1.1
   url_launcher: ^6.1.5
+  web: ^1.1.1
 
 dev_dependencies:
   flutter_test:
@@ -57,7 +59,7 @@ dev_dependencies:
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
-  flutter_lints: ^2.0.1
+  flutter_lints: ^6.0.0
 
   build_runner: ^2.2.0
   mobx_codegen: ^2.0.7
@@ -154,3 +156,5 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+flutter_intl:
+  enabled: true

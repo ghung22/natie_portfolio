@@ -1,8 +1,5 @@
 // ignore: avoid_web_libraries_in_flutter
-import 'dart:html';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:natie_portfolio/data/model/project.dart';
 import 'package:natie_portfolio/global/mixin.dart';
@@ -21,9 +18,12 @@ import 'package:natie_portfolio/global/dimens.dart';
 import 'package:natie_portfolio/widget/common/text_view.dart';
 import 'package:natie_portfolio/widget/common/web_item.dart';
 import 'package:provider/provider.dart';
+import 'package:web/web.dart' hide Navigator;
+
+import '../../l10n/app_localizations.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+  const HomePage({super.key});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -180,7 +180,7 @@ class _HomePageState extends State<HomePage> with PostFrameMixin {
       appBar: _appBar,
       drawer: _drawer,
       body: SizedBox(
-        width: window.screen?.width?.toDouble(),
+        width: window.screen.width.toDouble(),
         child: AnimatedFadeSlide(
             offset: _introAni.willStart
                 ? Offset.zero

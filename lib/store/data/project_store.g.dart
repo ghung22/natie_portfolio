@@ -9,8 +9,10 @@ part of 'project_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$ProjectStore on _ProjectStore, Store {
-  late final _$projectsAtom =
-      Atom(name: '_ProjectStore.projects', context: context);
+  late final _$projectsAtom = Atom(
+    name: '_ProjectStore.projects',
+    context: context,
+  );
 
   @override
   Projects get projects {
@@ -25,16 +27,20 @@ mixin _$ProjectStore on _ProjectStore, Store {
     });
   }
 
-  late final _$getProjectsAsyncAction =
-      AsyncAction('_ProjectStore.getProjects', context: context);
+  late final _$getProjectsAsyncAction = AsyncAction(
+    '_ProjectStore.getProjects',
+    context: context,
+  );
 
   @override
   Future<void> getProjects() {
     return _$getProjectsAsyncAction.run(() => super.getProjects());
   }
 
-  late final _$uploadHardDataAsyncAction =
-      AsyncAction('_ProjectStore.uploadHardData', context: context);
+  late final _$uploadHardDataAsyncAction = AsyncAction(
+    '_ProjectStore.uploadHardData',
+    context: context,
+  );
 
   @override
   Future<void> uploadHardData() {

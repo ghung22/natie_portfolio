@@ -11,12 +11,12 @@ class ProjectService {
       .doc(p.id)
       .set(p.toJson())
       .then((v) => Firestore.onDone('setProject'))
-      .onError((e, st) => Firestore.onError('setProject', e, st));
+      .onError((e, st) => Firestore.onQueryError('setProject', e, st));
 
   static Future<Projects> getProjects() async {
     final data = await projects
         .get()
-        .onError((e, st) => Firestore.onError('getProjects', e, st));
+        .onError((e, st) => Firestore.onQueryError('getProjects', e, st));
     final list = data.docs.map((d) => Project.fromJson(d.data())).toList();
     Firestore.onDone('getProjects', list);
     return Projects(list);

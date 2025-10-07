@@ -23,11 +23,16 @@ class Firestore {
     context.read<BioStore>().getBio();
   }
 
-  static onDone(String caller, [Object? value]) async {
+  static Future<void> onDone(String caller, [Object? value]) async {
     Debug.log(value ?? 'No data', useDebugPrint: true, caller: caller);
   }
 
-  static onError(String caller, Object? error, StackTrace stackTrace) async {
+  static Future<QuerySnapshot<Map<String, dynamic>>> onQueryError(String caller, Object? error, StackTrace stackTrace) async {
+    Debug.log(stackTrace, useDebugPrint: true, caller: caller);
+    throw error ?? 'Unknown error';
+  }
+
+  static Future<DocumentSnapshot<Map<String, dynamic>>> onDocumentError(String caller, Object? error, StackTrace stackTrace) async {
     Debug.log(stackTrace, useDebugPrint: true, caller: caller);
     throw error ?? 'Unknown error';
   }

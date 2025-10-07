@@ -7,14 +7,14 @@ part of 'score.dart';
 // **************************************************************************
 
 Score _$ScoreFromJson(Map<String, dynamic> json) => Score(
-      name: json['name'] as String? ?? '',
-      score: (json['score'] as num?)?.toDouble() ?? 0,
-      customData: json['customData'] as Map<String, dynamic>? ??
-          const <String, dynamic>{},
-    );
+  name: json['name'] as String? ?? '',
+  score: (json['score'] as num?)?.toDouble() ?? 0,
+  customData:
+      json['customData'] as Map<String, dynamic>? ?? const <String, dynamic>{},
+);
 
 Map<String, dynamic> _$ScoreToJson(Score instance) => <String, dynamic>{
-      'name': instance.name,
-      'score': instance.score,
-      'customData': instance.customData,
-    };
+  'name': instance.name,
+  'score': instance.score,
+  'customData': instance.customData,
+};

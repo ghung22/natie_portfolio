@@ -7,7 +7,7 @@ enum SnackbarType {
 }
 
 class Snackbars {
-  static showSnackbar(BuildContext context, SnackbarType type, String text,
+  static void showSnackbar(BuildContext context, SnackbarType type, String text,
       {String? actionLabel, VoidCallback? onAction}) {
     final ms = ScaffoldMessenger.of(context);
     ms.clearSnackBars();
@@ -47,13 +47,12 @@ class InfoSnackbar extends SnackBar {
   final VoidCallback? onAction;
 
   InfoSnackbar({
-    Key? key,
+    super.key,
     required this.context,
     required this.text,
     this.actionLabel,
     this.onAction,
   }) : super(
-          key: key,
           content: Text(text),
           action: actionLabel == null
               ? null
@@ -71,13 +70,12 @@ class PositiveSnackbar extends SnackBar {
   final VoidCallback? onAction;
 
   PositiveSnackbar({
-    Key? key,
+    super.key,
     required this.context,
     required this.text,
     this.actionLabel,
     this.onAction,
   }) : super(
-          key: key,
           content: Text(text),
           backgroundColor: Theme.of(context).primaryColor,
           action: actionLabel == null
@@ -96,15 +94,14 @@ class NegativeSnackbar extends SnackBar {
   final VoidCallback? onAction;
 
   NegativeSnackbar({
-    Key? key,
+    super.key,
     required this.context,
     required this.text,
     this.actionLabel,
     this.onAction,
   }) : super(
-          key: key,
           content: Text(text),
-          backgroundColor: Theme.of(context).errorColor,
+          backgroundColor: Theme.of(context).colorScheme.error,
           action: actionLabel == null
               ? null
               : SnackBarAction(

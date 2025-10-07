@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:intl/intl.dart';
 import 'package:natie_portfolio/data/model/experience.dart';
@@ -17,6 +16,7 @@ import 'package:url_launcher/url_launcher_string.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 
 import '../../global/vars.dart';
+import '../../l10n/app_localizations.dart';
 import 'animated_view.dart';
 import 'image_view.dart';
 import 'list_view.dart';
@@ -35,7 +35,7 @@ class CardItem extends StatefulWidget {
   final Duration hoverAnimationSpeed;
 
   const CardItem({
-    Key? key,
+    super.key,
     required this.child,
     this.padding = const EdgeInsets.all(Dimens.cardPadding),
     this.color,
@@ -44,7 +44,7 @@ class CardItem extends StatefulWidget {
     this.hoverFeedback = false,
     this.hoverScale = 1.2,
     this.hoverAnimationSpeed = Vars.animationFast,
-  }) : super(key: key);
+  });
 
   @override
   State<CardItem> createState() => _CardItemState();
@@ -75,8 +75,7 @@ class IntlListItem extends StatefulWidget {
   final List<String> itemsVi;
   final int index;
 
-  const IntlListItem(this.items, this.itemsVi, this.index, {Key? key})
-      : super(key: key);
+  const IntlListItem(this.items, this.itemsVi, this.index, {super.key});
 
   @override
   State<IntlListItem> createState() => _IntlListItemState();
@@ -149,7 +148,7 @@ class _IntlListItemState extends State<IntlListItem> {
 
 /// An empty widget
 class Nothing extends StatelessWidget {
-  const Nothing({Key? key}) : super(key: key);
+  const Nothing({super.key});
 
   @override
   Widget build(BuildContext context) => const SizedBox.shrink();
@@ -159,7 +158,7 @@ class Nothing extends StatelessWidget {
 class RedContainer extends StatelessWidget {
   final Widget child;
 
-  const RedContainer({Key? key, required this.child}) : super(key: key);
+  const RedContainer({super.key, required this.child});
 
   @override
   Widget build(BuildContext context) =>
@@ -173,7 +172,7 @@ class RedContainer extends StatelessWidget {
 class ProjectMiniItem extends StatelessWidget {
   final Project project;
 
-  const ProjectMiniItem(this.project, {Key? key}) : super(key: key);
+  const ProjectMiniItem(this.project, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -250,7 +249,7 @@ class ProjectMiniItem extends StatelessWidget {
 class ProjectTimestampItem extends StatefulWidget {
   final Project project;
 
-  const ProjectTimestampItem(this.project, {Key? key}) : super(key: key);
+  const ProjectTimestampItem(this.project, {super.key});
 
   @override
   State<ProjectTimestampItem> createState() => _ProjectTimestampItemState();
@@ -314,7 +313,7 @@ class _ProjectTimestampItemState extends State<ProjectTimestampItem> {
 class ProjectAuthorItem extends StatefulWidget {
   final Project project;
 
-  const ProjectAuthorItem(this.project, {Key? key}) : super(key: key);
+  const ProjectAuthorItem(this.project, {super.key});
 
   @override
   State<ProjectAuthorItem> createState() => _ProjectAuthorItemState();
@@ -375,7 +374,7 @@ class _ProjectAuthorItemState extends State<ProjectAuthorItem> {
 class HostUrlItem extends StatefulWidget {
   final Project project;
 
-  const HostUrlItem(this.project, {Key? key}) : super(key: key);
+  const HostUrlItem(this.project, {super.key});
 
   @override
   State<HostUrlItem> createState() => _HostUrlItemState();
@@ -444,7 +443,7 @@ class FunctionalityItem extends StatelessWidget {
   final Project p;
   final int index;
 
-  const FunctionalityItem(this.p, this.index, {Key? key}) : super(key: key);
+  const FunctionalityItem(this.p, this.index, {super.key});
 
   @override
   Widget build(BuildContext context) =>
@@ -455,7 +454,7 @@ class LearnedItem extends StatelessWidget {
   final Project p;
   final int index;
 
-  const LearnedItem(this.p, this.index, {Key? key}) : super(key: key);
+  const LearnedItem(this.p, this.index, {super.key});
 
   @override
   Widget build(BuildContext context) =>
@@ -465,7 +464,7 @@ class LearnedItem extends StatelessWidget {
 class TechItem extends StatelessWidget {
   final String tech;
 
-  const TechItem(this.tech, {Key? key}) : super(key: key);
+  const TechItem(this.tech, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -489,7 +488,7 @@ class TechItem extends StatelessWidget {
 // region Bio items
 
 class BioMiniItem extends StatelessWidget {
-  const BioMiniItem({Key? key}) : super(key: key);
+  const BioMiniItem({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -590,7 +589,7 @@ class BioScoreItem extends StatefulWidget {
   final Score score;
   final Color? color;
 
-  const BioScoreItem(this.score, {Key? key, this.color}) : super(key: key);
+  const BioScoreItem(this.score, {super.key, this.color});
 
   @override
   State<BioScoreItem> createState() => _BioScoreItemState();
@@ -648,7 +647,7 @@ class BioExperienceItem extends StatefulWidget {
   final Experience exp;
   final Color? color;
 
-  const BioExperienceItem(this.exp, {Key? key, this.color}) : super(key: key);
+  const BioExperienceItem(this.exp, {super.key, this.color});
 
   @override
   State<BioExperienceItem> createState() => _BioExperienceItemState();
@@ -726,7 +725,7 @@ class _BioExperienceItemState extends State<BioExperienceItem> {
                         text: _e.time,
                         style: Styles.subheaderStyle.copyWith(
                           color: (_c ?? Theme.of(context).colorScheme.onSurface)
-                              .withOpacity(.8),
+                              .withValues(alpha: .8),
                           fontWeight: FontWeight.bold,
                         ),
                         spaced: true,
