@@ -14,22 +14,11 @@ Project _$ProjectFromJson(Map<String, dynamic> json) => Project(
   tech: json['tech'] as String? ?? '',
   description: json['description'] as String? ?? '',
   descriptionVi: json['descriptionVi'] as String? ?? '',
-  functionalities:
-      (json['functionalities'] as List<dynamic>?)
-          ?.map((e) => e as String)
-          .toList() ??
-      const <String>[],
+  functionalities: (json['functionalities'] as List<dynamic>?)?.map((e) => e as String).toList() ?? const <String>[],
   functionalitiesVi:
-      (json['functionalitiesVi'] as List<dynamic>?)
-          ?.map((e) => e as String)
-          .toList() ??
-      const <String>[],
-  learned:
-      (json['learned'] as List<dynamic>?)?.map((e) => e as String).toList() ??
-      const <String>[],
-  learnedVi:
-      (json['learnedVi'] as List<dynamic>?)?.map((e) => e as String).toList() ??
-      const <String>[],
+      (json['functionalitiesVi'] as List<dynamic>?)?.map((e) => e as String).toList() ?? const <String>[],
+  learned: (json['learned'] as List<dynamic>?)?.map((e) => e as String).toList() ?? const <String>[],
+  learnedVi: (json['learnedVi'] as List<dynamic>?)?.map((e) => e as String).toList() ?? const <String>[],
   hostUrl: json['hostUrl'] as String? ?? '',
   iconUrl: json['iconUrl'] as String? ?? '',
   imageUrls:

@@ -57,71 +57,65 @@ class _HomePageState extends State<HomePage> with PostFrameMixin {
   void _initAppBar() {
     _appBar = WebAppBar(
       leading: NavBtn(scaffoldKey: _scaffoldKey),
-      title: Observer(builder: (context) {
-        Strings.isEn;
-        return TextBtn(
-          textStyle: Theme.of(context).appBarTheme.titleTextStyle,
-          hoverFeedback: false,
-          onPressed: () => _scrollController.animateTo(
-            0,
-            duration: Vars.animationSlow,
-            curve: Curves.easeOut,
-          ),
-          child: TextView(textCallback: () => Strings.title),
-        );
-      }),
-      actions: const [
-        LanguageBtn(),
-        ThemeBtn(),
-      ],
+      title: Observer(
+        builder: (context) {
+          Strings.isEn;
+          return TextBtn(
+            textStyle: Theme.of(context).appBarTheme.titleTextStyle,
+            hoverFeedback: false,
+            onPressed: () => _scrollController.animateTo(0, duration: Vars.animationSlow, curve: Curves.easeOut),
+            child: TextView(textCallback: () => Strings.title),
+          );
+        },
+      ),
+      actions: const [LanguageBtn(), ThemeBtn()],
     );
   }
 
   void _initBody() {
     _body = SingleChildScrollView(
       controller: _scrollController,
-      child: Observer(builder: (context) {
-        if (_projectStore!.projects.isEmpty) return const Nothing();
-        return PaddedColumn(
-          padding:
-              const EdgeInsets.symmetric(vertical: Dimens.projectItemPadding),
-          paddingStartAndEnd: false,
-          children: [
-            // Welcome banner
-            IgnorePadding(child: BioBanner(bio: _bioStore!.bio)),
-            const SizedBox(height: Dimens.projectItemPadding),
+      child: Observer(
+        builder: (context) {
+          if (_projectStore!.projects.isEmpty) return const Nothing();
+          return PaddedColumn(
+            padding: const EdgeInsets.symmetric(vertical: Dimens.projectItemPadding),
+            paddingStartAndEnd: false,
+            children: [
+              // Welcome banner
+              IgnorePadding(child: BioBanner(bio: _bioStore!.bio)),
+              const SizedBox(height: Dimens.projectItemPadding),
 
-            // Featured projects
-            TextView.header(
-                text: AppLocalizations.of(context)!.featured_projects),
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                  horizontal: Dimens.pageContentPaddingHorizontal),
-              child: Wrap(
-                spacing: Dimens.projectItemPadding,
-                runSpacing: Dimens.projectItemPadding,
-                alignment: WrapAlignment.center,
-                children: _projectStore!.projects.featured
-                    .map((p) => CardItem(
+              // Featured projects
+              TextView.header(text: AppLocalizations.of(context)!.featured_projects),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: Dimens.pageContentPaddingHorizontal),
+                child: Wrap(
+                  spacing: Dimens.projectItemPadding,
+                  runSpacing: Dimens.projectItemPadding,
+                  alignment: WrapAlignment.center,
+                  children: _projectStore!.projects.featured
+                      .map(
+                        (p) => CardItem(
                           color: p.color,
                           child: ConstrainedBox(
-                            constraints: const BoxConstraints(
-                                maxWidth: Dimens.pageContentMaxWidth),
+                            constraints: const BoxConstraints(maxWidth: Dimens.pageContentMaxWidth),
                             child: ProjectBanner(
                               project: p,
-                              onAction: () => Navigator.of(context)
-                                  .pushNamed(Routes.project, arguments: p),
+                              onAction: () => Navigator.of(context).pushNamed(Routes.project, arguments: p),
                               isHomePage: true,
                             ),
                           ),
-                        ))
-                    .toList(),
+                        ),
+                      )
+                      .toList(),
+                ),
               ),
-            ),
-            const WebFooter(),
-          ],
-        );
-      }),
+              const WebFooter(),
+            ],
+          );
+        },
+      ),
     );
   }
 
@@ -130,44 +124,43 @@ class _HomePageState extends State<HomePage> with PostFrameMixin {
       child: Padding(
         padding: const EdgeInsets.all(Dimens.drawerPadding),
         child: CardItem(
-          child: Observer(builder: (context) {
-            final p = _projectStore?.projects ?? Projects();
-            return ListView(
-              children: [
-                Stack(
-                  children: [
-                    DrawerHeader(
-                      child: PaddedColumn(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        padding: const EdgeInsets.symmetric(
-                            vertical: Dimens.drawerItemPadding),
-                        children: [
-                          // App icon
-                          TextView.header(
-                            text: AppLocalizations.of(context)!.projects,
-                            color: Theme.of(context).primaryColor,
-                          ),
-                        ],
+          child: Observer(
+            builder: (context) {
+              final p = _projectStore?.projects ?? Projects();
+              return ListView(
+                children: [
+                  Stack(
+                    children: [
+                      DrawerHeader(
+                        child: PaddedColumn(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          padding: const EdgeInsets.symmetric(vertical: Dimens.drawerItemPadding),
+                          children: [
+                            // App icon
+                            TextView.header(
+                              text: AppLocalizations.of(context)!.projects,
+                              color: Theme.of(context).primaryColor,
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                    const Padding(
-                      padding: EdgeInsets.symmetric(
-                          vertical: Dimens.drawerItemPadding),
-                      child: BioMiniItem(),
-                    ),
-                  ],
-                ),
-                ...p.values.map((p) {
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: Dimens.drawerItemPadding),
-                    child: ProjectMiniItem(p),
-                  );
-                }),
-              ],
-            );
-          }),
+                      const Padding(
+                        padding: EdgeInsets.symmetric(vertical: Dimens.drawerItemPadding),
+                        child: BioMiniItem(),
+                      ),
+                    ],
+                  ),
+                  ...p.values.map((p) {
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(vertical: Dimens.drawerItemPadding),
+                      child: ProjectMiniItem(p),
+                    );
+                  }),
+                ],
+              );
+            },
+          ),
         ),
       ),
     );
@@ -182,13 +175,12 @@ class _HomePageState extends State<HomePage> with PostFrameMixin {
       body: SizedBox(
         width: window.screen.width.toDouble(),
         child: AnimatedFadeSlide(
-            offset: _introAni.willStart
-                ? Offset.zero
-                : const Offset(0, -Dimens.bannerSlideOffset),
-            opacity: _introAni.willStart ? 1 : 0,
-            duration: Vars.animationSluggish,
-            curve: Curves.easeOut,
-            child: _body),
+          offset: _introAni.willStart ? Offset.zero : const Offset(0, -Dimens.bannerSlideOffset),
+          opacity: _introAni.willStart ? 1 : 0,
+          duration: Vars.animationSluggish,
+          curve: Curves.easeOut,
+          child: _body,
+        ),
       ),
     );
   }

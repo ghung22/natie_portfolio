@@ -49,32 +49,34 @@ class WebAppBar extends StatelessWidget implements PreferredSizeWidget {
   PreferredSizeWidget build(BuildContext context) {
     return PreferredSize(
       preferredSize: const Size(double.infinity, kToolbarHeight),
-      child: Observer(builder: (context) {
-        return Stack(
-          children: [
-            AppBar(
-              leading: Dimens.isMedium ? leading : null,
-              automaticallyImplyLeading: automaticallyImplyLeading,
-              title: title,
-              actions: actions,
-              flexibleSpace: flexibleSpace,
-              bottom: bottom,
-              primary: primary,
-              toolbarOpacity: toolbarOpacity,
-              bottomOpacity: bottomOpacity,
-              leadingWidth: leadingWidth,
-            ),
-            if (!Dimens.isMedium && leading != null)
-              Align(
-                alignment: Alignment.centerLeft,
-                child: ConstrainedBox(
-                  constraints: const BoxConstraints(minHeight: kToolbarHeight),
-                  child: leading!,
-                ),
+      child: Observer(
+        builder: (context) {
+          return Stack(
+            children: [
+              AppBar(
+                leading: Dimens.isMedium ? leading : null,
+                automaticallyImplyLeading: automaticallyImplyLeading,
+                title: title,
+                actions: actions,
+                flexibleSpace: flexibleSpace,
+                bottom: bottom,
+                primary: primary,
+                toolbarOpacity: toolbarOpacity,
+                bottomOpacity: bottomOpacity,
+                leadingWidth: leadingWidth,
               ),
-          ],
-        );
-      }),
+              if (!Dimens.isMedium && leading != null)
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: ConstrainedBox(
+                    constraints: const BoxConstraints(minHeight: kToolbarHeight),
+                    child: leading!,
+                  ),
+                ),
+            ],
+          );
+        },
+      ),
     );
   }
 
@@ -118,34 +120,26 @@ class _WebFooterState extends State<WebFooter> with PostFrameMixin {
     _initContact();
     _body = Column(
       children: [
-        Observer(builder: (context) {
-          if (Dimens.isSmall) {
-            return Wrap(
-              children: [
-                _navigation,
-                _projects,
-                _contact,
-              ],
+        Observer(
+          builder: (context) {
+            if (Dimens.isSmall) {
+              return Wrap(children: [_navigation, _projects, _contact]);
+            }
+            return Padding(
+              padding: const EdgeInsets.symmetric(horizontal: Dimens.pageFooterPaddingHorizontal),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(child: _navigation),
+                  Expanded(child: _projects),
+                  Expanded(child: _contact),
+                ],
+              ),
             );
-          }
-          return Padding(
-            padding: const EdgeInsets.symmetric(
-                horizontal: Dimens.pageFooterPaddingHorizontal),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Expanded(child: _navigation),
-                Expanded(child: _projects),
-                Expanded(child: _contact),
-              ],
-            ),
-          );
-        }),
-        const SizedBox(height: Dimens.pageContentPaddingVertical),
-        TextView.footer(
-          text: AppLocalizations.of(context)!.copyright,
-          softWrap: true,
+          },
         ),
+        const SizedBox(height: Dimens.pageContentPaddingVertical),
+        TextView.footer(text: AppLocalizations.of(context)!.copyright, softWrap: true),
       ],
     );
   }
@@ -158,140 +152,123 @@ class _WebFooterState extends State<WebFooter> with PostFrameMixin {
         horizontal: Dimens.pageContentPaddingHorizontal,
       ),
       children: [
-        TextView.header(
-          text: AppLocalizations.of(context)!.navigate_to,
-          color: _color,
-        ),
+        TextView.header(text: AppLocalizations.of(context)!.navigate_to, color: _color),
         TextBtn(
           hoverFeedback: false,
-          padding:
-              const EdgeInsets.symmetric(vertical: Dimens.btnPaddingVertical),
+          padding: const EdgeInsets.symmetric(vertical: Dimens.btnPaddingVertical),
           onPressed: () => Navigator.of(context).pushNamed(Routes.home),
           textStyle: TextStyle(color: Theme.of(context).colorScheme.onSurface),
-          child: TextView(
-              text: AppLocalizations.of(context)!.home,
-              textAlign: TextAlign.start),
+          child: TextView(text: AppLocalizations.of(context)!.home, textAlign: TextAlign.start),
         ),
         TextBtn(
           hoverFeedback: false,
-          padding:
-              const EdgeInsets.symmetric(vertical: Dimens.btnPaddingVertical),
+          padding: const EdgeInsets.symmetric(vertical: Dimens.btnPaddingVertical),
           onPressed: () => Navigator.of(context).pushNamed(Routes.about),
           textStyle: TextStyle(color: Theme.of(context).colorScheme.onSurface),
-          child: TextView(
-              text: AppLocalizations.of(context)!.about_me,
-              textAlign: TextAlign.start),
+          child: TextView(text: AppLocalizations.of(context)!.about_me, textAlign: TextAlign.start),
         ),
         TextBtn(
           hoverFeedback: false,
-          padding:
-              const EdgeInsets.symmetric(vertical: Dimens.btnPaddingVertical),
+          padding: const EdgeInsets.symmetric(vertical: Dimens.btnPaddingVertical),
           onPressed: () => Navigator.of(context).pushNamed(Routes.projects),
           textStyle: TextStyle(color: Theme.of(context).colorScheme.onSurface),
-          child: TextView(
-              text: AppLocalizations.of(context)!.projects,
-              textAlign: TextAlign.start),
+          child: TextView(text: AppLocalizations.of(context)!.projects, textAlign: TextAlign.start),
         ),
       ],
     );
   }
 
   void _initProjects() {
-    _projects = Observer(builder: (context) {
-      final p = _projectStore?.projects ?? Projects();
-      if (p.isEmpty) return const Nothing();
-      return PaddedColumn(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        padding: const EdgeInsets.symmetric(
-          vertical: Dimens.pageContentPaddingVertical,
-          horizontal: Dimens.pageContentPaddingHorizontal,
-        ),
-        children: [
-          TextView.header(
-            text: AppLocalizations.of(context)!.projects,
-            color: _color,
+    _projects = Observer(
+      builder: (context) {
+        final p = _projectStore?.projects ?? Projects();
+        if (p.isEmpty) return const Nothing();
+        return PaddedColumn(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          padding: const EdgeInsets.symmetric(
+            vertical: Dimens.pageContentPaddingVertical,
+            horizontal: Dimens.pageContentPaddingHorizontal,
           ),
-          ...p.values.map((p) {
-            return TextBtn(
-              hoverFeedback: false,
-              padding: const EdgeInsets.symmetric(
-                  vertical: Dimens.btnPaddingVertical),
-              onPressed: () =>
-                  Navigator.of(context).pushNamed(Routes.project, arguments: p),
-              textStyle:
-                  TextStyle(color: Theme.of(context).colorScheme.onSurface),
-              child: TextView(text: p.title, textAlign: TextAlign.start),
-            );
-          }),
-        ],
-      );
-    });
+          children: [
+            TextView.header(text: AppLocalizations.of(context)!.projects, color: _color),
+            ...p.values.map((p) {
+              return TextBtn(
+                hoverFeedback: false,
+                padding: const EdgeInsets.symmetric(vertical: Dimens.btnPaddingVertical),
+                onPressed: () => Navigator.of(context).pushNamed(Routes.project, arguments: p),
+                textStyle: TextStyle(color: Theme.of(context).colorScheme.onSurface),
+                child: TextView(text: p.title, textAlign: TextAlign.start),
+              );
+            }),
+          ],
+        );
+      },
+    );
   }
 
   void _initContact() {
-    _contact = Observer(builder: (context) {
-      final b = _bioStore?.bio ?? const Bio();
-      return PaddedColumn(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        padding: const EdgeInsets.symmetric(
-          vertical: Dimens.pageContentPaddingVertical,
-          horizontal: Dimens.pageContentPaddingHorizontal,
-        ),
-        children: [
-          TextView.header(
-            text: AppLocalizations.of(context)!.contact,
-            color: _color,
+    _contact = Observer(
+      builder: (context) {
+        final b = _bioStore?.bio ?? const Bio();
+        return PaddedColumn(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          padding: const EdgeInsets.symmetric(
+            vertical: Dimens.pageContentPaddingVertical,
+            horizontal: Dimens.pageContentPaddingHorizontal,
           ),
-          Wrap(
-            spacing: Dimens.bioDetailsContactPadding,
-            runSpacing: Dimens.bioDetailsContactPadding,
-            children: b.contact
-                .map((k, v) {
-                  return MapEntry(
-                    k,
-                    SizedBox(
-                      width: Dimens.bioDetailsContactSize,
-                      height: Dimens.bioDetailsContactSize,
-                      child: Tooltip(
-                        message: k,
-                        child: ElevatedBtn(
-                          color: Theme.of(context).colorScheme.surface,
-                          padding: const EdgeInsets.all(Dimens.cardPadding),
-                          onPressed: () => launchUrlString(v,
-                              mode: LaunchMode.externalApplication),
-                          child: SvgImageView(
-                            Vars.assets[k.toLowerCase()] ?? '',
-                            width: Dimens.bioDetailsContactSize,
-                            height: Dimens.bioDetailsContactSize,
+          children: [
+            TextView.header(text: AppLocalizations.of(context)!.contact, color: _color),
+            Wrap(
+              spacing: Dimens.bioDetailsContactPadding,
+              runSpacing: Dimens.bioDetailsContactPadding,
+              children: b.contact
+                  .map((k, v) {
+                    return MapEntry(
+                      k,
+                      SizedBox(
+                        width: Dimens.bioDetailsContactSize,
+                        height: Dimens.bioDetailsContactSize,
+                        child: Tooltip(
+                          message: k,
+                          child: ElevatedBtn(
+                            color: Theme.of(context).colorScheme.surface,
+                            padding: const EdgeInsets.all(Dimens.cardPadding),
+                            onPressed: () => launchUrlString(v, mode: LaunchMode.externalApplication),
+                            child: SvgImageView(
+                              Vars.assets[k.toLowerCase()] ?? '',
+                              width: Dimens.bioDetailsContactSize,
+                              height: Dimens.bioDetailsContactSize,
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  );
-                })
-                .values
-                .toList(),
-          ),
-        ],
-      );
-    });
+                    );
+                  })
+                  .values
+                  .toList(),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     if (_bioStore == null || _projectStore == null) return const Nothing();
     _initBody();
-    return Observer(builder: (context) {
-      return Container(
-        width: double.infinity,
-        color: Themes.isDarkMode
-            ? MoreColors.darker(_color, magnitude: 1)
-            : MoreColors.lighter(_color, magnitude: 2),
-        padding: const EdgeInsets.symmetric(
+    return Observer(
+      builder: (context) {
+        return Container(
+          width: double.infinity,
+          color: Themes.isDarkMode ? MoreColors.darker(_color, magnitude: 1) : MoreColors.lighter(_color, magnitude: 2),
+          padding: const EdgeInsets.symmetric(
             horizontal: Dimens.pageContentPaddingHorizontal,
-            vertical: Dimens.pageFooterPaddingVertical),
-        child: _body,
-      );
-    });
+            vertical: Dimens.pageFooterPaddingVertical,
+          ),
+          child: _body,
+        );
+      },
+    );
   }
 }

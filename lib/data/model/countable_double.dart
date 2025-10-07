@@ -9,11 +9,8 @@ class CountableDouble {
   final double value;
   final int fractionalLength;
 
-  CountableDouble(
-    this.value, {
-    int? fractionalLength,
-  }) : fractionalLength =
-            fractionalLength ?? '$value.'.split('.')[1].length.clamp(0, 3);
+  CountableDouble(this.value, {int? fractionalLength})
+    : fractionalLength = fractionalLength ?? '$value.'.split('.')[1].length.clamp(0, 3);
 
   int get countValue {
     var v = value;
@@ -43,8 +40,7 @@ class CountableDouble {
 
   CountableDouble operator -() => CountableDouble(-value);
 
-  factory CountableDouble.fromJson(Map<String, dynamic> json) =>
-      _$CountableDoubleFromJson(json);
+  factory CountableDouble.fromJson(Map<String, dynamic> json) => _$CountableDoubleFromJson(json);
 
   Map<String, dynamic> toJson() => _$CountableDoubleToJson(this);
 

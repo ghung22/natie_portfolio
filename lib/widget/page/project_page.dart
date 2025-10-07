@@ -27,11 +27,7 @@ class ProjectPage extends StatefulWidget {
   final Project project;
   final bool disableAnimation;
 
-  const ProjectPage({
-    super.key,
-    required this.project,
-    this.disableAnimation = false,
-  });
+  const ProjectPage({super.key, required this.project, this.disableAnimation = false});
 
   @override
   State<ProjectPage> createState() => _ProjectPageState();
@@ -59,22 +55,20 @@ class _ProjectPageState extends State<ProjectPage> with PostFrameMixin {
   void _initAppBar() {
     _appBar = WebAppBar(
       leading: const BackBtn(),
-      title: Observer(builder: (context) {
-        return AnimatedOpacity(
-          opacity: _introAni.willStart ? 1 : 0,
-          duration: Vars.animationFast,
-          child: TextBtn(
-            textStyle: Theme.of(context).appBarTheme.titleTextStyle,
-            hoverFeedback: false,
-            onPressed: () => _scrollController.animateTo(
-              0,
-              duration: Vars.animationSlow,
-              curve: Curves.easeOut,
+      title: Observer(
+        builder: (context) {
+          return AnimatedOpacity(
+            opacity: _introAni.willStart ? 1 : 0,
+            duration: Vars.animationFast,
+            child: TextBtn(
+              textStyle: Theme.of(context).appBarTheme.titleTextStyle,
+              hoverFeedback: false,
+              onPressed: () => _scrollController.animateTo(0, duration: Vars.animationSlow, curve: Curves.easeOut),
+              child: TextView(text: _p.title),
             ),
-            child: TextView(text: _p.title),
-          ),
-        );
-      }),
+          );
+        },
+      ),
       actions: const [LanguageBtn(), ThemeBtn()],
     );
   }
@@ -84,8 +78,7 @@ class _ProjectPageState extends State<ProjectPage> with PostFrameMixin {
       controller: _scrollController,
       child: PaddedColumn(
         paddingStartAndEnd: false,
-        padding: const EdgeInsets.symmetric(
-            vertical: Dimens.projectDetailsPaddingVertical),
+        padding: const EdgeInsets.symmetric(vertical: Dimens.projectDetailsPaddingVertical),
         children: [
           // Banner
           ProjectBanner(project: _p),
@@ -94,42 +87,37 @@ class _ProjectPageState extends State<ProjectPage> with PostFrameMixin {
           Container(
             width: double.infinity,
             padding: const EdgeInsets.symmetric(
-                horizontal: Dimens.projectDetailsPaddingHorizontal,
-                vertical: Dimens.projectDetailsPaddingVertical),
+              horizontal: Dimens.projectDetailsPaddingHorizontal,
+              vertical: Dimens.projectDetailsPaddingVertical,
+            ),
             color: Themes.isDarkMode
                 ? MoreColors.darker(_p.color, magnitude: 1)
                 : MoreColors.lighter(_p.color, magnitude: 2),
             child: PaddedColumn(
-              padding: const EdgeInsets.symmetric(
-                  vertical: Dimens.projectDetailsPaddingVertical),
+              padding: const EdgeInsets.symmetric(vertical: Dimens.projectDetailsPaddingVertical),
               paddingStartAndEnd: false,
               children: [
                 Wrap(
                   spacing: Dimens.projectDetailsFuncPadding,
                   runSpacing: Dimens.projectDetailsFuncPadding,
-                  children: [
-                    ProjectTimestampItem(_p),
-                    ProjectAuthorItem(_p),
-                  ],
+                  children: [ProjectTimestampItem(_p), ProjectAuthorItem(_p)],
                 ),
                 Center(child: HostUrlItem(_p)),
-                Observer(builder: (context) {
-                  final dimenStore = context.read<DimenStore>();
-                  final w = dimenStore.width;
-                  return CarouselSlider(
+                Observer(
+                  builder: (context) {
+                    final dimenStore = context.read<DimenStore>();
+                    final w = dimenStore.width;
+                    return CarouselSlider(
                       items: _p.imageUrls.map((url) {
                         return InkWell(
-                          onTap: () => launchUrlString(url,
-                              mode: LaunchMode.externalApplication),
+                          onTap: () => launchUrlString(url, mode: LaunchMode.externalApplication),
                           child: RoundedImageView(url),
                         );
                       }).toList(),
                       options: CarouselOptions(
                         height: Dimens.projectDetailsImgHeight,
                         pageSnapping: false,
-                        viewportFraction: (Dimens.projectDetailsImgWidth +
-                                Dimens.projectDetailsImgPadding) /
-                            w,
+                        viewportFraction: (Dimens.projectDetailsImgWidth + Dimens.projectDetailsImgPadding) / w,
                         enableInfiniteScroll: false,
                         padEnds: false,
                         autoPlay: true,
@@ -137,43 +125,40 @@ class _ProjectPageState extends State<ProjectPage> with PostFrameMixin {
                         autoPlayAnimationDuration: Vars.animationFast,
                         pauseAutoPlayOnManualNavigate: true,
                         pauseAutoPlayOnTouch: true,
-                      ));
-                }),
+                      ),
+                    );
+                  },
+                ),
               ],
             ),
           ),
 
           // Functionalities
-          TextView.header(
-            text: AppLocalizations.of(context)!.what_you_can_do(_p.title),
-            color: _p.color,
-          ),
+          TextView.header(text: AppLocalizations.of(context)!.what_you_can_do(_p.title), color: _p.color),
           Wrap(
             spacing: Dimens.projectDetailsFuncPadding,
             runSpacing: Dimens.projectDetailsFuncPadding,
             children: List.generate(
-                min(_p.functionalities.length, _p.functionalitiesVi.length),
-                (i) => FunctionalityItem(_p, i)),
+              min(_p.functionalities.length, _p.functionalitiesVi.length),
+              (i) => FunctionalityItem(_p, i),
+            ),
           ),
 
           // Technology used
           Container(
             width: double.infinity,
             padding: const EdgeInsets.symmetric(
-                horizontal: Dimens.projectDetailsPaddingHorizontal,
-                vertical: Dimens.projectDetailsPaddingVertical),
+              horizontal: Dimens.projectDetailsPaddingHorizontal,
+              vertical: Dimens.projectDetailsPaddingVertical,
+            ),
             color: Themes.isDarkMode
                 ? MoreColors.darker(_p.color, magnitude: 1)
                 : MoreColors.lighter(_p.color, magnitude: 2),
             child: PaddedColumn(
-              padding: const EdgeInsets.symmetric(
-                  vertical: Dimens.projectDetailsPaddingVertical),
+              padding: const EdgeInsets.symmetric(vertical: Dimens.projectDetailsPaddingVertical),
               paddingStartAndEnd: false,
               children: [
-                TextView.header(
-                  text: AppLocalizations.of(context)!.tech_used,
-                  color: _p.color,
-                ),
+                TextView.header(text: AppLocalizations.of(context)!.tech_used, color: _p.color),
                 Wrap(
                   spacing: Dimens.projectDetailsTechPaddingHorizontal,
                   runSpacing: Dimens.projectDetailsTechPaddingVertical,
@@ -187,15 +172,11 @@ class _ProjectPageState extends State<ProjectPage> with PostFrameMixin {
           ),
 
           // Learned
-          TextView.header(
-            text: AppLocalizations.of(context)!.what_i_learned(_p.title),
-            color: _p.color,
-          ),
+          TextView.header(text: AppLocalizations.of(context)!.what_i_learned(_p.title), color: _p.color),
           Wrap(
             spacing: Dimens.projectDetailsFuncPadding,
             runSpacing: Dimens.projectDetailsFuncPadding,
-            children: List.generate(min(_p.learned.length, _p.learnedVi.length),
-                (i) => LearnedItem(_p, i)),
+            children: List.generate(min(_p.learned.length, _p.learnedVi.length), (i) => LearnedItem(_p, i)),
           ),
           WebFooter(color: _p.color),
         ],
@@ -208,52 +189,47 @@ class _ProjectPageState extends State<ProjectPage> with PostFrameMixin {
     _initAppBar();
     _initBody();
 
-    return Builder(builder: (context) {
-      if (widget.disableAnimation) {
-        return Scaffold(
-          appBar: _appBar,
-          body: _body,
-        );
-      }
-      return Stack(
-        children: [
-          Hero(
-            tag: '${Routes.project}/${_p.id}/banner',
-            child: Scaffold(
-              backgroundColor: Colors.transparent,
-              appBar: AppBar(
-                toolbarOpacity: 0,
-                backgroundColor: Colors.transparent,
-                elevation: 0,
-                leading: const Nothing(),
-              ),
-              body: Observer(builder: (context) {
-                return AnimatedOpacity(
-                  opacity: _introAni.willStart ? 0 : 1,
-                  duration: Vars.animationFast,
-                  child: Container(
-                    height: Dimens.bannerHeight,
-                    color: _p.color,
-                  ),
-                );
-              }),
-            ),
-          ),
-          Hero(
-            tag: '${Routes.project}/${_p.id}',
-            child: Card(
-              color: Colors.transparent,
-              elevation: 0,
-              margin: EdgeInsets.zero,
-              shape: const RoundedRectangleBorder(side: BorderSide.none),
+    return Builder(
+      builder: (context) {
+        if (widget.disableAnimation) {
+          return Scaffold(appBar: _appBar, body: _body);
+        }
+        return Stack(
+          children: [
+            Hero(
+              tag: '${Routes.project}/${_p.id}/banner',
               child: Scaffold(
-                appBar: _appBar,
-                body: _body,
+                backgroundColor: Colors.transparent,
+                appBar: AppBar(
+                  toolbarOpacity: 0,
+                  backgroundColor: Colors.transparent,
+                  elevation: 0,
+                  leading: const Nothing(),
+                ),
+                body: Observer(
+                  builder: (context) {
+                    return AnimatedOpacity(
+                      opacity: _introAni.willStart ? 0 : 1,
+                      duration: Vars.animationFast,
+                      child: Container(height: Dimens.bannerHeight, color: _p.color),
+                    );
+                  },
+                ),
               ),
             ),
-          ),
-        ],
-      );
-    });
+            Hero(
+              tag: '${Routes.project}/${_p.id}',
+              child: Card(
+                color: Colors.transparent,
+                elevation: 0,
+                margin: EdgeInsets.zero,
+                shape: const RoundedRectangleBorder(side: BorderSide.none),
+                child: Scaffold(appBar: _appBar, body: _body),
+              ),
+            ),
+          ],
+        );
+      },
+    );
   }
 }

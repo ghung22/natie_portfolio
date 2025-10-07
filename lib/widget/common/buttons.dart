@@ -32,37 +32,36 @@ class IconBtn extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Observer(builder: (context) {
-      if (Dimens.isSmall || ignoreScreenSize) {
-        return Tooltip(
-          message: tooltipText,
-          waitDuration: const Duration(seconds: 1),
-          child: TextButton(
-            style: TextButton.styleFrom(
-              foregroundColor: color ?? Theme.of(context).colorScheme.onSurface,
-              padding: EdgeInsets.zero,
-              shape: const CircleBorder(),
+    return Observer(
+      builder: (context) {
+        if (Dimens.isSmall || ignoreScreenSize) {
+          return Tooltip(
+            message: tooltipText,
+            waitDuration: const Duration(seconds: 1),
+            child: TextButton(
+              style: TextButton.styleFrom(
+                foregroundColor: color ?? Theme.of(context).colorScheme.onSurface,
+                padding: EdgeInsets.zero,
+                shape: const CircleBorder(),
+              ),
+              onPressed: onPressed,
+              child: child,
             ),
-            onPressed: onPressed,
-            child: child,
+          );
+        }
+        return TextButton.icon(
+          style: TextButton.styleFrom(
+            foregroundColor: color ?? Theme.of(context).colorScheme.onSurface,
+            padding: const EdgeInsets.symmetric(horizontal: Dimens.btnIconPaddingHorizontal),
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(Dimens.btnRadius)),
+            textStyle: Styles.iconBtnLabelStyle,
           ),
+          onPressed: onPressed,
+          icon: child,
+          label: TextView(text: tooltipText),
         );
-      }
-      return TextButton.icon(
-        style: TextButton.styleFrom(
-          foregroundColor: color ?? Theme.of(context).colorScheme.onSurface,
-          padding: const EdgeInsets.symmetric(
-              horizontal: Dimens.btnIconPaddingHorizontal),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(Dimens.btnRadius),
-          ),
-          textStyle: Styles.iconBtnLabelStyle,
-        ),
-        onPressed: onPressed,
-        icon: child,
-        label: TextView(text: tooltipText),
-      );
-    });
+      },
+    );
   }
 }
 
@@ -91,14 +90,12 @@ class TextBtn extends StatelessWidget {
       style: ButtonStyle(
         foregroundColor: WidgetStateProperty.all(textStyle?.color),
         padding: WidgetStateProperty.all(padding),
-        shape: WidgetStateProperty.all(const RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(Dimens.btnRadius)),
-        )),
+        shape: WidgetStateProperty.all(
+          const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(Dimens.btnRadius))),
+        ),
         textStyle: WidgetStateProperty.all(textStyle),
         splashFactory: hoverFeedback ? null : NoSplash.splashFactory,
-        overlayColor: hoverFeedback
-            ? null
-            : WidgetStateProperty.all(Colors.transparent),
+        overlayColor: hoverFeedback ? null : WidgetStateProperty.all(Colors.transparent),
       ),
       onPressed: onPressed,
       child: child,
@@ -137,10 +134,7 @@ class ElevatedBtn extends StatelessWidget {
           elevation: elevation,
           shape: circular
               ? const CircleBorder()
-              : const RoundedRectangleBorder(
-                  borderRadius:
-                      BorderRadius.all(Radius.circular(Dimens.btnRadius)),
-                ),
+              : const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(Dimens.btnRadius))),
         ),
         onPressed: onPressed,
         child: child,
@@ -156,15 +150,17 @@ class BackBtn extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Builder(builder: (context) {
-      if (!Navigator.of(context).canPop()) return const Nothing();
-      return IconBtn(
-        tooltipText: AppLocalizations.of(context)!.back,
-        onPressed: () => Navigator.of(context).pop(),
-        ignoreScreenSize: false,
-        child: const Icon(Icons.arrow_back_ios_new),
-      );
-    });
+    return Builder(
+      builder: (context) {
+        if (!Navigator.of(context).canPop()) return const Nothing();
+        return IconBtn(
+          tooltipText: AppLocalizations.of(context)!.back,
+          onPressed: () => Navigator.of(context).pop(),
+          ignoreScreenSize: false,
+          child: const Icon(Icons.arrow_back_ios_new),
+        );
+      },
+    );
   }
 }
 
@@ -204,14 +200,9 @@ class LanguageBtn extends StatelessWidget {
           child: ImageView(
             Strings.isEn ? enImageUrl : viImageUrl,
             width: Dimens.iconBtnSize,
-            errorWidget: Text(
-              Strings.isEn ? Language.en.name : Language.vi.name,
-              style: Styles.iconBtnErrorStyle,
-            ),
+            errorWidget: Text(Strings.isEn ? Language.en.name : Language.vi.name, style: Styles.iconBtnErrorStyle),
           ),
-          onPressed: () => context
-              .read<LanguageStore>()
-              .setActiveLanguage(Strings.isEn ? Language.vi : Language.en),
+          onPressed: () => context.read<LanguageStore>().setActiveLanguage(Strings.isEn ? Language.vi : Language.en),
         );
       },
     );
@@ -227,11 +218,9 @@ class ThemeBtn extends StatelessWidget {
       builder: (context) {
         return IconBtn(
           tooltipText: AppLocalizations.of(context)!.theme,
-          child: Themes.isDarkMode
-              ? const Icon(CupertinoIcons.moon)
-              : const Icon(CupertinoIcons.sun_min),
-          onPressed: () => context.read<ThemeStore>().setActiveTheme(
-              Themes.isDarkMode ? ThemeMode.light : ThemeMode.dark),
+          child: Themes.isDarkMode ? const Icon(CupertinoIcons.moon) : const Icon(CupertinoIcons.sun_min),
+          onPressed: () =>
+              context.read<ThemeStore>().setActiveTheme(Themes.isDarkMode ? ThemeMode.light : ThemeMode.dark),
         );
       },
     );

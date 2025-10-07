@@ -43,12 +43,8 @@ class PaddedColumn extends StatelessWidget {
         if (_Constants.ignorePadding.contains(child.runtimeType)) {
           return child;
         }
-        final noPad = !paddingStartAndEnd &&
-            (child == children.first || child == children.last);
-        return Padding(
-          padding: noPad ? EdgeInsets.zero : padding,
-          child: child,
-        );
+        final noPad = !paddingStartAndEnd && (child == children.first || child == children.last);
+        return Padding(padding: noPad ? EdgeInsets.zero : padding, child: child);
       }).toList(),
     );
   }
@@ -80,12 +76,8 @@ class PaddedRow extends StatelessWidget {
       crossAxisAlignment: crossAxisAlignment,
       children: children.map((child) {
         if (_Constants.ignorePadding.contains(child.runtimeType)) return child;
-        final noPad = !paddingStartAndEnd &&
-            (child == children.first || child == children.last);
-        return Padding(
-          padding: noPad ? EdgeInsets.zero : padding,
-          child: child,
-        );
+        final noPad = !paddingStartAndEnd && (child == children.first || child == children.last);
+        return Padding(padding: noPad ? EdgeInsets.zero : padding, child: child);
       }).toList(),
     );
   }

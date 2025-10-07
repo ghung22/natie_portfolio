@@ -7,11 +7,7 @@ class Debug {
 
   static bool get isTesting => !isProduction;
 
-  static void log(
-    Object message, {
-    bool useDebugPrint = false,
-    String caller = 'App',
-  }) {
+  static void log(Object message, {bool useDebugPrint = false, String caller = 'App'}) {
     if (isProduction) return;
     if (useDebugPrint) {
       debugPrint('$caller: $message');

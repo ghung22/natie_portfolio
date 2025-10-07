@@ -61,14 +61,16 @@ class Project {
     this.hostUrl = '',
     this.iconUrl = '',
     this.imageUrls = const <String>[
-      'https://static.vecteezy.com/system/resources/previews/008/520/175/original/hand-holding-smartphone-with-screen-mockup-png.png'
+      'https://static.vecteezy.com/system/resources/previews/008/520/175/original/hand-holding-smartphone-with-screen-mockup-png.png',
     ],
     this.colorHex = 0x000000,
     this.completionTimestamp,
     this.featured = false,
-  }) : assert(functionalities.length == functionalitiesVi.length ||
-            functionalities.isEmpty && functionalitiesVi.isNotEmpty ||
-            functionalities.isNotEmpty && functionalitiesVi.isEmpty);
+  }) : assert(
+         functionalities.length == functionalitiesVi.length ||
+             functionalities.isEmpty && functionalitiesVi.isNotEmpty ||
+             functionalities.isNotEmpty && functionalitiesVi.isEmpty,
+       );
 
   Color get color => Color(colorHex);
 
@@ -77,8 +79,7 @@ class Project {
     return DateTime.fromMillisecondsSinceEpoch(completionTimestamp!);
   }
 
-  factory Project.fromJson(Map<String, dynamic> json) =>
-      _$ProjectFromJson(json);
+  factory Project.fromJson(Map<String, dynamic> json) => _$ProjectFromJson(json);
 
   Map<String, dynamic> toJson() => _$ProjectToJson(this);
 
@@ -127,24 +128,19 @@ class Projects {
 }
 
 class ProjectData {
-  static Projects data = Projects([
-    aPum,
-    lms,
-    nieNote,
-    nieFlat,
-    letTutor,
-    moodleMobile,
-  ]);
+  static Projects data = Projects([aPum, lms, nieNote, nieFlat, letTutor, moodleMobile]);
 
   static Project aPum = Project(
     id: 'a_pum',
     title: 'aPum',
     author: 'Nguyễn Gia Hưng',
     tech: 'android,java,sqlite,ml_kit',
-    description: 'An image gallery management application compact with '
+    description:
+        'An image gallery management application compact with '
         'features like: view photos, see photo information, favorite photos, '
         'facial detection, and more…',
-    descriptionVi: 'Một ứng dụng quản lý ảnh nhỏ gọn với các tính năng như: '
+    descriptionVi:
+        'Một ứng dụng quản lý ảnh nhỏ gọn với các tính năng như: '
         'xem ảnh, thông tin ảnh, yêu thích ảnh, nhận dạng khuôn mặt, '
         'và nhiều hơn nữa…',
     functionalities: [
@@ -191,12 +187,14 @@ class ProjectData {
     author: 'Intern project at FPT Software',
     authorVi: 'Dự án thực tập tại FPT Software',
     tech: 'android,java,mongodb',
-    description: 'A mobile application for a learning management system. '
+    description:
+        'A mobile application for a learning management system. '
         'Inspired by Quizziz, this app lets its users to see and play '
         'quizzes, and let lecturers create their own quiz with multiple types '
         'of questions. Data are taken from MongoDB through team-made RESTful '
         'APIs.',
-    descriptionVi: 'Ứng dụng cho một hệ thống quản lý học tập. Lấy cảm hứng '
+    descriptionVi:
+        'Ứng dụng cho một hệ thống quản lý học tập. Lấy cảm hứng '
         'từ Quizziz, ứng dụng này cho phép người dùng xem và chơi '
         'các bài quiz, và cho giảng viên tạo bài của riêng họ với nhiều loại '
         'câu hỏi. Dữ liệu được lấy từ MongoDB qua các REST API được tạo bởi '
@@ -231,10 +229,12 @@ class ProjectData {
     title: 'Nie Note',
     author: 'Nguyễn Gia Hưng',
     tech: 'android,java,sqlite,markdown',
-    description: 'A simple note taking application. Using markdown syntax, '
+    description:
+        'A simple note taking application. Using markdown syntax, '
         'you can create the most eye-catching notes to record everything, '
         'from your tasks, shopping list, to your snippets of code.',
-    descriptionVi: 'Một ứng dụng ghi chú đơn giản. Vận dụng cú pháp markdown, '
+    descriptionVi:
+        'Một ứng dụng ghi chú đơn giản. Vận dụng cú pháp markdown, '
         'bạn có thể tạo những bài ghi chú bắt mắt nhất để ghi nhận mọi thứ, từ '
         'công việc, danh sách mua hàng, đến các đoạn code của bạn.',
     functionalities: [
@@ -273,12 +273,14 @@ class ProjectData {
     title: 'Nie Flat',
     author: 'Nguyễn Gia Hưng',
     tech: 'android,java,firebase',
-    description: 'A social media app for those living in an apartment complex. '
+    description:
+        'A social media app for those living in an apartment complex. '
         'Communicate easily with your roommates, and keep an eye on official '
         'news. Admins also have a separate app to manage the rooms, residents, '
         'and posts made in the apartment complex. Data are synchronised with '
         'Firebase.',
-    descriptionVi: 'Ứng dụng mạng xã hội cho các cư dân của một khu chung cư. '
+    descriptionVi:
+        'Ứng dụng mạng xã hội cho các cư dân của một khu chung cư. '
         'Giao tiếp dễ dàng với bạn cùng phòng của bạn, và theo dõi tin tức từ '
         'chung cư. Các quản trị viên cũng có một ứng dụng riêng để quản lý các '
         'phòng, cư dân và bài đăng trong khu chung cư. Dữ liệu được đồng bộ '
@@ -325,11 +327,13 @@ class ProjectData {
     title: 'LetTutor Clone',
     author: 'Nguyễn Gia Hưng',
     tech: 'flutter,jitsi',
-    description: 'A one-on-one learning app to improve your English skills. '
+    description:
+        'A one-on-one learning app to improve your English skills. '
         'Search and see your favorite tutors, join interesting courses, and '
         'register as a tutor yourself. This Flutter app uses effective state '
         'management with BlOC.',
-    descriptionVi: 'Ứng dụng gia sư giúp cải thiện kỹ năng tiếng Anh của bạn. '
+    descriptionVi:
+        'Ứng dụng gia sư giúp cải thiện kỹ năng tiếng Anh của bạn. '
         'Hỗ trợ tìm gia sư, tham gia khóa học hữu ích, và đăng ký bản thân làm '
         'gia sư. Ứng dụng Flutter này sử dụng mô hình quản lý trạng thái BlOC.',
     functionalities: [
@@ -367,11 +371,13 @@ class ProjectData {
     author: 'University graduation project',
     authorVi: 'Đồ án tốt nghiệp đại học',
     tech: 'flutter,moodle,firebase',
-    description: 'An improved version of the mobile app created by Moodle '
+    description:
+        'An improved version of the mobile app created by Moodle '
         'developers, tailored for the needs of students and teachers in Ho Chi '
         'Minh City University of Science. This app aims for ease of usage, '
         'fast response, a modern UI, and new advance features.',
-    descriptionVi: 'Phiên bản cải tiến của ứng dụng di động được tạo bởi những '
+    descriptionVi:
+        'Phiên bản cải tiến của ứng dụng di động được tạo bởi những '
         'người phát triển Moodle, đã điều chỉnh theo nhu cầu của các sinh viên '
         'và giảng viên trong trường Đại học Khoa học tự nhiên. Ứng dụng nhắm '
         'đến sự tiện lợi, phản hồi nhanh, giao diện hiện đại, và hỗ trợ các '

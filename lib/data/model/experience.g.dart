@@ -12,17 +12,14 @@ Experience _$ExperienceFromJson(Map<String, dynamic> json) => Experience(
   time: json['time'] as String?,
   major: json['major'] as String?,
   majorVi: json['majorVi'] as String?,
-  imageUrls: (json['imageUrls'] as List<dynamic>?)
-      ?.map((e) => e as String)
-      .toList(),
+  imageUrls: (json['imageUrls'] as List<dynamic>?)?.map((e) => e as String).toList(),
 );
 
-Map<String, dynamic> _$ExperienceToJson(Experience instance) =>
-    <String, dynamic>{
-      'name': instance.name,
-      'nameVi': instance.nameVi,
-      'time': instance.time,
-      'major': instance.major,
-      'majorVi': instance.majorVi,
-      'imageUrls': instance.imageUrls,
-    };
+Map<String, dynamic> _$ExperienceToJson(Experience instance) => <String, dynamic>{
+  'name': instance.name,
+  'nameVi': instance.nameVi,
+  'time': instance.time,
+  'major': instance.major,
+  'majorVi': instance.majorVi,
+  'imageUrls': instance.imageUrls,
+};

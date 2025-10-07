@@ -50,11 +50,7 @@ class _ProjectsPageState extends State<ProjectsPage> with PostFrameMixin {
       title: TextBtn(
         textStyle: Theme.of(context).appBarTheme.titleTextStyle,
         hoverFeedback: false,
-        onPressed: () => _scrollController.animateTo(
-          0,
-          duration: Vars.animationSlow,
-          curve: Curves.easeOut,
-        ),
+        onPressed: () => _scrollController.animateTo(0, duration: Vars.animationSlow, curve: Curves.easeOut),
         child: TextView(text: AppLocalizations.of(context)!.projects),
       ),
       actions: [
@@ -78,8 +74,9 @@ class _ProjectsPageState extends State<ProjectsPage> with PostFrameMixin {
       controller: _scrollController,
       child: PaddedColumn(
         padding: const EdgeInsets.symmetric(
-            horizontal: Dimens.pageContentPaddingHorizontal,
-            vertical: Dimens.pageContentPaddingVertical),
+          horizontal: Dimens.pageContentPaddingHorizontal,
+          vertical: Dimens.pageContentPaddingVertical,
+        ),
         children: [
           _featured,
           _others,
@@ -90,62 +87,59 @@ class _ProjectsPageState extends State<ProjectsPage> with PostFrameMixin {
   }
 
   void _initFeatured() {
-    _featured = Observer(builder: (context) {
-      if (_projectStore == null) return const Nothing();
-      final p = _projectStore!.projects.featured;
-      return PaddedColumn(
-        padding:
-            const EdgeInsets.symmetric(vertical: Dimens.projectItemPadding),
-        children: [
-          TextView.header(
-              text: AppLocalizations.of(context)!.featured_projects),
-          ...p.map((p) {
-            return CardItem(
-              color: p.color,
-              child: ConstrainedBox(
-                constraints:
-                    const BoxConstraints(maxWidth: Dimens.pageContentMaxWidth),
-                child: ProjectBanner(
-                  project: p,
-                  onAction: () => Navigator.of(context)
-                      .pushNamed(Routes.project, arguments: p),
-                  isHomePage: true,
+    _featured = Observer(
+      builder: (context) {
+        if (_projectStore == null) return const Nothing();
+        final p = _projectStore!.projects.featured;
+        return PaddedColumn(
+          padding: const EdgeInsets.symmetric(vertical: Dimens.projectItemPadding),
+          children: [
+            TextView.header(text: AppLocalizations.of(context)!.featured_projects),
+            ...p.map((p) {
+              return CardItem(
+                color: p.color,
+                child: ConstrainedBox(
+                  constraints: const BoxConstraints(maxWidth: Dimens.pageContentMaxWidth),
+                  child: ProjectBanner(
+                    project: p,
+                    onAction: () => Navigator.of(context).pushNamed(Routes.project, arguments: p),
+                    isHomePage: true,
+                  ),
                 ),
-              ),
-            );
-          }),
-        ],
-      );
-    });
+              );
+            }),
+          ],
+        );
+      },
+    );
   }
 
   void _initOthers() {
-    _others = Observer(builder: (context) {
-      if (_projectStore == null) return const Nothing();
-      final p = _projectStore!.projects.others;
-      return PaddedColumn(
-        padding:
-            const EdgeInsets.symmetric(vertical: Dimens.projectItemPadding),
-        children: [
-          TextView.header(text: AppLocalizations.of(context)!.more_projects),
-          ...p.map((p) {
-            return CardItem(
-              color: p.color,
-              child: ConstrainedBox(
-                constraints:
-                    const BoxConstraints(maxWidth: Dimens.pageContentMaxWidth),
-                child: ProjectBanner(
-                  project: p,
-                  onAction: () => Navigator.of(context)
-                      .pushNamed(Routes.project, arguments: p),
-                  isHomePage: true,
+    _others = Observer(
+      builder: (context) {
+        if (_projectStore == null) return const Nothing();
+        final p = _projectStore!.projects.others;
+        return PaddedColumn(
+          padding: const EdgeInsets.symmetric(vertical: Dimens.projectItemPadding),
+          children: [
+            TextView.header(text: AppLocalizations.of(context)!.more_projects),
+            ...p.map((p) {
+              return CardItem(
+                color: p.color,
+                child: ConstrainedBox(
+                  constraints: const BoxConstraints(maxWidth: Dimens.pageContentMaxWidth),
+                  child: ProjectBanner(
+                    project: p,
+                    onAction: () => Navigator.of(context).pushNamed(Routes.project, arguments: p),
+                    isHomePage: true,
+                  ),
                 ),
-              ),
-            );
-          }),
-        ],
-      );
-    });
+              );
+            }),
+          ],
+        );
+      },
+    );
   }
 
   // endregion
@@ -155,9 +149,6 @@ class _ProjectsPageState extends State<ProjectsPage> with PostFrameMixin {
     _initAppBar();
     _initBody();
 
-    return Scaffold(
-      appBar: _appBar,
-      body: _body,
-    );
+    return Scaffold(appBar: _appBar, body: _body);
   }
 }

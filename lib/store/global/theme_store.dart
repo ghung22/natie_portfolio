@@ -12,8 +12,7 @@ abstract class _ThemeStore with Store {
   ThemeMode activeTheme = ThemeMode.system;
 
   @action
-  Future<void> getActiveTheme() async => activeTheme = await SharedPref
-      .getTheme();
+  Future<void> getActiveTheme() async => activeTheme = await SharedPref.getTheme();
 
   @action
   Future<void> setActiveTheme(ThemeMode theme) async {

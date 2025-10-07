@@ -14,28 +14,13 @@ Bio _$BioFromJson(Map<String, dynamic> json) => Bio(
   descriptionVi: json['descriptionVi'] as String? ?? '',
   avatarUrl: json['avatarUrl'] as String? ?? '',
   birthdayTimestamp: (json['birthdayTimestamp'] as num?)?.toInt() ?? 0,
-  contact:
-      (json['contact'] as Map<String, dynamic>?)?.map(
-        (k, e) => MapEntry(k, e as String),
-      ) ??
-      const {},
-  colorHexes:
-      (json['colorHexes'] as List<dynamic>?)
-          ?.map((e) => (e as num).toInt())
-          .toList() ??
-      const [0x00000000],
-  imageUrls:
-      (json['imageUrls'] as List<dynamic>?)?.map((e) => e as String).toList() ??
-      const [],
+  contact: (json['contact'] as Map<String, dynamic>?)?.map((k, e) => MapEntry(k, e as String)) ?? const {},
+  colorHexes: (json['colorHexes'] as List<dynamic>?)?.map((e) => (e as num).toInt()).toList() ?? const [0x00000000],
+  imageUrls: (json['imageUrls'] as List<dynamic>?)?.map((e) => e as String).toList() ?? const [],
   scores:
-      (json['scores'] as List<dynamic>?)
-          ?.map((e) => Score.fromJson(e as Map<String, dynamic>))
-          .toList() ??
-      const [],
+      (json['scores'] as List<dynamic>?)?.map((e) => Score.fromJson(e as Map<String, dynamic>)).toList() ?? const [],
   experience:
-      (json['experience'] as List<dynamic>?)
-          ?.map((e) => Experience.fromJson(e as Map<String, dynamic>))
-          .toList() ??
+      (json['experience'] as List<dynamic>?)?.map((e) => Experience.fromJson(e as Map<String, dynamic>)).toList() ??
       const [],
 );
 

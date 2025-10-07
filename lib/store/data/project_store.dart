@@ -12,8 +12,7 @@ abstract class _ProjectStore with Store {
   Projects projects = Projects();
 
   @action
-  Future<void> getProjects() async =>
-      projects = await ProjectService.getProjects();
+  Future<void> getProjects() async => projects = await ProjectService.getProjects();
 
   @action
   Future<void> uploadHardData() async {

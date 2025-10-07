@@ -2,11 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:natie_portfolio/store/global/dimen_store.dart';
 import 'package:provider/provider.dart';
 
-enum ScreenSize {
-  small,
-  medium,
-  large,
-}
+enum ScreenSize { small, medium, large }
 
 class Dimens {
   static BuildContext? _context;
@@ -54,8 +50,7 @@ class Dimens {
   static const bioDetailsExpPaddingVertical = bioDetailsScorePaddingVertical;
   static const bioDetailsExpSize = 160.0;
   static const bioDetailsPaddingVertical = projectDetailsPaddingVertical / 2;
-  static const bioDetailsPaddingHorizontal =
-      projectDetailsPaddingHorizontal / 2;
+  static const bioDetailsPaddingHorizontal = projectDetailsPaddingHorizontal / 2;
   static const bioDetailsScorePaddingHorizontal = 64.0;
   static const bioDetailsScorePaddingVertical = 12.0;
   static const bioDetailsScoreSize = bioScoreSize * 2;

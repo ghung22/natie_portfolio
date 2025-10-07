@@ -18,21 +18,18 @@ class AnimatedFadeSlide extends ImplicitlyAnimatedWidget {
     Duration duration = Vars.animationFast,
     super.curve,
     super.onEnd,
-  })  : assert(opacity >= 0.0 && opacity <= 1.0),
-        super(
-            duration: !disableAnimation ? duration : Duration.zero);
+  }) : assert(opacity >= 0.0 && opacity <= 1.0),
+       super(duration: !disableAnimation ? duration : Duration.zero);
 
   final Widget child;
   final Offset offset;
   final double opacity;
 
   @override
-  ImplicitlyAnimatedWidgetState<AnimatedFadeSlide> createState() =>
-      _AnimatedFadeSlideState();
+  ImplicitlyAnimatedWidgetState<AnimatedFadeSlide> createState() => _AnimatedFadeSlideState();
 }
 
-class _AnimatedFadeSlideState
-    extends ImplicitlyAnimatedWidgetState<AnimatedFadeSlide> {
+class _AnimatedFadeSlideState extends ImplicitlyAnimatedWidgetState<AnimatedFadeSlide> {
   Tween<Offset>? _offset;
   late Animation<Offset> _offsetAnimation;
   Tween<double>? _opacity;
@@ -40,10 +37,8 @@ class _AnimatedFadeSlideState
 
   @override
   void forEachTween(TweenVisitor<dynamic> visitor) {
-    _offset = visitor(_offset, widget.offset,
-        (value) => Tween<Offset>(begin: value as Offset)) as Tween<Offset>?;
-    _opacity = visitor(_opacity, widget.opacity,
-        (value) => Tween<double>(begin: value as double)) as Tween<double>?;
+    _offset = visitor(_offset, widget.offset, (value) => Tween<Offset>(begin: value as Offset)) as Tween<Offset>?;
+    _opacity = visitor(_opacity, widget.opacity, (value) => Tween<double>(begin: value as double)) as Tween<double>?;
   }
 
   @override
@@ -56,10 +51,7 @@ class _AnimatedFadeSlideState
   Widget build(BuildContext context) {
     return SlideTransition(
       position: _offsetAnimation,
-      child: FadeTransition(
-        opacity: _opacityAnimation,
-        child: widget.child,
-      ),
+      child: FadeTransition(opacity: _opacityAnimation, child: widget.child),
     );
   }
 }
@@ -86,8 +78,7 @@ class AnimatedHover extends StatefulWidget {
   State<AnimatedHover> createState() => _AnimatedHoverState();
 }
 
-class _AnimatedHoverState extends State<AnimatedHover>
-    with SingleTickerProviderStateMixin {
+class _AnimatedHoverState extends State<AnimatedHover> with SingleTickerProviderStateMixin {
   late double _scaleOnHover;
   late VoidCallback? _onPressed;
   late bool _feedback;
@@ -106,8 +97,7 @@ class _AnimatedHoverState extends State<AnimatedHover>
   Widget build(BuildContext context) {
     return InkWell(
       onTap: _onPressed ?? (_feedback ? () {} : null),
-      mouseCursor:
-          _feedback && _onPressed == null ? MouseCursor.uncontrolled : null,
+      mouseCursor: _feedback && _onPressed == null ? MouseCursor.uncontrolled : null,
       splashFactory: NoSplash.splashFactory,
       hoverColor: Colors.transparent,
       highlightColor: Colors.transparent,
@@ -121,11 +111,7 @@ class _AnimatedHoverState extends State<AnimatedHover>
           _ani.stop();
         }
       },
-      child: AnimatedScale(
-        scale: _ani.willStart ? _scaleOnHover : 1,
-        duration: widget.duration,
-        child: widget.child,
-      ),
+      child: AnimatedScale(scale: _ani.willStart ? _scaleOnHover : 1, duration: widget.duration, child: widget.child),
     );
   }
 }
@@ -137,12 +123,15 @@ class AnimatedLanguageUpdate extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Observer(builder: (context) {
-      Strings.isEn;
-      return AnimatedOpacity(
+    return Observer(
+      builder: (context) {
+        Strings.isEn;
+        return AnimatedOpacity(
           duration: Vars.animationFast,
           opacity: context.read<LanguageStore>().changingLanguage ? 0 : 1,
-          child: child);
-    });
+          child: child,
+        );
+      },
+    );
   }
 }

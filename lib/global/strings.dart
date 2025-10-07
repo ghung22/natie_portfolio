@@ -16,9 +16,7 @@ class Strings {
     switch (languageStore.activeLanguage) {
       case Language.system:
         Locale locale = Localizations.localeOf(_context!);
-        return locale.languageCode == Language.en.name
-            ? Language.en
-            : Language.vi;
+        return locale.languageCode == Language.en.name ? Language.en : Language.vi;
       case Language.en:
       case Language.vi:
         return languageStore.activeLanguage;

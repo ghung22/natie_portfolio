@@ -98,21 +98,14 @@ class _BannerItemState extends State<BannerItem> with PostFrameMixin {
     _leftSide = PaddedColumn(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
-      padding:
-          const EdgeInsets.symmetric(vertical: Dimens.bannerContentPadding),
+      padding: const EdgeInsets.symmetric(vertical: Dimens.bannerContentPadding),
       children: [
         if (_title != null)
           Material(
             color: Colors.transparent,
             textStyle: Styles.bannerTitleStyle.copyWith(
               color: MoreColors.onColor(_primary),
-              shadows: [
-                Shadow(
-                  color: MoreColors.onColorShadow(_primary),
-                  offset: const Offset(2, 2),
-                  blurRadius: 4,
-                ),
-              ],
+              shadows: [Shadow(color: MoreColors.onColorShadow(_primary), offset: const Offset(2, 2), blurRadius: 4)],
             ),
             child: _title,
           ),
@@ -121,13 +114,7 @@ class _BannerItemState extends State<BannerItem> with PostFrameMixin {
             color: Colors.transparent,
             textStyle: Styles.bannerDescriptionStyle.copyWith(
               color: MoreColors.onColor(_primary),
-              shadows: [
-                Shadow(
-                  color: MoreColors.onColorShadow(_primary),
-                  offset: const Offset(2, 2),
-                  blurRadius: 4,
-                ),
-              ],
+              shadows: [Shadow(color: MoreColors.onColorShadow(_primary), offset: const Offset(2, 2), blurRadius: 4)],
             ),
             child: _description,
           ),
@@ -141,11 +128,7 @@ class _BannerItemState extends State<BannerItem> with PostFrameMixin {
               ),
               onPressed: _onAction,
               color: MoreColors.lighter(_primary),
-              child: Material(
-                color: Colors.transparent,
-                textStyle: Styles.bannerActionStyle,
-                child: _action,
-              ),
+              child: Material(color: Colors.transparent, textStyle: Styles.bannerActionStyle, child: _action),
             ),
           ),
       ],
@@ -156,32 +139,39 @@ class _BannerItemState extends State<BannerItem> with PostFrameMixin {
     _rightSide = Align(
       alignment: Alignment.bottomRight,
       child: CarouselSlider(
-          items: _imageUrls.map((url) {
-            if (!widget.imageRounded) {
-              if (_imageUrls.first == url) {
-                return ImageView(url, onFinish: () {
+        items: _imageUrls.map((url) {
+          if (!widget.imageRounded) {
+            if (_imageUrls.first == url) {
+              return ImageView(
+                url,
+                onFinish: () {
                   if (!_introAni.willStart) _introAni.start();
-                });
-              }
-              return ImageView(url);
-            } else {
-              if (_imageUrls.first == url) {
-                return RoundedImageView(url, onFinish: () {
-                  if (!_introAni.willStart) _introAni.start();
-                });
-              }
-              return RoundedImageView(url);
+                },
+              );
             }
-          }).toList(),
-          options: CarouselOptions(
-            aspectRatio: 9 / 16,
-            autoPlay: true,
-            autoPlayInterval: const Duration(seconds: 5),
-            autoPlayAnimationDuration: Vars.animationFast,
-            disableCenter: true,
-            viewportFraction: 1,
-            enlargeCenterPage: true,
-          )),
+            return ImageView(url);
+          } else {
+            if (_imageUrls.first == url) {
+              return RoundedImageView(
+                url,
+                onFinish: () {
+                  if (!_introAni.willStart) _introAni.start();
+                },
+              );
+            }
+            return RoundedImageView(url);
+          }
+        }).toList(),
+        options: CarouselOptions(
+          aspectRatio: 9 / 16,
+          autoPlay: true,
+          autoPlayInterval: const Duration(seconds: 5),
+          autoPlayAnimationDuration: Vars.animationFast,
+          disableCenter: true,
+          viewportFraction: 1,
+          enlargeCenterPage: true,
+        ),
+      ),
     );
   }
 
@@ -197,35 +187,34 @@ class _BannerItemState extends State<BannerItem> with PostFrameMixin {
       child: Stack(
         alignment: Alignment.center,
         children: [
-          Container(
-            width: double.infinity,
-            height: Dimens.bannerHeight,
-            color: _primary,
-          ),
+          Container(width: double.infinity, height: Dimens.bannerHeight, color: _primary),
           ConstrainedBox(
             constraints: const BoxConstraints(
-                minHeight: Dimens.bannerHeight,
-                maxHeight: Dimens.bannerHeight,
-                maxWidth: Dimens.pageContentMaxWidth),
+              minHeight: Dimens.bannerHeight,
+              maxHeight: Dimens.bannerHeight,
+              maxWidth: Dimens.pageContentMaxWidth,
+            ),
             child: Stack(
               children: [
                 // Right side below everything
-                Builder(builder: (context) {
-                  if (widget.rightSide != null) return widget.rightSide!;
-                  return Observer(builder: (context) {
-                    return AnimatedFadeSlide(
-                      offset: _introAni.willStart
-                          ? Offset.zero
-                          : const Offset(Dimens.bannerSlideOffset, 0),
-                      opacity: _introAni.willStart ? 1 : 0,
-                      duration: Vars.animationSluggish,
-                      curve: Curves.easeOut,
-                      onEnd: widget.onAnimationDone,
-                      disableAnimation: widget.disableAnimation,
-                      child: _rightSide,
+                Builder(
+                  builder: (context) {
+                    if (widget.rightSide != null) return widget.rightSide!;
+                    return Observer(
+                      builder: (context) {
+                        return AnimatedFadeSlide(
+                          offset: _introAni.willStart ? Offset.zero : const Offset(Dimens.bannerSlideOffset, 0),
+                          opacity: _introAni.willStart ? 1 : 0,
+                          duration: Vars.animationSluggish,
+                          curve: Curves.easeOut,
+                          onEnd: widget.onAnimationDone,
+                          disableAnimation: widget.disableAnimation,
+                          child: _rightSide,
+                        );
+                      },
                     );
-                  });
-                }),
+                  },
+                ),
 
                 // Left side, on top of the right
                 Padding(
@@ -234,24 +223,24 @@ class _BannerItemState extends State<BannerItem> with PostFrameMixin {
                     vertical: Dimens.bannerPaddingVertical,
                   ),
                   child: ConstrainedBox(
-                    constraints: const BoxConstraints(
-                      maxWidth: Dimens.bannerContentLeftMaxWidth,
-                    ),
-                    child: Builder(builder: (context) {
-                      if (widget.leftSide != null) return widget.leftSide!;
-                      return Observer(builder: (context) {
-                        return AnimatedFadeSlide(
-                          offset: _introAni.willStart
-                              ? Offset.zero
-                              : const Offset(-Dimens.bannerSlideOffset, 0),
-                          opacity: _introAni.willStart ? 1 : 0,
-                          duration: Vars.animationSluggish,
-                          curve: Curves.easeOut,
-                          disableAnimation: widget.disableAnimation,
-                          child: _leftSide,
+                    constraints: const BoxConstraints(maxWidth: Dimens.bannerContentLeftMaxWidth),
+                    child: Builder(
+                      builder: (context) {
+                        if (widget.leftSide != null) return widget.leftSide!;
+                        return Observer(
+                          builder: (context) {
+                            return AnimatedFadeSlide(
+                              offset: _introAni.willStart ? Offset.zero : const Offset(-Dimens.bannerSlideOffset, 0),
+                              opacity: _introAni.willStart ? 1 : 0,
+                              duration: Vars.animationSluggish,
+                              curve: Curves.easeOut,
+                              disableAnimation: widget.disableAnimation,
+                              child: _leftSide,
+                            );
+                          },
                         );
-                      });
-                    }),
+                      },
+                    ),
                   ),
                 ),
               ],
@@ -280,37 +269,34 @@ class ProjectBanner extends StatelessWidget {
   });
 
   Widget get _bannerWidget => BannerItem(
-        title: TextView(text: project.title),
-        description: Observer(builder: (context) {
-          return TextView(
-            text: Strings.isEn ? project.description : project.descriptionVi,
-            spaced: true,
-            softWrap: true,
-          );
-        }),
-        imageUrls: project.imageUrls,
-        imageRounded: true,
-        primary: project.color,
-        action: onAction == null
-            ? null
-            : Observer(builder: (context) {
-                Strings.isEn;
-                return TextView(text: AppLocalizations.of(context)!.explore);
-              }),
-        onAction: onAction,
-        disableAnimation: skipIntro,
-        onAnimationDone: onIntroDone,
-      );
+    title: TextView(text: project.title),
+    description: Observer(
+      builder: (context) {
+        return TextView(text: Strings.isEn ? project.description : project.descriptionVi, spaced: true, softWrap: true);
+      },
+    ),
+    imageUrls: project.imageUrls,
+    imageRounded: true,
+    primary: project.color,
+    action: onAction == null
+        ? null
+        : Observer(
+            builder: (context) {
+              Strings.isEn;
+              return TextView(text: AppLocalizations.of(context)!.explore);
+            },
+          ),
+    onAction: onAction,
+    disableAnimation: skipIntro,
+    onAnimationDone: onIntroDone,
+  );
 
   @override
   Widget build(BuildContext context) {
     if (!isHomePage) {
       return _bannerWidget;
     }
-    return Hero(
-      tag: '${Routes.project}/${project.id}/banner',
-      child: _bannerWidget,
-    );
+    return Hero(tag: '${Routes.project}/${project.id}/banner', child: _bannerWidget);
   }
 }
 
@@ -322,12 +308,7 @@ class BioBanner extends StatelessWidget {
   final AnimationStore _introAni = AnimationStore();
   final AnimationStore _introSecondAni = AnimationStore();
 
-  BioBanner({
-    super.key,
-    required this.bio,
-    this.skipIntro = false,
-    this.onIntroDone,
-  });
+  BioBanner({super.key, required this.bio, this.skipIntro = false, this.onIntroDone});
 
   @override
   Widget build(BuildContext context) {
@@ -335,109 +316,98 @@ class BioBanner extends StatelessWidget {
     Widget leftSide = PaddedColumn(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
-      padding:
-          const EdgeInsets.symmetric(vertical: Dimens.bannerContentPadding),
+      padding: const EdgeInsets.symmetric(vertical: Dimens.bannerContentPadding),
       children: [
-        Observer(builder: (context) {
-          Strings.isEn;
-          return AnimatedFadeSlide(
-            offset: _introAni.willStart
-                ? Offset.zero
-                : const Offset(0, Dimens.bannerSlideOffset),
-            opacity: _introAni.willStart ? 1 : 0,
-            duration: Vars.animationSluggish,
-            curve: Curves.easeOut,
-            child: AnimatedTypingText(
-              text: AppLocalizations.of(context)!.welcome(bio.name),
-              style: Styles.bannerTitleStyle,
-              softWrap: true,
-              disableAnimation: skipIntro,
-              onDone: () => _introSecondAni.start(),
-            ),
-          );
-        }),
-        Observer(builder: (context) {
-          return AnimatedFadeSlide(
-            offset: _introSecondAni.willStart
-                ? Offset.zero
-                : const Offset(0, Dimens.bannerSlideOffset),
-            opacity: _introSecondAni.willStart ? 1 : 0,
-            duration: Vars.animationSluggish,
-            curve: Curves.easeOut,
-            child: TextView(
-              text: Strings.isEn ? bio.description : bio.descriptionVi,
-              style: Styles.bannerDescriptionStyle,
-              spaced: true,
-              softWrap: true,
-            ),
-          );
-        }),
+        Observer(
+          builder: (context) {
+            Strings.isEn;
+            return AnimatedFadeSlide(
+              offset: _introAni.willStart ? Offset.zero : const Offset(0, Dimens.bannerSlideOffset),
+              opacity: _introAni.willStart ? 1 : 0,
+              duration: Vars.animationSluggish,
+              curve: Curves.easeOut,
+              child: AnimatedTypingText(
+                text: AppLocalizations.of(context)!.welcome(bio.name),
+                style: Styles.bannerTitleStyle,
+                softWrap: true,
+                disableAnimation: skipIntro,
+                onDone: () => _introSecondAni.start(),
+              ),
+            );
+          },
+        ),
+        Observer(
+          builder: (context) {
+            return AnimatedFadeSlide(
+              offset: _introSecondAni.willStart ? Offset.zero : const Offset(0, Dimens.bannerSlideOffset),
+              opacity: _introSecondAni.willStart ? 1 : 0,
+              duration: Vars.animationSluggish,
+              curve: Curves.easeOut,
+              child: TextView(
+                text: Strings.isEn ? bio.description : bio.descriptionVi,
+                style: Styles.bannerDescriptionStyle,
+                spaced: true,
+                softWrap: true,
+              ),
+            );
+          },
+        ),
         const SizedBox(height: Dimens.bannerContentPadding),
-        Observer(builder: (context) {
-          return AnimatedFadeSlide(
-            offset: _introSecondAni.willStart
-                ? Offset.zero
-                : const Offset(0, Dimens.bannerSlideOffset),
-            opacity: _introSecondAni.willStart ? 1 : 0,
-            duration: Vars.animationSluggish,
-            curve: Curves.easeOut,
-            child: PaddedRow(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              padding: const EdgeInsets.symmetric(
-                  horizontal: Dimens.bioScorePadding),
-              paddingStartAndEnd: false,
-              children: [
-                ...bio.scores.map((s) {
-                  return AnimatedCountingText(
-                    value: s.score,
-                    color: Colors.white,
-                    dimension: Dimens.bioScoreSize,
-                    style: Styles.scoreValueStyle,
-                    spaced: true,
-                    disableAnimation: skipIntro,
-                    topSide: TextView(
-                      text: s.name,
-                      style: Styles.scoreNameStyle,
+        Observer(
+          builder: (context) {
+            return AnimatedFadeSlide(
+              offset: _introSecondAni.willStart ? Offset.zero : const Offset(0, Dimens.bannerSlideOffset),
+              opacity: _introSecondAni.willStart ? 1 : 0,
+              duration: Vars.animationSluggish,
+              curve: Curves.easeOut,
+              child: PaddedRow(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                padding: const EdgeInsets.symmetric(horizontal: Dimens.bioScorePadding),
+                paddingStartAndEnd: false,
+                children: [
+                  ...bio.scores.map((s) {
+                    return AnimatedCountingText(
+                      value: s.score,
+                      color: Colors.white,
+                      dimension: Dimens.bioScoreSize,
+                      style: Styles.scoreValueStyle,
                       spaced: true,
-                    ),
-                  );
-                }),
-              ],
-            ),
-          );
-        }),
+                      disableAnimation: skipIntro,
+                      topSide: TextView(text: s.name, style: Styles.scoreNameStyle, spaced: true),
+                    );
+                  }),
+                ],
+              ),
+            );
+          },
+        ),
       ],
     );
 
     Widget rightSide = Align(
       alignment: Alignment.bottomRight,
       child: Padding(
-        padding: const EdgeInsets.only(
-            right: Dimens.bioRightSidePadding,
-            bottom: Dimens.bioRightSidePadding),
+        padding: const EdgeInsets.only(right: Dimens.bioRightSidePadding, bottom: Dimens.bioRightSidePadding),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Observer(builder: (context) {
-              return AnimatedFadeSlide(
-                offset: _introSecondAni.willStart
-                    ? Offset.zero
-                    : const Offset(0, Dimens.bannerSlideOffset),
-                opacity: _introSecondAni.willStart ? 1 : 0,
-                duration: Vars.animationFast,
-                curve: Curves.easeOut,
-                child: SpeechBubble(
-                  color: Colors.white,
-                  child: Padding(
-                    padding: const EdgeInsets.all(Dimens.cardPadding),
-                    child: TextView(
-                      text: AppLocalizations.of(context)!.see_more,
-                      color: Colors.black,
+            Observer(
+              builder: (context) {
+                return AnimatedFadeSlide(
+                  offset: _introSecondAni.willStart ? Offset.zero : const Offset(0, Dimens.bannerSlideOffset),
+                  opacity: _introSecondAni.willStart ? 1 : 0,
+                  duration: Vars.animationFast,
+                  curve: Curves.easeOut,
+                  child: SpeechBubble(
+                    color: Colors.white,
+                    child: Padding(
+                      padding: const EdgeInsets.all(Dimens.cardPadding),
+                      child: TextView(text: AppLocalizations.of(context)!.see_more, color: Colors.black),
                     ),
                   ),
-                ),
-              );
-            }),
+                );
+              },
+            ),
             const SizedBox(height: Dimens.bioScorePadding),
             ConstrainedBox(
               constraints: const BoxConstraints(maxHeight: Dimens.bioHeight),
@@ -449,12 +419,10 @@ class BioBanner extends StatelessWidget {
                   tag: '${Routes.about}/avatar',
                   child: DecoratedBox(
                     decoration: const ShapeDecoration(
-                        shape: CircleBorder(
-                      side: BorderSide(
-                        color: Colors.white,
-                        width: Dimens.bioAvatarBorderSize,
+                      shape: CircleBorder(
+                        side: BorderSide(color: Colors.white, width: Dimens.bioAvatarBorderSize),
                       ),
-                    )),
+                    ),
                     child: Padding(
                       padding: const EdgeInsets.all(Dimens.bioAvatarPadding),
                       child: CircleImageView(
@@ -478,17 +446,17 @@ class BioBanner extends StatelessWidget {
       description: null,
       primary: bio.colors.first,
       leftSide: leftSide,
-      rightSide: Observer(builder: (context) {
-        return AnimatedFadeSlide(
-          offset: _introAni.willStart
-              ? Offset.zero
-              : const Offset(-Dimens.bannerSlideOffset, 0),
-          opacity: _introAni.willStart ? 1 : 0,
-          duration: Vars.animationSluggish,
-          curve: Curves.easeOut,
-          child: rightSide,
-        );
-      }),
+      rightSide: Observer(
+        builder: (context) {
+          return AnimatedFadeSlide(
+            offset: _introAni.willStart ? Offset.zero : const Offset(-Dimens.bannerSlideOffset, 0),
+            opacity: _introAni.willStart ? 1 : 0,
+            duration: Vars.animationSluggish,
+            curve: Curves.easeOut,
+            child: rightSide,
+          );
+        },
+      ),
       disableAnimation: skipIntro,
       onAnimationDone: onIntroDone,
     );

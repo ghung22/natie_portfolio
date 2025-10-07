@@ -28,9 +28,7 @@ class S {
   static const AppLocalizationDelegate delegate = AppLocalizationDelegate();
 
   static Future<S> load(Locale locale) {
-    final name = (locale.countryCode?.isEmpty ?? false)
-        ? locale.languageCode
-        : locale.toString();
+    final name = (locale.countryCode?.isEmpty ?? false) ? locale.languageCode : locale.toString();
     final localeName = Intl.canonicalizedLocale(name);
     return initializeMessages(localeName).then((_) {
       Intl.defaultLocale = localeName;
@@ -71,12 +69,7 @@ class S {
 
   /// `Completion date`
   String get completion_date {
-    return Intl.message(
-      'Completion date',
-      name: 'completion_date',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Completion date', name: 'completion_date', desc: '', args: []);
   }
 
   /// `Contact me`
@@ -86,12 +79,7 @@ class S {
 
   /// `© 2021 Natie Portfolio - Made with Flutter`
   String get copyright {
-    return Intl.message(
-      '© 2021 Natie Portfolio - Made with Flutter',
-      name: 'copyright',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('© 2021 Natie Portfolio - Made with Flutter', name: 'copyright', desc: '', args: []);
   }
 
   /// `More details`
@@ -106,22 +94,12 @@ class S {
 
   /// `Work experience & Education`
   String get experience {
-    return Intl.message(
-      'Work experience & Education',
-      name: 'experience',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Work experience & Education', name: 'experience', desc: '', args: []);
   }
 
   /// `Featured Projects`
   String get featured_projects {
-    return Intl.message(
-      'Featured Projects',
-      name: 'featured_projects',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Featured Projects', name: 'featured_projects', desc: '', args: []);
   }
 
   /// `Home`
@@ -141,12 +119,7 @@ class S {
 
   /// `More projects`
   String get more_projects {
-    return Intl.message(
-      'More projects',
-      name: 'more_projects',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('More projects', name: 'more_projects', desc: '', args: []);
   }
 
   /// `Navigate to`
@@ -176,12 +149,7 @@ class S {
 
   /// `See scoreboard`
   String get scoreboard {
-    return Intl.message(
-      'See scoreboard',
-      name: 'scoreboard',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('See scoreboard', name: 'scoreboard', desc: '', args: []);
   }
 
   /// `Academic grades`
@@ -196,22 +164,12 @@ class S {
 
   /// `Press me to see more`
   String get see_more {
-    return Intl.message(
-      'Press me to see more',
-      name: 'see_more',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Press me to see more', name: 'see_more', desc: '', args: []);
   }
 
   /// `Technology used:`
   String get tech_used {
-    return Intl.message(
-      'Technology used:',
-      name: 'tech_used',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Technology used:', name: 'tech_used', desc: '', args: []);
   }
 
   /// `Theme`
@@ -221,12 +179,7 @@ class S {
 
   /// `Hi! This is\n{name}`
   String welcome(String name) {
-    return Intl.message(
-      'Hi! This is\n$name',
-      name: 'welcome',
-      desc: 'A welcome message for the viewer.',
-      args: [name],
-    );
+    return Intl.message('Hi! This is\n$name', name: 'welcome', desc: 'A welcome message for the viewer.', args: [name]);
   }
 
   /// `Thanks to {name}, I have learned to…`
@@ -259,10 +212,7 @@ class AppLocalizationDelegate extends LocalizationsDelegate<S> {
   const AppLocalizationDelegate();
 
   List<Locale> get supportedLocales {
-    return const <Locale>[
-      Locale.fromSubtags(languageCode: 'en'),
-      Locale.fromSubtags(languageCode: 'vi'),
-    ];
+    return const <Locale>[Locale.fromSubtags(languageCode: 'en'), Locale.fromSubtags(languageCode: 'vi')];
   }
 
   @override

@@ -61,8 +61,7 @@ class Bio {
 
   List<Color> get colors => colorHexes.map((c) => Color(c)).toList();
 
-  DateTime get birthday =>
-      DateTime.fromMillisecondsSinceEpoch(birthdayTimestamp);
+  DateTime get birthday => DateTime.fromMillisecondsSinceEpoch(birthdayTimestamp);
 
   factory Bio.fromJson(Map<String, dynamic> json) => _$BioFromJson(json);
 

@@ -52,19 +52,17 @@ class _AboutPageState extends State<AboutPage> with PostFrameMixin {
   void _initAppBar() {
     _appBar = WebAppBar(
       leading: const BackBtn(),
-      title: Observer(builder: (context) {
-        Strings.isEn;
-        return TextBtn(
-          textStyle: Theme.of(context).appBarTheme.titleTextStyle,
-          hoverFeedback: false,
-          onPressed: () => _scrollController.animateTo(
-            0,
-            duration: Vars.animationSlow,
-            curve: Curves.easeOut,
-          ),
-          child: TextView(textCallback: () => Strings.title),
-        );
-      }),
+      title: Observer(
+        builder: (context) {
+          Strings.isEn;
+          return TextBtn(
+            textStyle: Theme.of(context).appBarTheme.titleTextStyle,
+            hoverFeedback: false,
+            onPressed: () => _scrollController.animateTo(0, duration: Vars.animationSlow, curve: Curves.easeOut),
+            child: TextView(textCallback: () => Strings.title),
+          );
+        },
+      ),
       actions: const [LanguageBtn(), ThemeBtn()],
     );
   }
@@ -78,16 +76,17 @@ class _AboutPageState extends State<AboutPage> with PostFrameMixin {
     _body = SingleChildScrollView(
       controller: _scrollController,
       child: PaddedColumn(
-        padding: const EdgeInsets.symmetric(
-            vertical: Dimens.bioDetailsPaddingVertical),
+        padding: const EdgeInsets.symmetric(vertical: Dimens.bioDetailsPaddingVertical),
         children: [
           _header,
           _scores,
           _experience,
           IgnorePadding(
-            child: Observer(builder: (context) {
-              return WebFooter(color: _bioStore?.bio.colors.first);
-            }),
+            child: Observer(
+              builder: (context) {
+                return WebFooter(color: _bioStore?.bio.colors.first);
+              },
+            ),
           ),
         ],
       ),
@@ -95,158 +94,149 @@ class _AboutPageState extends State<AboutPage> with PostFrameMixin {
   }
 
   void _initHeader() {
-    _header = Observer(builder: (context) {
-      if (_bioStore == null) return const Nothing();
-      final bio = _bioStore!.bio;
-      return Table(
-        defaultVerticalAlignment: TableCellVerticalAlignment.top,
-        columnWidths: const {
-          0: FlexColumnWidth(1),
-          1: FlexColumnWidth(2),
-        },
-        children: [
-          TableRow(
-            children: [
-              ConstrainedBox(
-                constraints: const BoxConstraints(maxHeight: Dimens.bioHeight),
-                child: Builder(builder: (context) {
-                  final ava = DecoratedBox(
-                    decoration: ShapeDecoration(
-                        shape: CircleBorder(
-                          side: BorderSide(
-                            color: bio.colors.first,
-                            width: Dimens.bioAvatarBorderSize,
+    _header = Observer(
+      builder: (context) {
+        if (_bioStore == null) return const Nothing();
+        final bio = _bioStore!.bio;
+        return Table(
+          defaultVerticalAlignment: TableCellVerticalAlignment.top,
+          columnWidths: const {0: FlexColumnWidth(1), 1: FlexColumnWidth(2)},
+          children: [
+            TableRow(
+              children: [
+                ConstrainedBox(
+                  constraints: const BoxConstraints(maxHeight: Dimens.bioHeight),
+                  child: Builder(
+                    builder: (context) {
+                      final ava = DecoratedBox(
+                        decoration: ShapeDecoration(
+                          shape: CircleBorder(
+                            side: BorderSide(color: bio.colors.first, width: Dimens.bioAvatarBorderSize),
                           ),
-                        )),
-                    child: Padding(
-                      padding: const EdgeInsets.all(Dimens.bioAvatarPadding),
-                      child: FittedBox(
-                        child: CircleImageView(
-                          bio.avatarUrl,
-                          onFinish: () {
-                            if (!_introAni.willStart) _introAni.start();
-                          },
                         ),
-                      ),
-                    ),
-                  );
-                  if (widget.disableAnimation) return ava;
-                  return Hero(
-                    tag: '${Routes.about}/avatar',
-                    child: ava,
-                  );
-                }),
-              ),
-              PaddedColumn(
-                padding: const EdgeInsets.symmetric(
+                        child: Padding(
+                          padding: const EdgeInsets.all(Dimens.bioAvatarPadding),
+                          child: FittedBox(
+                            child: CircleImageView(
+                              bio.avatarUrl,
+                              onFinish: () {
+                                if (!_introAni.willStart) _introAni.start();
+                              },
+                            ),
+                          ),
+                        ),
+                      );
+                      if (widget.disableAnimation) return ava;
+                      return Hero(tag: '${Routes.about}/avatar', child: ava);
+                    },
+                  ),
+                ),
+                PaddedColumn(
+                  padding: const EdgeInsets.symmetric(
                     horizontal: Dimens.bioDetailsPaddingHorizontal,
-                    vertical: Dimens.bioDetailsPaddingVertical),
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  TextView(
-                    text: bio.name,
-                    style: Styles.bioNameStyle.copyWith(
-                      color: bio.colors.first,
+                    vertical: Dimens.bioDetailsPaddingVertical,
+                  ),
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    TextView(
+                      text: bio.name,
+                      style: Styles.bioNameStyle.copyWith(color: bio.colors.first),
                     ),
-                  ),
-                  TextView(
-                    text: Strings.isEn ? bio.description : bio.descriptionVi,
-                    style: Styles.bioDescriptionStyle,
-                    spaced: true,
-                    softWrap: true,
-                  ),
-                  TextView.header(text: AppLocalizations.of(context)!.contact),
-                  Padding(
-                    padding: const EdgeInsets.only(
-                        left: Dimens.bioDetailsPaddingHorizontal),
-                    child: Wrap(
-                      spacing: Dimens.bioDetailsContactPadding,
-                      runSpacing: Dimens.bioDetailsContactPadding,
-                      children: bio.contact
-                          .map((k, v) {
-                            return MapEntry(
-                              k,
-                              SizedBox(
-                                width: Dimens.bioDetailsContactSize,
-                                height: Dimens.bioDetailsContactSize,
-                                child: Tooltip(
-                                  message: k,
-                                  child: ElevatedBtn(
-                                    color:
-                                        Theme.of(context).colorScheme.surface,
-                                    onPressed: () => launchUrlString(v,
-                                        mode: LaunchMode.externalApplication),
-                                    padding: const EdgeInsets.all(
-                                        Dimens.cardPadding),
-                                    child: SvgImageView(
-                                      Vars.assets[k.toLowerCase()] ?? '',
-                                      width: Dimens.bioDetailsContactSize,
-                                      height: Dimens.bioDetailsContactSize,
+                    TextView(
+                      text: Strings.isEn ? bio.description : bio.descriptionVi,
+                      style: Styles.bioDescriptionStyle,
+                      spaced: true,
+                      softWrap: true,
+                    ),
+                    TextView.header(text: AppLocalizations.of(context)!.contact),
+                    Padding(
+                      padding: const EdgeInsets.only(left: Dimens.bioDetailsPaddingHorizontal),
+                      child: Wrap(
+                        spacing: Dimens.bioDetailsContactPadding,
+                        runSpacing: Dimens.bioDetailsContactPadding,
+                        children: bio.contact
+                            .map((k, v) {
+                              return MapEntry(
+                                k,
+                                SizedBox(
+                                  width: Dimens.bioDetailsContactSize,
+                                  height: Dimens.bioDetailsContactSize,
+                                  child: Tooltip(
+                                    message: k,
+                                    child: ElevatedBtn(
+                                      color: Theme.of(context).colorScheme.surface,
+                                      onPressed: () => launchUrlString(v, mode: LaunchMode.externalApplication),
+                                      padding: const EdgeInsets.all(Dimens.cardPadding),
+                                      child: SvgImageView(
+                                        Vars.assets[k.toLowerCase()] ?? '',
+                                        width: Dimens.bioDetailsContactSize,
+                                        height: Dimens.bioDetailsContactSize,
+                                      ),
                                     ),
                                   ),
                                 ),
-                              ),
-                            );
-                          })
-                          .values
-                          .toList(),
+                              );
+                            })
+                            .values
+                            .toList(),
+                      ),
                     ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ],
-      );
-    });
+                  ],
+                ),
+              ],
+            ),
+          ],
+        );
+      },
+    );
   }
 
   void _initScores() {
-    _scores = Observer(builder: (context) {
-      if (_bioStore == null) return const Nothing();
-      final bio = _bioStore!.bio;
-      return PaddedColumn(
-        padding: const EdgeInsets.symmetric(
+    _scores = Observer(
+      builder: (context) {
+        if (_bioStore == null) return const Nothing();
+        final bio = _bioStore!.bio;
+        return PaddedColumn(
+          padding: const EdgeInsets.symmetric(
             horizontal: Dimens.bioDetailsPaddingHorizontal,
-            vertical: Dimens.bioDetailsPaddingVertical),
-        children: [
-          TextView.header(
-            text: AppLocalizations.of(context)!.scores,
-            color: bio.colors.first,
+            vertical: Dimens.bioDetailsPaddingVertical,
           ),
-          Wrap(
-            spacing: Dimens.bioDetailsScorePaddingHorizontal,
-            runSpacing: Dimens.bioDetailsScorePaddingVertical,
-            children: [
-              ...bio.scores.map((s) {
-                return BioScoreItem(s, color: bio.colors.first);
-              }),
-            ],
-          ),
-        ],
-      );
-    });
+          children: [
+            TextView.header(text: AppLocalizations.of(context)!.scores, color: bio.colors.first),
+            Wrap(
+              spacing: Dimens.bioDetailsScorePaddingHorizontal,
+              runSpacing: Dimens.bioDetailsScorePaddingVertical,
+              children: [
+                ...bio.scores.map((s) {
+                  return BioScoreItem(s, color: bio.colors.first);
+                }),
+              ],
+            ),
+          ],
+        );
+      },
+    );
   }
 
   void _initExperience() {
-    _experience = Observer(builder: (context) {
-      if (_bioStore == null) return const Nothing();
-      final bio = _bioStore!.bio;
-      return PaddedColumn(
-        padding: const EdgeInsets.symmetric(
+    _experience = Observer(
+      builder: (context) {
+        if (_bioStore == null) return const Nothing();
+        final bio = _bioStore!.bio;
+        return PaddedColumn(
+          padding: const EdgeInsets.symmetric(
             horizontal: Dimens.bioDetailsPaddingHorizontal,
-            vertical: Dimens.bioDetailsPaddingVertical),
-        children: [
-          TextView.header(
-            text: AppLocalizations.of(context)!.experience,
-            color: bio.colors.first,
+            vertical: Dimens.bioDetailsPaddingVertical,
           ),
-          ...bio.experience.map((e) {
-            return BioExperienceItem(e, color: bio.colors.first);
-          }),
-        ],
-      );
-    });
+          children: [
+            TextView.header(text: AppLocalizations.of(context)!.experience, color: bio.colors.first),
+            ...bio.experience.map((e) {
+              return BioExperienceItem(e, color: bio.colors.first);
+            }),
+          ],
+        );
+      },
+    );
   }
 
   // endregion
@@ -256,9 +246,6 @@ class _AboutPageState extends State<AboutPage> with PostFrameMixin {
     _initAppBar();
     _initBody();
 
-    return Scaffold(
-      appBar: _appBar,
-      body: _body,
-    );
+    return Scaffold(appBar: _appBar, body: _body);
   }
 }

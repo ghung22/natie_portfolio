@@ -61,10 +61,7 @@ class _CardItemState extends State<CardItem> {
       feedback: widget.hoverFeedback,
       child: Card(
         color: widget.color,
-        child: Padding(
-          padding: widget.padding,
-          child: widget.child,
-        ),
+        child: Padding(padding: widget.padding, child: widget.child),
       ),
     );
   }
@@ -98,30 +95,33 @@ class _IntlListItemState extends State<IntlListItem> {
   }
 
   void _initContentCard() {
-    _contentCard = Observer(builder: (context) {
-      List<String> f;
-      if (Strings.isEn) {
-        f = _l.isNotEmpty ? _l : _lv;
-      } else {
-        f = _lv.isNotEmpty ? _lv : _l;
-      }
-      if (f.length < _i) return const Nothing();
-      return SizedBox(
-        width: Dimens.projectDetailsFuncWidth,
-        child: CardItem(
-          hoverFeedback: true,
-          child: TextView(
-            text: f[_i],
-            textAlign: TextAlign.center,
-            spaced: true,
-            softWrap: true,
-            padding: const EdgeInsets.symmetric(
+    _contentCard = Observer(
+      builder: (context) {
+        List<String> f;
+        if (Strings.isEn) {
+          f = _l.isNotEmpty ? _l : _lv;
+        } else {
+          f = _lv.isNotEmpty ? _lv : _l;
+        }
+        if (f.length < _i) return const Nothing();
+        return SizedBox(
+          width: Dimens.projectDetailsFuncWidth,
+          child: CardItem(
+            hoverFeedback: true,
+            child: TextView(
+              text: f[_i],
+              textAlign: TextAlign.center,
+              spaced: true,
+              softWrap: true,
+              padding: const EdgeInsets.symmetric(
                 horizontal: Dimens.projectDetailsFuncPadding,
-                vertical: Dimens.projectDetailsFuncPadding),
+                vertical: Dimens.projectDetailsFuncPadding,
+              ),
+            ),
           ),
-        ),
-      );
-    });
+        );
+      },
+    );
   }
 
   @override
@@ -135,9 +135,7 @@ class _IntlListItemState extends State<IntlListItem> {
         }
       },
       child: AnimatedFadeSlide(
-        offset: _visibleAni.willStart
-            ? Offset.zero
-            : const Offset(0, -Dimens.projectDetailsFuncOffset),
+        offset: _visibleAni.willStart ? Offset.zero : const Offset(0, -Dimens.projectDetailsFuncOffset),
         opacity: _visibleAni.willStart ? 1 : 0,
         duration: Vars.animationFast,
         child: _contentCard,
@@ -161,8 +159,7 @@ class RedContainer extends StatelessWidget {
   const RedContainer({super.key, required this.child});
 
   @override
-  Widget build(BuildContext context) =>
-      Container(color: Colors.red, child: child);
+  Widget build(BuildContext context) => Container(color: Colors.red, child: child);
 }
 
 // endregion
@@ -178,40 +175,34 @@ class ProjectMiniItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return CardItem(
       onPressed: () {
-        Navigator.of(context).pushNamed(
-          Routes.project,
-          arguments: <String, dynamic>{
-            'project': project,
-            'disableAnimation': true,
-          },
-        );
+        Navigator.of(
+          context,
+        ).pushNamed(Routes.project, arguments: <String, dynamic>{'project': project, 'disableAnimation': true});
       },
       color: project.color,
       child: PaddedRow(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,
-        padding: const EdgeInsets.symmetric(
-            horizontal: Dimens.projectItemContentPadding),
+        padding: const EdgeInsets.symmetric(horizontal: Dimens.projectItemContentPadding),
         children: [
           Container(
-            decoration: const BoxDecoration(
-              shape: BoxShape.circle,
-              color: Colors.white,
-            ),
-            child: Builder(builder: (context) {
-              if (project.iconUrl.isEmpty) {
-                return Container(
-                  color: Colors.white,
+            decoration: const BoxDecoration(shape: BoxShape.circle, color: Colors.white),
+            child: Builder(
+              builder: (context) {
+                if (project.iconUrl.isEmpty) {
+                  return Container(
+                    color: Colors.white,
+                    width: Dimens.projectItemIconSize,
+                    height: Dimens.projectItemIconSize,
+                  );
+                }
+                return RoundedImageView(
+                  project.iconUrl,
                   width: Dimens.projectItemIconSize,
                   height: Dimens.projectItemIconSize,
                 );
-              }
-              return RoundedImageView(
-                project.iconUrl,
-                width: Dimens.projectItemIconSize,
-                height: Dimens.projectItemIconSize,
-              );
-            }),
+              },
+            ),
           ),
           Expanded(
             child: PaddedColumn(
@@ -219,24 +210,24 @@ class ProjectMiniItem extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               padding: const EdgeInsets.symmetric(
-                  horizontal: Dimens.projectItemContentPadding,
-                  vertical: Dimens.projectItemContentPadding),
+                horizontal: Dimens.projectItemContentPadding,
+                vertical: Dimens.projectItemContentPadding,
+              ),
               children: [
-                TextView.header(
-                  text: project.title,
-                  color: Colors.white,
+                TextView.header(text: project.title, color: Colors.white),
+                Observer(
+                  builder: (context) {
+                    Strings.isEn;
+                    if (project.author.isEmpty && project.authorVi.isEmpty) {
+                      return const Nothing();
+                    }
+                    var author = Strings.isEn ? project.author : project.authorVi;
+                    if (author.isEmpty) {
+                      author = Strings.isEn ? project.authorVi : project.author;
+                    }
+                    return TextView.subheader(text: author, color: Colors.white);
+                  },
                 ),
-                Observer(builder: (context) {
-                  Strings.isEn;
-                  if (project.author.isEmpty && project.authorVi.isEmpty) {
-                    return const Nothing();
-                  }
-                  var author = Strings.isEn ? project.author : project.authorVi;
-                  if (author.isEmpty) {
-                    author = Strings.isEn ? project.authorVi : project.author;
-                  }
-                  return TextView.subheader(text: author, color: Colors.white);
-                }),
               ],
             ),
           ),
@@ -276,35 +267,32 @@ class _ProjectTimestampItemState extends State<ProjectTimestampItem> {
         }
       },
       child: AnimatedFadeSlide(
-        offset: _visibleAni.willStart
-            ? Offset.zero
-            : const Offset(0, -Dimens.projectDetailsFuncOffset),
+        offset: _visibleAni.willStart ? Offset.zero : const Offset(0, -Dimens.projectDetailsFuncOffset),
         opacity: _visibleAni.willStart ? 1 : 0,
         duration: Vars.animationFast,
-        child: Observer(builder: (context) {
-          return SizedBox(
-            width: Dimens.projectDetailsFuncWidth,
-            child: CardItem(
-              hoverFeedback: true,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  TextView.header(
-                    text: AppLocalizations.of(context)!.completion_date,
-                    color: _p.color,
-                  ),
-                  const SizedBox(height: Dimens.projectDetailsFuncPadding),
-                  TextView(
-                    text: DateFormat.yMMMM(Strings.language.name).format(
-                        DateTime.fromMillisecondsSinceEpoch(
-                            _p.completionTimestamp ?? 0)),
-                    spaced: true,
-                  ),
-                ],
+        child: Observer(
+          builder: (context) {
+            return SizedBox(
+              width: Dimens.projectDetailsFuncWidth,
+              child: CardItem(
+                hoverFeedback: true,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    TextView.header(text: AppLocalizations.of(context)!.completion_date, color: _p.color),
+                    const SizedBox(height: Dimens.projectDetailsFuncPadding),
+                    TextView(
+                      text: DateFormat.yMMMM(
+                        Strings.language.name,
+                      ).format(DateTime.fromMillisecondsSinceEpoch(_p.completionTimestamp ?? 0)),
+                      spaced: true,
+                    ),
+                  ],
+                ),
               ),
-            ),
-          );
-        }),
+            );
+          },
+        ),
       ),
     );
   }
@@ -340,32 +328,29 @@ class _ProjectAuthorItemState extends State<ProjectAuthorItem> {
         }
       },
       child: AnimatedFadeSlide(
-        offset: _visibleAni.willStart
-            ? Offset.zero
-            : const Offset(0, -Dimens.projectDetailsFuncOffset),
+        offset: _visibleAni.willStart ? Offset.zero : const Offset(0, -Dimens.projectDetailsFuncOffset),
         opacity: _visibleAni.willStart ? 1 : 0,
         duration: Vars.animationFast,
-        child: Observer(builder: (context) {
-          var author = Strings.isEn ? _p.author : _p.authorVi;
-          if (author.isEmpty) author = Strings.isEn ? _p.authorVi : _p.author;
-          return SizedBox(
-            width: Dimens.projectDetailsFuncWidth,
-            child: CardItem(
-              hoverFeedback: true,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  TextView.header(
-                    text: AppLocalizations.of(context)!.author,
-                    color: _p.color,
-                  ),
-                  const SizedBox(height: Dimens.projectDetailsFuncPadding),
-                  TextView(text: author, spaced: true),
-                ],
+        child: Observer(
+          builder: (context) {
+            var author = Strings.isEn ? _p.author : _p.authorVi;
+            if (author.isEmpty) author = Strings.isEn ? _p.authorVi : _p.author;
+            return SizedBox(
+              width: Dimens.projectDetailsFuncWidth,
+              child: CardItem(
+                hoverFeedback: true,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    TextView.header(text: AppLocalizations.of(context)!.author, color: _p.color),
+                    const SizedBox(height: Dimens.projectDetailsFuncPadding),
+                    TextView(text: author, spaced: true),
+                  ],
+                ),
               ),
-            ),
-          );
-        }),
+            );
+          },
+        ),
       ),
     );
   }
@@ -402,38 +387,33 @@ class _HostUrlItemState extends State<HostUrlItem> {
         }
       },
       child: AnimatedFadeSlide(
-        offset: _visibleAni.willStart
-            ? Offset.zero
-            : const Offset(0, -Dimens.projectDetailsFuncOffset),
+        offset: _visibleAni.willStart ? Offset.zero : const Offset(0, -Dimens.projectDetailsFuncOffset),
         opacity: _visibleAni.willStart ? 1 : 0,
         duration: Vars.animationFast,
-        child: Observer(builder: (context) {
-          return SizedBox(
-            width: Dimens.projectDetailsFuncWidth,
-            child: CardItem(
-              hoverFeedback: true,
-              onPressed: () => launchUrlString(_p.hostUrl,
-                  mode: LaunchMode.externalApplication),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  TextView.header(
-                    text: AppLocalizations.of(context)!.host,
-                    color: _p.color,
-                  ),
-                  const SizedBox(height: Dimens.projectDetailsFuncPadding),
-                  TextBtn(
-                    hoverFeedback: false,
-                    textStyle: TextStyle(color: _p.color),
-                    onPressed: () => launchUrlString(_p.hostUrl,
-                        mode: LaunchMode.externalApplication),
-                    child: TextView(text: _p.hostUrl, spaced: true),
-                  ),
-                ],
+        child: Observer(
+          builder: (context) {
+            return SizedBox(
+              width: Dimens.projectDetailsFuncWidth,
+              child: CardItem(
+                hoverFeedback: true,
+                onPressed: () => launchUrlString(_p.hostUrl, mode: LaunchMode.externalApplication),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    TextView.header(text: AppLocalizations.of(context)!.host, color: _p.color),
+                    const SizedBox(height: Dimens.projectDetailsFuncPadding),
+                    TextBtn(
+                      hoverFeedback: false,
+                      textStyle: TextStyle(color: _p.color),
+                      onPressed: () => launchUrlString(_p.hostUrl, mode: LaunchMode.externalApplication),
+                      child: TextView(text: _p.hostUrl, spaced: true),
+                    ),
+                  ],
+                ),
               ),
-            ),
-          );
-        }),
+            );
+          },
+        ),
       ),
     );
   }
@@ -446,8 +426,7 @@ class FunctionalityItem extends StatelessWidget {
   const FunctionalityItem(this.p, this.index, {super.key});
 
   @override
-  Widget build(BuildContext context) =>
-      IntlListItem(p.functionalities, p.functionalitiesVi, index);
+  Widget build(BuildContext context) => IntlListItem(p.functionalities, p.functionalitiesVi, index);
 }
 
 class LearnedItem extends StatelessWidget {
@@ -457,8 +436,7 @@ class LearnedItem extends StatelessWidget {
   const LearnedItem(this.p, this.index, {super.key});
 
   @override
-  Widget build(BuildContext context) =>
-      IntlListItem(p.learned, p.learnedVi, index);
+  Widget build(BuildContext context) => IntlListItem(p.learned, p.learnedVi, index);
 }
 
 class TechItem extends StatelessWidget {
@@ -476,8 +454,7 @@ class TechItem extends StatelessWidget {
         hoverFeedback: true,
         color: Colors.white,
         padding: const EdgeInsets.all(Dimens.projectDetailsTechPaddingInternal),
-        child: SvgImageView(src,
-            height: Dimens.projectDetailsTechSize, fit: BoxFit.fitHeight),
+        child: SvgImageView(src, height: Dimens.projectDetailsTechSize, fit: BoxFit.fitHeight),
       ),
     );
   }
@@ -492,96 +469,90 @@ class BioMiniItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Observer(builder: (context) {
-      final bioStore = context.read<BioStore>();
-      final bio = bioStore.bio;
-      return PaddedRow(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        padding: const EdgeInsets.symmetric(horizontal: Dimens.drawerPadding),
-        children: [
-          InkWell(
-            splashFactory: NoSplash.splashFactory,
-            hoverColor: Colors.transparent,
-            highlightColor: Colors.transparent,
-            onTap: () =>
-                Navigator.of(context).pushNamed(Routes.about, arguments: true),
-            child: DecoratedBox(
-              decoration: ShapeDecoration(
+    return Observer(
+      builder: (context) {
+        final bioStore = context.read<BioStore>();
+        final bio = bioStore.bio;
+        return PaddedRow(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          padding: const EdgeInsets.symmetric(horizontal: Dimens.drawerPadding),
+          children: [
+            InkWell(
+              splashFactory: NoSplash.splashFactory,
+              hoverColor: Colors.transparent,
+              highlightColor: Colors.transparent,
+              onTap: () => Navigator.of(context).pushNamed(Routes.about, arguments: true),
+              child: DecoratedBox(
+                decoration: ShapeDecoration(
                   shape: CircleBorder(
-                side: BorderSide(
-                  color: bio.colors.first,
-                  width: Dimens.bioAvatarBorderSize,
+                    side: BorderSide(color: bio.colors.first, width: Dimens.bioAvatarBorderSize),
+                  ),
                 ),
-              )),
-              child: Padding(
-                padding: const EdgeInsets.all(Dimens.bioAvatarPadding),
-                child: FittedBox(
-                  child: CircleImageView(
-                    bio.avatarUrl,
-                    width: Dimens.drawerAvatarSize,
-                    height: Dimens.drawerAvatarSize,
+                child: Padding(
+                  padding: const EdgeInsets.all(Dimens.bioAvatarPadding),
+                  child: FittedBox(
+                    child: CircleImageView(
+                      bio.avatarUrl,
+                      width: Dimens.drawerAvatarSize,
+                      height: Dimens.drawerAvatarSize,
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
-          Expanded(
-            child: PaddedColumn(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              padding: const EdgeInsets.symmetric(
+            Expanded(
+              child: PaddedColumn(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                padding: const EdgeInsets.symmetric(
                   horizontal: Dimens.projectItemContentPadding,
-                  vertical: Dimens.projectItemContentPadding),
-              children: [
-                TextBtn(
-                  hoverFeedback: false,
-                  onPressed: () => Navigator.of(context)
-                      .pushNamed(Routes.about, arguments: true),
-                  padding: EdgeInsets.zero,
-                  child: TextView.header(
-                    text: bio.name,
-                    color: bio.colors.first,
-                  ),
+                  vertical: Dimens.projectItemContentPadding,
                 ),
-                Wrap(
-                  spacing: Dimens.bioDetailsContactPadding,
-                  runSpacing: Dimens.bioDetailsContactPadding,
-                  children: bio.contact
-                      .map((k, v) {
-                        return MapEntry(
-                          k,
-                          SizedBox(
-                            width: Dimens.bioDetailsContactSize,
-                            height: Dimens.bioDetailsContactSize,
-                            child: Tooltip(
-                              message: k,
-                              child: ElevatedBtn(
-                                color: Theme.of(context).colorScheme.surface,
-                                padding:
-                                    const EdgeInsets.all(Dimens.cardPadding),
-                                onPressed: () => launchUrlString(v,
-                                    mode: LaunchMode.externalApplication),
-                                child: SvgImageView(
-                                  Vars.assets[k.toLowerCase()] ?? '',
-                                  width: Dimens.bioDetailsContactSize,
-                                  height: Dimens.bioDetailsContactSize,
+                children: [
+                  TextBtn(
+                    hoverFeedback: false,
+                    onPressed: () => Navigator.of(context).pushNamed(Routes.about, arguments: true),
+                    padding: EdgeInsets.zero,
+                    child: TextView.header(text: bio.name, color: bio.colors.first),
+                  ),
+                  Wrap(
+                    spacing: Dimens.bioDetailsContactPadding,
+                    runSpacing: Dimens.bioDetailsContactPadding,
+                    children: bio.contact
+                        .map((k, v) {
+                          return MapEntry(
+                            k,
+                            SizedBox(
+                              width: Dimens.bioDetailsContactSize,
+                              height: Dimens.bioDetailsContactSize,
+                              child: Tooltip(
+                                message: k,
+                                child: ElevatedBtn(
+                                  color: Theme.of(context).colorScheme.surface,
+                                  padding: const EdgeInsets.all(Dimens.cardPadding),
+                                  onPressed: () => launchUrlString(v, mode: LaunchMode.externalApplication),
+                                  child: SvgImageView(
+                                    Vars.assets[k.toLowerCase()] ?? '',
+                                    width: Dimens.bioDetailsContactSize,
+                                    height: Dimens.bioDetailsContactSize,
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                        );
-                      })
-                      .values
-                      .toList(),
-                ),
-              ],
+                          );
+                        })
+                        .values
+                        .toList(),
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
-      );
-    });
+          ],
+        );
+      },
+    );
   }
 }
 
@@ -608,38 +579,35 @@ class _BioScoreItemState extends State<BioScoreItem> {
 
   @override
   Widget build(BuildContext context) {
-    return Observer(builder: (context) {
-      Strings.isEn;
-      return SizedBox(
-        width: Dimens.bioDetailsScoreSize,
-        child: CardItem(
-          hoverFeedback: true,
-          child: PaddedColumn(
-            padding:
-                const EdgeInsets.all(Dimens.bioDetailsScorePaddingVertical),
-            children: [
-              TextView.header(
-                text: _s.name,
-                color: _c ?? Theme.of(context).primaryColor,
-              ),
-              TextView.subheader(
-                text: '${_s.score}'
-                    '${(_s.customData['alt'] != null) ? ' (${_s.customData['alt']!})' : ''}',
-                color: Theme.of(context).colorScheme.onSurface,
-                spaced: true,
-              ),
-              if (_s.customData['ref'] != null)
-                ElevatedBtn(
-                  child:
-                      TextView(text: AppLocalizations.of(context)!.scoreboard),
-                  onPressed: () => launchUrlString(_s.customData['ref']!,
-                      mode: LaunchMode.externalApplication),
+    return Observer(
+      builder: (context) {
+        Strings.isEn;
+        return SizedBox(
+          width: Dimens.bioDetailsScoreSize,
+          child: CardItem(
+            hoverFeedback: true,
+            child: PaddedColumn(
+              padding: const EdgeInsets.all(Dimens.bioDetailsScorePaddingVertical),
+              children: [
+                TextView.header(text: _s.name, color: _c ?? Theme.of(context).primaryColor),
+                TextView.subheader(
+                  text:
+                      '${_s.score}'
+                      '${(_s.customData['alt'] != null) ? ' (${_s.customData['alt']!})' : ''}',
+                  color: Theme.of(context).colorScheme.onSurface,
+                  spaced: true,
                 ),
-            ],
+                if (_s.customData['ref'] != null)
+                  ElevatedBtn(
+                    child: TextView(text: AppLocalizations.of(context)!.scoreboard),
+                    onPressed: () => launchUrlString(_s.customData['ref']!, mode: LaunchMode.externalApplication),
+                  ),
+              ],
+            ),
           ),
-        ),
-      );
-    });
+        );
+      },
+    );
   }
 }
 
@@ -666,85 +634,80 @@ class _BioExperienceItemState extends State<BioExperienceItem> {
 
   @override
   Widget build(BuildContext context) {
-    return Observer(builder: (context) {
-      var name = _e.nameVi ?? _e.name;
-      if (Strings.isEn) name = _e.name ?? _e.nameVi;
-      var major = _e.majorVi ?? _e.major;
-      if (Strings.isEn) major = _e.major ?? _e.majorVi;
-      return CardItem(
-        child: ConstrainedBox(
-          constraints: const BoxConstraints(
-            minHeight: Dimens.bioDetailsExpSize,
-          ),
-          child: Stack(
-            alignment: Alignment.centerLeft,
-            children: [
-              if (_e.imageUrls != null)
-                if (_e.imageUrls!.length > 1)
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: ShaderMask(
-                      blendMode: BlendMode.dstOut,
-                      shaderCallback: (Rect rect) => const LinearGradient(
-                        colors: [Colors.white, Colors.transparent],
-                        begin: Alignment.centerLeft,
-                        end: Alignment.centerRight,
-                      ).createShader(rect),
-                      child: RoundedImageView(
-                        _e.imageUrls![1],
-                        height: Dimens.bioDetailsExpSize,
-                        fit: BoxFit.fitHeight,
+    return Observer(
+      builder: (context) {
+        var name = _e.nameVi ?? _e.name;
+        if (Strings.isEn) name = _e.name ?? _e.nameVi;
+        var major = _e.majorVi ?? _e.major;
+        if (Strings.isEn) major = _e.major ?? _e.majorVi;
+        return CardItem(
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(minHeight: Dimens.bioDetailsExpSize),
+            child: Stack(
+              alignment: Alignment.centerLeft,
+              children: [
+                if (_e.imageUrls != null)
+                  if (_e.imageUrls!.length > 1)
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: ShaderMask(
+                        blendMode: BlendMode.dstOut,
+                        shaderCallback: (Rect rect) => const LinearGradient(
+                          colors: [Colors.white, Colors.transparent],
+                          begin: Alignment.centerLeft,
+                          end: Alignment.centerRight,
+                        ).createShader(rect),
+                        child: RoundedImageView(
+                          _e.imageUrls![1],
+                          height: Dimens.bioDetailsExpSize,
+                          fit: BoxFit.fitHeight,
+                        ),
                       ),
                     ),
-                  ),
-              PaddedRow(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                padding: const EdgeInsets.symmetric(
-                    horizontal: Dimens.bioDetailsExpPaddingHorizontal),
-                children: [
-                  if (_e.imageUrls != null)
-                    if (_e.imageUrls!.isNotEmpty)
-                      ImageView(
-                        _e.imageUrls![0],
-                        width: Dimens.bioDetailsExpSize * .75,
-                        height: Dimens.bioDetailsExpSize * .75,
-                        fit: BoxFit.scaleDown,
-                      ),
-                  PaddedColumn(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    padding: const EdgeInsets.symmetric(
-                        vertical: Dimens.bioDetailsExpPaddingVertical),
-                    children: [
-                      TextView(
-                        text: name,
-                        style: Styles.headerStyle.copyWith(
-                          color: _c ?? Theme.of(context).primaryColor,
+                PaddedRow(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  padding: const EdgeInsets.symmetric(horizontal: Dimens.bioDetailsExpPaddingHorizontal),
+                  children: [
+                    if (_e.imageUrls != null)
+                      if (_e.imageUrls!.isNotEmpty)
+                        ImageView(
+                          _e.imageUrls![0],
+                          width: Dimens.bioDetailsExpSize * .75,
+                          height: Dimens.bioDetailsExpSize * .75,
+                          fit: BoxFit.scaleDown,
                         ),
-                      ),
-                      TextView(
-                        text: _e.time,
-                        style: Styles.subheaderStyle.copyWith(
-                          color: (_c ?? Theme.of(context).colorScheme.onSurface)
-                              .withValues(alpha: .8),
-                          fontWeight: FontWeight.bold,
+                    PaddedColumn(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      padding: const EdgeInsets.symmetric(vertical: Dimens.bioDetailsExpPaddingVertical),
+                      children: [
+                        TextView(
+                          text: name,
+                          style: Styles.headerStyle.copyWith(color: _c ?? Theme.of(context).primaryColor),
                         ),
-                        spaced: true,
-                      ),
-                      TextView(
-                        text: major,
-                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                              color: Theme.of(context).colorScheme.onSurface,
-                            ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ],
+                        TextView(
+                          text: _e.time,
+                          style: Styles.subheaderStyle.copyWith(
+                            color: (_c ?? Theme.of(context).colorScheme.onSurface).withValues(alpha: .8),
+                            fontWeight: FontWeight.bold,
+                          ),
+                          spaced: true,
+                        ),
+                        TextView(
+                          text: major,
+                          style: Theme.of(
+                            context,
+                          ).textTheme.bodyMedium?.copyWith(color: Theme.of(context).colorScheme.onSurface),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
-        ),
-      );
-    });
+        );
+      },
+    );
   }
 }
 

@@ -32,42 +32,42 @@ class Router {
       switch (settings.name) {
         case Routes.home:
           return AnimatedPageRoute(
-              builder: (_) => Builder(builder: (context) {
-                    NatiePortfolio.init(context);
-                    return const HomePage();
-                  }));
+            builder: (_) => Builder(
+              builder: (context) {
+                NatiePortfolio.init(context);
+                return const HomePage();
+              },
+            ),
+          );
         case Routes.about:
           return AnimatedPageRoute(
-              builder: (_) => Builder(builder: (context) {
+            builder: (_) => Builder(
+              builder: (context) {
                 if (settings.arguments != null) {
-                  return AboutPage(
-                    disableAnimation: settings.arguments as bool,
-                  );
+                  return AboutPage(disableAnimation: settings.arguments as bool);
                 }
                 return const AboutPage();
-              }));
+              },
+            ),
+          );
         case Routes.project:
-          if (settings.arguments is! Project &&
-              settings.arguments is! Map<String, dynamic>) {
+          if (settings.arguments is! Project && settings.arguments is! Map<String, dynamic>) {
             throw 'Type ${settings.arguments.runtimeType} is not valid';
           }
           return AnimatedPageRoute(
-              builder: (_) => Builder(builder: (context) {
-                    if (settings.arguments is Project) {
-                      return ProjectPage(
-                          project: settings.arguments as Project);
-                    } else {
-                      final args = settings.arguments as Map<String, dynamic>;
-                      return ProjectPage(
-                        project: args['project'],
-                        disableAnimation: args['disableAnimation'],
-                      );
-                    }
-                  }));
+            builder: (_) => Builder(
+              builder: (context) {
+                if (settings.arguments is Project) {
+                  return ProjectPage(project: settings.arguments as Project);
+                } else {
+                  final args = settings.arguments as Map<String, dynamic>;
+                  return ProjectPage(project: args['project'], disableAnimation: args['disableAnimation']);
+                }
+              },
+            ),
+          );
         case Routes.projects:
-          return AnimatedPageRoute(
-              builder: (_) =>
-                  Builder(builder: (context) => const ProjectsPage()));
+          return AnimatedPageRoute(builder: (_) => Builder(builder: (context) => const ProjectsPage()));
 
         case Routes.debug:
           if (Debug.isProduction) {
@@ -75,22 +75,24 @@ class Router {
             return generateRoute(RouteSettings(name: Routes.home, arguments: settings.arguments));
           }
           return AnimatedPageRoute(
-              builder: (_) => Builder(builder: (context) {
-                    NatiePortfolio.init(context);
-                    return const HomePage();
-                    return const DebugPage();
-                  }));
+            builder: (_) => Builder(
+              builder: (context) {
+                NatiePortfolio.init(context);
+                return const HomePage();
+                return const DebugPage();
+              },
+            ),
+          );
         default:
           Snackbars.showSnackbar(
-              _context!,
-              SnackbarType.negative,
-              AppLocalizations.of(_context!)!
-                  .route_unknown(settings.name ?? ''));
+            _context!,
+            SnackbarType.negative,
+            AppLocalizations.of(_context!)!.route_unknown(settings.name ?? ''),
+          );
           return null;
       }
     } catch (e) {
-      Debug.log('Error navigating to ${settings.name}: $e',
-          useDebugPrint: true);
+      Debug.log('Error navigating to ${settings.name}: $e', useDebugPrint: true);
       return null;
     }
   }
@@ -99,10 +101,7 @@ class Router {
 class AnimatedPageRoute extends MaterialPageRoute {
   final Duration duration;
 
-  AnimatedPageRoute({
-    required super.builder,
-    this.duration = Vars.animationSluggish,
-  });
+  AnimatedPageRoute({required super.builder, this.duration = Vars.animationSluggish});
 
   @override
   Duration get transitionDuration => duration;

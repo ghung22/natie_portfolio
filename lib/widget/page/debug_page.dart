@@ -53,10 +53,11 @@ class _DebugPageState extends State<DebugPage> with PostFrameMixin {
   void _initAppBar() {
     _appBar = WebAppBar(
       leading: const BackBtn(),
-      title: Observer(builder: (context) {
-        return TextView(
-            textCallback: () => '${context.read<DimenStore>().size}');
-      }),
+      title: Observer(
+        builder: (context) {
+          return TextView(textCallback: () => '${context.read<DimenStore>().size}');
+        },
+      ),
       actions: const [LanguageBtn(), ThemeBtn()],
     );
   }
@@ -69,8 +70,7 @@ class _DebugPageState extends State<DebugPage> with PostFrameMixin {
     _initTestSect();
     _body = SingleChildScrollView(
       child: PaddedColumn(
-        padding:
-            const EdgeInsets.symmetric(vertical: Dimens.pageContentPaddingHorizontal),
+        padding: const EdgeInsets.symmetric(vertical: Dimens.pageContentPaddingHorizontal),
         children: [
           // Navigation
           _navSect,
@@ -87,8 +87,7 @@ class _DebugPageState extends State<DebugPage> with PostFrameMixin {
 
   void _initNavSect() {
     _navSect = PaddedColumn(
-      padding:
-      const EdgeInsets.symmetric(vertical: Dimens.projectItemPadding),
+      padding: const EdgeInsets.symmetric(vertical: Dimens.projectItemPadding),
       children: [
         TextView.header(text: AppLocalizations.of(context)!.navigate_to),
         Wrap(
@@ -99,9 +98,7 @@ class _DebugPageState extends State<DebugPage> with PostFrameMixin {
               onPressed: () => Navigator.pushNamed(
                 context,
                 r,
-                arguments: r == Routes.project
-                    ? _projectStore?.projects.first
-                    : null,
+                arguments: r == Routes.project ? _projectStore?.projects.first : null,
               ),
               child: TextView(text: r),
             );
@@ -113,8 +110,7 @@ class _DebugPageState extends State<DebugPage> with PostFrameMixin {
 
   void _initInfoSect() {
     _infoSect = PaddedColumn(
-      padding:
-      const EdgeInsets.symmetric(vertical: Dimens.projectItemPadding),
+      padding: const EdgeInsets.symmetric(vertical: Dimens.projectItemPadding),
       children: [
         TextView.header(text: 'Debug information'),
         Wrap(
@@ -158,47 +154,52 @@ class _DebugPageState extends State<DebugPage> with PostFrameMixin {
           children: [
             CardItem(
               child: PaddedColumn(
-                padding: const EdgeInsets.symmetric(
-                    vertical: Dimens.projectItemPadding),
+                padding: const EdgeInsets.symmetric(vertical: Dimens.projectItemPadding),
                 children: [
                   TextView.subheader(text: 'Platform'),
                   const TextView(text: (kIsWeb ? 'Web' : 'Mobile')),
-                  const TextView(
-                      text: (kDebugMode ? 'Debug' : 'Release/Profile')),
+                  const TextView(text: (kDebugMode ? 'Debug' : 'Release/Profile')),
                 ],
               ),
             ),
             CardItem(
               child: PaddedColumn(
-                padding: const EdgeInsets.symmetric(
-                    vertical: Dimens.projectItemPadding),
+                padding: const EdgeInsets.symmetric(vertical: Dimens.projectItemPadding),
                 children: [
                   TextView.subheader(text: 'States'),
                   TextView(
-                      text: 'Screen size:'
-                          '${window.screen.width}x${window.screen.height}'),
-                  Observer(builder: (context) {
-                    return TextView(text: 'Language: ${Strings.language}');
-                  }),
-                  Observer(builder: (context) {
-                    return TextView(text: 'Theme: ${Themes.themeMode}');
-                  }),
+                    text:
+                        'Screen size:'
+                        '${window.screen.width}x${window.screen.height}',
+                  ),
+                  Observer(
+                    builder: (context) {
+                      return TextView(text: 'Language: ${Strings.language}');
+                    },
+                  ),
+                  Observer(
+                    builder: (context) {
+                      return TextView(text: 'Theme: ${Themes.themeMode}');
+                    },
+                  ),
                 ],
               ),
             ),
             CardItem(
               child: PaddedColumn(
-                padding: const EdgeInsets.symmetric(
-                    vertical: Dimens.projectItemPadding),
+                padding: const EdgeInsets.symmetric(vertical: Dimens.projectItemPadding),
                 children: [
                   TextView.subheader(text: 'Data'),
-                  Observer(builder: (context) {
-                    return TextView(text: 'ProSize: ${_projectStore?.projects
-                        .length}');
-                  }),
-                  Observer(builder: (context) {
-                    return TextView(text: 'BioLoaded: ${_bioStore?.bio.name}');
-                  }),
+                  Observer(
+                    builder: (context) {
+                      return TextView(text: 'ProSize: ${_projectStore?.projects.length}');
+                    },
+                  ),
+                  Observer(
+                    builder: (context) {
+                      return TextView(text: 'BioLoaded: ${_bioStore?.bio.name}');
+                    },
+                  ),
                 ],
               ),
             ),
@@ -210,25 +211,22 @@ class _DebugPageState extends State<DebugPage> with PostFrameMixin {
 
   void _initTestSect() {
     _testSect = PaddedColumn(
-      padding:
-      const EdgeInsets.symmetric(vertical: Dimens.projectItemPadding),
+      padding: const EdgeInsets.symmetric(vertical: Dimens.projectItemPadding),
       children: [
-        Observer(builder: (context) {
-          if (_projectStore == null) return const Nothing();
-          if (_projectStore!.projects.isEmpty) return const Nothing();
-          return PaddedColumn(
-            padding: const EdgeInsets.symmetric(
-                vertical: Dimens.pageContentPaddingHorizontal),
-            paddingStartAndEnd: false,
-            children: [
-              ProjectBanner(
-                project: _projectStore!.projects.first!,
-                isHomePage: true,
-              ),
-              ProjectBanner(project: _projectStore!.projects.first!),
-            ],
-          );
-        }),
+        Observer(
+          builder: (context) {
+            if (_projectStore == null) return const Nothing();
+            if (_projectStore!.projects.isEmpty) return const Nothing();
+            return PaddedColumn(
+              padding: const EdgeInsets.symmetric(vertical: Dimens.pageContentPaddingHorizontal),
+              paddingStartAndEnd: false,
+              children: [
+                ProjectBanner(project: _projectStore!.projects.first!, isHomePage: true),
+                ProjectBanner(project: _projectStore!.projects.first!),
+              ],
+            );
+          },
+        ),
       ],
     );
   }
@@ -239,10 +237,7 @@ class _DebugPageState extends State<DebugPage> with PostFrameMixin {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: _appBar,
-      body: SizedBox(
-        width: window.screen.width.toDouble(),
-        child: _body,
-      ),
+      body: SizedBox(width: window.screen.width.toDouble(), child: _body),
     );
   }
 }

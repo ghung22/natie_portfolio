@@ -20,20 +20,20 @@ import 'store/global/theme_store.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   Debug.log('App started at ${DateTime.now()}');
-  runApp(MultiProvider(
-    providers: [
-      Provider<BioStore>(create: (_) => BioStore()),
-      Provider<DimenStore>(create: (_) => DimenStore()),
-      Provider<LanguageStore>(create: (_) => LanguageStore()),
-      Provider<ProjectStore>(create: (_) => ProjectStore()),
-      Provider<ThemeStore>(create: (_) => ThemeStore()),
-    ],
-    child: const NatiePortfolio(),
-  ));
+  runApp(
+    MultiProvider(
+      providers: [
+        Provider<BioStore>(create: (_) => BioStore()),
+        Provider<DimenStore>(create: (_) => DimenStore()),
+        Provider<LanguageStore>(create: (_) => LanguageStore()),
+        Provider<ProjectStore>(create: (_) => ProjectStore()),
+        Provider<ThemeStore>(create: (_) => ThemeStore()),
+      ],
+      child: const NatiePortfolio(),
+    ),
+  );
 }
 
 class NatiePortfolio extends StatelessWidget {
@@ -53,28 +53,29 @@ class NatiePortfolio extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        return Observer(builder: (_) {
-          rt.Router.init(context);
-          context.read<ThemeStore>().getActiveTheme();
-          context.read<LanguageStore>().getActiveLanguage();
-          context.read<DimenStore>().updateScreenSize(
-              Size(constraints.maxWidth, constraints.maxHeight));
-          return MaterialApp(
-            title: Strings.title,
-            debugShowCheckedModeBanner: true,
-            // Theme
-            themeMode: context.read<ThemeStore>().activeTheme,
-            theme: Themes.light,
-            darkTheme: Themes.dark,
-            // Locale
-            locale: Strings.locale,
-            localizationsDelegates: AppLocalizations.localizationsDelegates,
-            supportedLocales: AppLocalizations.supportedLocales,
-            // Pages
-            initialRoute: Debug.isProduction ? rt.Routes.home : rt.Routes.debug,
-            onGenerateRoute: rt.Router.generateRoute,
-          );
-        });
+        return Observer(
+          builder: (_) {
+            rt.Router.init(context);
+            context.read<ThemeStore>().getActiveTheme();
+            context.read<LanguageStore>().getActiveLanguage();
+            context.read<DimenStore>().updateScreenSize(Size(constraints.maxWidth, constraints.maxHeight));
+            return MaterialApp(
+              title: Strings.title,
+              debugShowCheckedModeBanner: true,
+              // Theme
+              themeMode: context.read<ThemeStore>().activeTheme,
+              theme: Themes.light,
+              darkTheme: Themes.dark,
+              // Locale
+              locale: Strings.locale,
+              localizationsDelegates: AppLocalizations.localizationsDelegates,
+              supportedLocales: AppLocalizations.supportedLocales,
+              // Pages
+              initialRoute: Debug.isProduction ? rt.Routes.home : rt.Routes.debug,
+              onGenerateRoute: rt.Router.generateRoute,
+            );
+          },
+        );
       },
     );
   }

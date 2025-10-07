@@ -32,8 +32,7 @@ abstract class _AnimationStore with Store {
 
   @action
   void setData(int data) => intData = data
-      .clamp(_intDataLowerLimit ?? double.negativeInfinity,
-          _intDataUpperLimit ?? double.infinity)
+      .clamp(_intDataLowerLimit ?? double.negativeInfinity, _intDataUpperLimit ?? double.infinity)
       .toInt();
 
   @action
