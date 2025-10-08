@@ -13,6 +13,8 @@ import 'package:natie_portfolio/store/common/animation_store.dart';
 import 'animated_view.dart';
 import 'list_view.dart';
 
+enum TextViewPreset { custom, header, subheader, footer }
+
 // region TextView
 
 /// A Text widget nested in some of the most used widgets.
@@ -25,16 +27,7 @@ class TextView extends StatelessWidget {
   final EdgeInsets padding;
   final TextAlign textAlign;
   final bool softWrap;
-
-  Widget get textWidget => Text(
-    text ?? textCallback!(),
-    textAlign: textAlign,
-    softWrap: softWrap,
-    style: style?.copyWith(
-      color: color ?? style?.color,
-      letterSpacing: spaced ? Styles.spacedTextStyle.letterSpacing : style?.letterSpacing,
-    ),
-  );
+  final TextViewPreset preset;
 
   const TextView({
     super.key,
@@ -46,9 +39,10 @@ class TextView extends StatelessWidget {
     this.padding = EdgeInsets.zero,
     this.textAlign = TextAlign.start,
     this.softWrap = false,
+    this.preset = TextViewPreset.custom,
   }) : assert(text != null && textCallback == null || textCallback != null && text == null);
 
-  TextView.header({
+  const TextView.header({
     super.key,
     this.text,
     this.textCallback,
@@ -57,10 +51,11 @@ class TextView extends StatelessWidget {
     this.padding = EdgeInsets.zero,
     this.textAlign = TextAlign.start,
     this.softWrap = false,
-  }) : style = Styles.headerStyle,
+  }) : style = null,
+       preset = TextViewPreset.header,
        assert(text != null && textCallback == null || textCallback != null && text == null);
 
-  TextView.subheader({
+  const TextView.subheader({
     super.key,
     this.text,
     this.textCallback,
@@ -69,10 +64,11 @@ class TextView extends StatelessWidget {
     this.padding = EdgeInsets.zero,
     this.textAlign = TextAlign.start,
     this.softWrap = false,
-  }) : style = Styles.subheaderStyle,
+  }) : style = null,
+       preset = TextViewPreset.subheader,
        assert(text != null && textCallback == null || textCallback != null && text == null);
 
-  TextView.footer({
+  const TextView.footer({
     super.key,
     this.text,
     this.textCallback,
@@ -81,15 +77,38 @@ class TextView extends StatelessWidget {
     this.padding = EdgeInsets.zero,
     this.textAlign = TextAlign.start,
     this.softWrap = false,
-  }) : style = Styles.footerStyle,
+  }) : style = null,
+       preset = TextViewPreset.footer,
        assert(text != null && textCallback == null || textCallback != null && text == null);
+
+  TextStyle? _styleByPreset(TextStyle? baseStyle) {
+    if (baseStyle == null) {
+      if (color == null && !spaced) return null;
+      return TextStyle(color: color, letterSpacing: spaced ? Styles.spacedTextStyle.letterSpacing : null);
+    }
+    return baseStyle.copyWith(
+      color: color ?? baseStyle.color,
+      letterSpacing: spaced ? Styles.spacedTextStyle.letterSpacing : baseStyle.letterSpacing,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
+    var textView = Text(
+      text ?? textCallback!(),
+      textAlign: textAlign,
+      softWrap: softWrap,
+      style: _styleByPreset(switch (preset) {
+        TextViewPreset.header => Styles.of(context).headerStyle,
+        TextViewPreset.subheader => Styles.of(context).subheaderStyle,
+        TextViewPreset.footer => Styles.of(context).footerStyle,
+        TextViewPreset.custom => style,
+      }),
+    );
     return AnimatedLanguageUpdate(
       child: Padding(
         padding: padding,
-        child: text != null ? textWidget : Observer(builder: (context) => textWidget),
+        child: text != null ? textView : Observer(builder: (context) => textView),
       ),
     );
   }

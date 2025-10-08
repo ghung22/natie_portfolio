@@ -90,7 +90,7 @@ class _ProjectPageState extends State<ProjectPage> with PostFrameMixin {
               horizontal: Dimens.projectDetailsPaddingHorizontal,
               vertical: Dimens.projectDetailsPaddingVertical,
             ),
-            color: Themes.isDarkMode
+            color: Themes.isDarkMode(context)
                 ? MoreColors.darker(_p.color, magnitude: 1)
                 : MoreColors.lighter(_p.color, magnitude: 2),
             child: PaddedColumn(
@@ -151,7 +151,7 @@ class _ProjectPageState extends State<ProjectPage> with PostFrameMixin {
               horizontal: Dimens.projectDetailsPaddingHorizontal,
               vertical: Dimens.projectDetailsPaddingVertical,
             ),
-            color: Themes.isDarkMode
+            color: Themes.isDarkMode(context)
                 ? MoreColors.darker(_p.color, magnitude: 1)
                 : MoreColors.lighter(_p.color, magnitude: 2),
             child: PaddedColumn(

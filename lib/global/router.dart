@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:natie_portfolio/data/model/project.dart';
-import 'package:natie_portfolio/main.dart';
 import 'package:natie_portfolio/widget/common/helper/snackbar.dart';
 import 'package:natie_portfolio/widget/page/about_page.dart';
 import 'package:natie_portfolio/widget/page/debug_page.dart';
@@ -31,14 +30,7 @@ class Router {
     try {
       switch (settings.name) {
         case Routes.home:
-          return AnimatedPageRoute(
-            builder: (_) => Builder(
-              builder: (context) {
-                NatiePortfolio.init(context);
-                return const HomePage();
-              },
-            ),
-          );
+          return AnimatedPageRoute(builder: (_) => Builder(builder: (context) => const HomePage()));
         case Routes.about:
           return AnimatedPageRoute(
             builder: (_) => Builder(
@@ -77,13 +69,16 @@ class Router {
           return AnimatedPageRoute(
             builder: (_) => Builder(
               builder: (context) {
-                NatiePortfolio.init(context);
                 return const HomePage();
-                return const DebugPage();
+                // return const DebugPage();
               },
             ),
           );
         default:
+          if (_context == null) {
+            debugPrint('Context is null');
+            return generateRoute(RouteSettings(name: Routes.home, arguments: settings.arguments));
+          }
           Snackbars.showSnackbar(
             _context!,
             SnackbarType.negative,

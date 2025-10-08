@@ -102,8 +102,8 @@ class Bio {
 
 class BioData {
   static Bio value = Bio(
-    title: 'Gia Hưng - Mobile Developer',
-    titleVi: 'Gia Hưng - Lập trình viên di động',
+    title: 'Gia Hưng - Software Developer',
+    titleVi: 'Gia Hưng - Lập trình viên',
     name: 'Nguyễn Gia Hưng',
     description:
         'An aspiring mobile developer who is passionate about building apps for the modern world, with a focus on UX/UI.',

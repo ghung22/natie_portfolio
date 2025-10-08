@@ -272,7 +272,7 @@ class ProjectBanner extends StatelessWidget {
     title: TextView(text: project.title),
     description: Observer(
       builder: (context) {
-        return TextView(text: Strings.isEn ? project.description : project.descriptionVi, spaced: true, softWrap: true);
+        return TextView(text: Strings.of(context).isEn ? project.description : project.descriptionVi, spaced: true, softWrap: true);
       },
     ),
     imageUrls: project.imageUrls,
@@ -282,7 +282,8 @@ class ProjectBanner extends StatelessWidget {
         ? null
         : Observer(
             builder: (context) {
-              Strings.isEn;
+              // Access language to subscribe Observer to MobX changes.
+              final _ = Strings.of(context).language;
               return TextView(text: AppLocalizations.of(context)!.explore);
             },
           ),
@@ -320,7 +321,7 @@ class BioBanner extends StatelessWidget {
       children: [
         Observer(
           builder: (context) {
-            Strings.isEn;
+            final _ = Strings.of(context).language;
             return AnimatedFadeSlide(
               offset: _introAni.willStart ? Offset.zero : const Offset(0, Dimens.bannerSlideOffset),
               opacity: _introAni.willStart ? 1 : 0,
@@ -344,7 +345,7 @@ class BioBanner extends StatelessWidget {
               duration: Vars.animationSluggish,
               curve: Curves.easeOut,
               child: TextView(
-                text: Strings.isEn ? bio.description : bio.descriptionVi,
+                text: Strings.of(context).isEn ? bio.description : bio.descriptionVi,
                 style: Styles.bannerDescriptionStyle,
                 spaced: true,
                 softWrap: true,

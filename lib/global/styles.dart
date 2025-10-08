@@ -5,21 +5,23 @@ import 'package:provider/provider.dart';
 import 'dimens.dart';
 
 class Styles {
-  static BuildContext? _context;
+  Styles._(this._context);
 
-  static void init(BuildContext context) => _context = context;
+  final BuildContext _context;
+
+  static Styles of(BuildContext context) => Styles._(context);
 
   // TextView styles
-  static TextStyle get headerStyle => TextStyle(
-    color: Theme.of(_context!).primaryColor,
+  TextStyle get headerStyle => TextStyle(
+    color: Theme.of(_context).primaryColor,
     fontSize: 20,
     fontWeight: FontWeight.bold,
     fontFamily: Themes.fontDisplay,
   );
 
-  static TextStyle get subheaderStyle => TextStyle(color: Theme.of(_context!).primaryColor, fontSize: 14);
+  TextStyle get subheaderStyle => TextStyle(color: Theme.of(_context).primaryColor, fontSize: 14);
 
-  static TextStyle get footerStyle => const TextStyle(color: Colors.black54);
+  TextStyle get footerStyle => const TextStyle(color: Colors.black54);
   static const TextStyle spacedTextStyle = TextStyle(letterSpacing: 0.5);
 
   // Widget styles
@@ -59,10 +61,6 @@ class MoreColors {
 }
 
 class Themes {
-  static BuildContext? _context;
-
-  static void init(BuildContext context) => _context = context;
-
   static const fontText = 'sf_text';
   static const fontDisplay = 'sf_display';
 
@@ -70,9 +68,8 @@ class Themes {
 
   static ThemeData get dark => _generateTheme(from: ThemeData.dark());
 
-  static ThemeMode get themeMode {
-    if (_context == null) return ThemeMode.light;
-    final themeStore = _context!.read<ThemeStore>();
+  static ThemeMode themeMode(BuildContext context) {
+    final themeStore = context.read<ThemeStore>();
     switch (themeStore.activeTheme) {
       case ThemeMode.system:
         return ThemeMode.light;
@@ -82,9 +79,9 @@ class Themes {
     }
   }
 
-  static bool get isLightMode => themeMode == ThemeMode.light;
+  static bool isLightMode(BuildContext context) => themeMode(context) == ThemeMode.light;
 
-  static bool get isDarkMode => themeMode == ThemeMode.dark;
+  static bool isDarkMode(BuildContext context) => themeMode(context) == ThemeMode.dark;
 
   static ThemeData _generateTheme({required ThemeData from}) {
     final initialTheme = ThemeData(primarySwatch: Colors.amber, fontFamily: fontText, textTheme: from.textTheme);

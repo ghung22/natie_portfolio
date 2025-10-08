@@ -1,10 +1,4 @@
-import 'package:flutter/material.dart';
-
 class Vars {
-  static BuildContext? _context;
-
-  static void init(BuildContext context) => _context = context;
-
   static const animationBlink = Duration(milliseconds: 25);
   static const animationFlash = Duration(milliseconds: 75);
   static const animationSwift = Duration(milliseconds: 150);

@@ -98,7 +98,7 @@ class _IntlListItemState extends State<IntlListItem> {
     _contentCard = Observer(
       builder: (context) {
         List<String> f;
-        if (Strings.isEn) {
+        if (Strings.of(context).isEn) {
           f = _l.isNotEmpty ? _l : _lv;
         } else {
           f = _lv.isNotEmpty ? _lv : _l;
@@ -217,13 +217,13 @@ class ProjectMiniItem extends StatelessWidget {
                 TextView.header(text: project.title, color: Colors.white),
                 Observer(
                   builder: (context) {
-                    Strings.isEn;
+                    final isEn = Strings.of(context).isEn;
                     if (project.author.isEmpty && project.authorVi.isEmpty) {
                       return const Nothing();
                     }
-                    var author = Strings.isEn ? project.author : project.authorVi;
+                    var author = isEn ? project.author : project.authorVi;
                     if (author.isEmpty) {
-                      author = Strings.isEn ? project.authorVi : project.author;
+                      author = isEn ? project.authorVi : project.author;
                     }
                     return TextView.subheader(text: author, color: Colors.white);
                   },
@@ -283,7 +283,7 @@ class _ProjectTimestampItemState extends State<ProjectTimestampItem> {
                     const SizedBox(height: Dimens.projectDetailsFuncPadding),
                     TextView(
                       text: DateFormat.yMMMM(
-                        Strings.language.name,
+                        Strings.of(context).language.name,
                       ).format(DateTime.fromMillisecondsSinceEpoch(_p.completionTimestamp ?? 0)),
                       spaced: true,
                     ),
@@ -333,8 +333,9 @@ class _ProjectAuthorItemState extends State<ProjectAuthorItem> {
         duration: Vars.animationFast,
         child: Observer(
           builder: (context) {
-            var author = Strings.isEn ? _p.author : _p.authorVi;
-            if (author.isEmpty) author = Strings.isEn ? _p.authorVi : _p.author;
+            final isEn = Strings.of(context).isEn;
+            var author = isEn ? _p.author : _p.authorVi;
+            if (author.isEmpty) author = isEn ? _p.authorVi : _p.author;
             return SizedBox(
               width: Dimens.projectDetailsFuncWidth,
               child: CardItem(
@@ -581,7 +582,7 @@ class _BioScoreItemState extends State<BioScoreItem> {
   Widget build(BuildContext context) {
     return Observer(
       builder: (context) {
-        Strings.isEn;
+        final _ = Strings.of(context).language;
         return SizedBox(
           width: Dimens.bioDetailsScoreSize,
           child: CardItem(
@@ -636,10 +637,13 @@ class _BioExperienceItemState extends State<BioExperienceItem> {
   Widget build(BuildContext context) {
     return Observer(
       builder: (context) {
+        final isEn = Strings.of(context).isEn;
+        final styles = Styles.of(context);
+        final theme = Theme.of(context);
         var name = _e.nameVi ?? _e.name;
-        if (Strings.isEn) name = _e.name ?? _e.nameVi;
+        if (isEn) name = _e.name ?? _e.nameVi;
         var major = _e.majorVi ?? _e.major;
-        if (Strings.isEn) major = _e.major ?? _e.majorVi;
+        if (isEn) major = _e.major ?? _e.majorVi;
         return CardItem(
           child: ConstrainedBox(
             constraints: const BoxConstraints(minHeight: Dimens.bioDetailsExpSize),
@@ -682,21 +686,19 @@ class _BioExperienceItemState extends State<BioExperienceItem> {
                       children: [
                         TextView(
                           text: name,
-                          style: Styles.headerStyle.copyWith(color: _c ?? Theme.of(context).primaryColor),
+                          style: styles.headerStyle.copyWith(color: _c ?? theme.primaryColor),
                         ),
                         TextView(
                           text: _e.time,
-                          style: Styles.subheaderStyle.copyWith(
-                            color: (_c ?? Theme.of(context).colorScheme.onSurface).withValues(alpha: .8),
+                          style: styles.subheaderStyle.copyWith(
+                            color: (_c ?? theme.colorScheme.onSurface).withValues(alpha: .8),
                             fontWeight: FontWeight.bold,
                           ),
                           spaced: true,
                         ),
                         TextView(
                           text: major,
-                          style: Theme.of(
-                            context,
-                          ).textTheme.bodyMedium?.copyWith(color: Theme.of(context).colorScheme.onSurface),
+                          style: theme.textTheme.bodyMedium?.copyWith(color: theme.colorScheme.onSurface),
                         ),
                       ],
                     ),

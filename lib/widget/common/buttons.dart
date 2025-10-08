@@ -34,7 +34,7 @@ class IconBtn extends StatelessWidget {
   Widget build(BuildContext context) {
     return Observer(
       builder: (context) {
-        if (Dimens.isSmall || ignoreScreenSize) {
+        if (Dimens.isSmall(context) || ignoreScreenSize) {
           return Tooltip(
             message: tooltipText,
             waitDuration: const Duration(seconds: 1),
@@ -195,14 +195,15 @@ class LanguageBtn extends StatelessWidget {
     return Observer(
       builder: (context) {
         // Build the button
+        final isEn = Strings.of(context).isEn;
         return IconBtn(
           tooltipText: AppLocalizations.of(context)!.language,
           child: ImageView(
-            Strings.isEn ? enImageUrl : viImageUrl,
+            isEn ? enImageUrl : viImageUrl,
             width: Dimens.iconBtnSize,
-            errorWidget: Text(Strings.isEn ? Language.en.name : Language.vi.name, style: Styles.iconBtnErrorStyle),
+            errorWidget: Text(isEn ? Language.en.name : Language.vi.name, style: Styles.iconBtnErrorStyle),
           ),
-          onPressed: () => context.read<LanguageStore>().setActiveLanguage(Strings.isEn ? Language.vi : Language.en),
+          onPressed: () => context.read<LanguageStore>().setActiveLanguage(isEn ? Language.vi : Language.en),
         );
       },
     );
@@ -216,11 +217,11 @@ class ThemeBtn extends StatelessWidget {
   Widget build(BuildContext context) {
     return Observer(
       builder: (context) {
+        final isDark = Themes.isDarkMode(context);
         return IconBtn(
           tooltipText: AppLocalizations.of(context)!.theme,
-          child: Themes.isDarkMode ? const Icon(CupertinoIcons.moon) : const Icon(CupertinoIcons.sun_min),
-          onPressed: () =>
-              context.read<ThemeStore>().setActiveTheme(Themes.isDarkMode ? ThemeMode.light : ThemeMode.dark),
+          child: isDark ? const Icon(CupertinoIcons.moon) : const Icon(CupertinoIcons.sun_min),
+          onPressed: () => context.read<ThemeStore>().setActiveTheme(isDark ? ThemeMode.light : ThemeMode.dark),
         );
       },
     );

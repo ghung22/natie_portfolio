@@ -125,7 +125,7 @@ class AnimatedLanguageUpdate extends StatelessWidget {
   Widget build(BuildContext context) {
     return Observer(
       builder: (context) {
-        Strings.isEn;
+        final _ = Strings.of(context).language;
         return AnimatedOpacity(
           duration: Vars.animationFast,
           opacity: context.read<LanguageStore>().changingLanguage ? 0 : 1,

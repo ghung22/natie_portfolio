@@ -5,27 +5,23 @@ import 'package:provider/provider.dart';
 enum ScreenSize { small, medium, large }
 
 class Dimens {
-  static BuildContext? _context;
+  const Dimens._();
 
-  static void init(BuildContext context) => _context = context;
+  static const smallScreenWidth = 600.0;
+  static const mediumScreenWidth = 900.0;
 
-  static ScreenSize get _screenSize {
-    if (_context == null) return ScreenSize.large;
-    final dimenStore = _context!.read<DimenStore>();
-    final size = dimenStore.size;
+  static ScreenSize screenSize(BuildContext context) {
+    final size = context.read<DimenStore>().size;
     if (size.width < smallScreenWidth) return ScreenSize.small;
     if (size.width < mediumScreenWidth) return ScreenSize.medium;
     return ScreenSize.large;
   }
 
-  static const smallScreenWidth = 600.0;
-  static const mediumScreenWidth = 900.0;
+  static bool isSmall(BuildContext context) => screenSize(context) == ScreenSize.small;
 
-  static bool get isSmall => _screenSize == ScreenSize.small;
+  static bool isMedium(BuildContext context) => screenSize(context) == ScreenSize.medium;
 
-  static bool get isMedium => _screenSize == ScreenSize.medium;
-
-  static bool get isLarge => _screenSize == ScreenSize.large;
+  static bool isLarge(BuildContext context) => screenSize(context) == ScreenSize.large;
 
   static const bannerActionOffset = 16.0;
   static const bannerActionPaddingHorizontal = 36.0;

@@ -6,22 +6,14 @@ import 'package:natie_portfolio/store/data/project_store.dart';
 import 'package:provider/provider.dart';
 
 class Firestore {
-  static BuildContext? _context;
-
-  static void init(BuildContext context) {
-    if (_context == null) onInit(context);
-    _context = context;
+  static Future<void> bootstrap(BuildContext context) async {
+    await Future.wait([context.read<ProjectStore>().getProjects(), context.read<BioStore>().getBio()]);
   }
 
   static FirebaseFirestore get instance => FirebaseFirestore.instance;
 
   static const String projects = 'projects';
   static const String bio = 'bio';
-
-  static Future<void> onInit(BuildContext context) async {
-    context.read<ProjectStore>().getProjects();
-    context.read<BioStore>().getBio();
-  }
 
   static Future<void> onDone(String caller, [Object? value]) async {
     Debug.log(value ?? 'No data', useDebugPrint: true, caller: caller);

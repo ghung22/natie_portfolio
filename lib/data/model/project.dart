@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -93,8 +92,13 @@ class Projects {
   Projects([this._v = const []]);
 
   List<Project> get values {
-    final v = _v;
-    v.sort((a, b) => b.completionTimestamp!.compareTo(a.completionTimestamp!));
+    const maxTimestamp = 0x1FFFFFFFFFFFFF;
+    final v = [..._v];
+    v.sort((a, b) {
+      final aTimestamp = a.completionTimestamp ?? -1;
+      final bTimestamp = b.completionTimestamp ?? maxTimestamp;
+      return bTimestamp.compareTo(aTimestamp);
+    });
     return v;
   }
 

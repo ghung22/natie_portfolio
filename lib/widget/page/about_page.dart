@@ -54,12 +54,12 @@ class _AboutPageState extends State<AboutPage> with PostFrameMixin {
       leading: const BackBtn(),
       title: Observer(
         builder: (context) {
-          Strings.isEn;
+          final _ = Strings.of(context).language;
           return TextBtn(
             textStyle: Theme.of(context).appBarTheme.titleTextStyle,
             hoverFeedback: false,
             onPressed: () => _scrollController.animateTo(0, duration: Vars.animationSlow, curve: Curves.easeOut),
-            child: TextView(textCallback: () => Strings.title),
+            child: TextView(textCallback: () => Strings.of(context).title),
           );
         },
       ),
@@ -143,7 +143,7 @@ class _AboutPageState extends State<AboutPage> with PostFrameMixin {
                       style: Styles.bioNameStyle.copyWith(color: bio.colors.first),
                     ),
                     TextView(
-                      text: Strings.isEn ? bio.description : bio.descriptionVi,
+                      text: Strings.of(context).isEn ? bio.description : bio.descriptionVi,
                       style: Styles.bioDescriptionStyle,
                       spaced: true,
                       softWrap: true,

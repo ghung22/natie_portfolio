@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -7,11 +9,9 @@ import 'package:provider/provider.dart';
 
 import 'data/firebase/firestore.dart';
 import 'firebase_options.dart';
-import 'global/dimens.dart';
 import 'global/router.dart' as rt;
 import 'global/strings.dart';
 import 'global/styles.dart';
-import 'global/vars.dart';
 import 'l10n/app_localizations.dart';
 import 'store/data/bio_store.dart';
 import 'store/data/project_store.dart';
@@ -36,16 +36,24 @@ void main() async {
   );
 }
 
-class NatiePortfolio extends StatelessWidget {
+class NatiePortfolio extends StatefulWidget {
   const NatiePortfolio({super.key});
 
-  static void init(BuildContext context) {
-    Dimens.init(context);
-    Firestore.init(context);
-    Strings.init(context);
-    Styles.init(context);
-    Themes.init(context);
-    Vars.init(context);
+  @override
+  State<NatiePortfolio> createState() => _NatiePortfolioState();
+}
+
+class _NatiePortfolioState extends State<NatiePortfolio> {
+  bool _bootstrapCompleted = false;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (_bootstrapCompleted) return;
+    context.read<ThemeStore>().getActiveTheme();
+    context.read<LanguageStore>().getActiveLanguage();
+    unawaited(Firestore.bootstrap(context));
+    _bootstrapCompleted = true;
   }
 
   // This widget is the root of your application.
@@ -56,18 +64,16 @@ class NatiePortfolio extends StatelessWidget {
         return Observer(
           builder: (_) {
             rt.Router.init(context);
-            context.read<ThemeStore>().getActiveTheme();
-            context.read<LanguageStore>().getActiveLanguage();
             context.read<DimenStore>().updateScreenSize(Size(constraints.maxWidth, constraints.maxHeight));
             return MaterialApp(
-              title: Strings.title,
+              title: Strings.of(context).title,
               debugShowCheckedModeBanner: true,
               // Theme
               themeMode: context.read<ThemeStore>().activeTheme,
               theme: Themes.light,
               darkTheme: Themes.dark,
               // Locale
-              locale: Strings.locale,
+              locale: Strings.of(context).locale,
               localizationsDelegates: AppLocalizations.localizationsDelegates,
               supportedLocales: AppLocalizations.supportedLocales,
               // Pages

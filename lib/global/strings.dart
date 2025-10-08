@@ -1,3 +1,5 @@
+import 'dart:ui' as ui;
+
 import 'package:flutter/material.dart';
 import 'package:natie_portfolio/store/data/bio_store.dart';
 import 'package:natie_portfolio/store/global/language_store.dart';
@@ -6,16 +8,17 @@ import 'package:provider/provider.dart';
 enum Language { system, en, vi }
 
 class Strings {
-  static BuildContext? _context;
+  Strings._(this._context);
 
-  static void init(BuildContext context) => _context = context;
+  final BuildContext _context;
 
-  static Language get language {
-    if (_context == null) return Language.en;
-    final languageStore = _context!.read<LanguageStore>();
+  static Strings of(BuildContext context) => Strings._(context);
+
+  Language get language {
+    final languageStore = _context.read<LanguageStore>();
     switch (languageStore.activeLanguage) {
       case Language.system:
-        Locale locale = Localizations.localeOf(_context!);
+        final locale = Localizations.maybeLocaleOf(_context) ?? ui.PlatformDispatcher.instance.locale;
         return locale.languageCode == Language.en.name ? Language.en : Language.vi;
       case Language.en:
       case Language.vi:
@@ -23,17 +26,17 @@ class Strings {
     }
   }
 
-  static bool get isEn => Strings.language == Language.en;
+  bool get isEn => language == Language.en;
 
-  static bool get isVi => Strings.language == Language.vi;
+  bool get isVi => language == Language.vi;
 
-  static Locale get locale => Locale(language.name);
+  Locale get locale => Locale(language.name);
 
-  static String get title {
+  String get title {
     try {
-      final bio = _context!.read<BioStore>().bio;
-      return language == Language.en ? bio.title : bio.titleVi;
-    } catch (e) {
+      final bio = _context.read<BioStore>().bio;
+      return isEn ? bio.title : bio.titleVi;
+    } catch (_) {
       return '';
     }
   }

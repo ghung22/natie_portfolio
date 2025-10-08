@@ -54,7 +54,7 @@ class WebAppBar extends StatelessWidget implements PreferredSizeWidget {
           return Stack(
             children: [
               AppBar(
-                leading: Dimens.isMedium ? leading : null,
+                leading: Dimens.isMedium(context) ? leading : null,
                 automaticallyImplyLeading: automaticallyImplyLeading,
                 title: title,
                 actions: actions,
@@ -65,7 +65,7 @@ class WebAppBar extends StatelessWidget implements PreferredSizeWidget {
                 bottomOpacity: bottomOpacity,
                 leadingWidth: leadingWidth,
               ),
-              if (!Dimens.isMedium && leading != null)
+              if (!Dimens.isMedium(context) && leading != null)
                 Align(
                   alignment: Alignment.centerLeft,
                   child: ConstrainedBox(
@@ -122,7 +122,7 @@ class _WebFooterState extends State<WebFooter> with PostFrameMixin {
       children: [
         Observer(
           builder: (context) {
-            if (Dimens.isSmall) {
+            if (Dimens.isSmall(context)) {
               return Wrap(children: [_navigation, _projects, _contact]);
             }
             return Padding(
@@ -261,7 +261,9 @@ class _WebFooterState extends State<WebFooter> with PostFrameMixin {
       builder: (context) {
         return Container(
           width: double.infinity,
-          color: Themes.isDarkMode ? MoreColors.darker(_color, magnitude: 1) : MoreColors.lighter(_color, magnitude: 2),
+          color: Themes.isDarkMode(context)
+              ? MoreColors.darker(_color, magnitude: 1)
+              : MoreColors.lighter(_color, magnitude: 2),
           padding: const EdgeInsets.symmetric(
             horizontal: Dimens.pageContentPaddingHorizontal,
             vertical: Dimens.pageFooterPaddingVertical,

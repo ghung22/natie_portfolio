@@ -59,12 +59,12 @@ class _HomePageState extends State<HomePage> with PostFrameMixin {
       leading: NavBtn(scaffoldKey: _scaffoldKey),
       title: Observer(
         builder: (context) {
-          Strings.isEn;
+          final _ = Strings.of(context).language;
           return TextBtn(
             textStyle: Theme.of(context).appBarTheme.titleTextStyle,
             hoverFeedback: false,
             onPressed: () => _scrollController.animateTo(0, duration: Vars.animationSlow, curve: Curves.easeOut),
-            child: TextView(textCallback: () => Strings.title),
+            child: TextView(textCallback: () => Strings.of(context).title),
           );
         },
       ),

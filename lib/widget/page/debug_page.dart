@@ -174,12 +174,12 @@ class _DebugPageState extends State<DebugPage> with PostFrameMixin {
                   ),
                   Observer(
                     builder: (context) {
-                      return TextView(text: 'Language: ${Strings.language}');
+                      return TextView(text: 'Language: ${Strings.of(context).language}');
                     },
                   ),
                   Observer(
                     builder: (context) {
-                      return TextView(text: 'Theme: ${Themes.themeMode}');
+                      return TextView(text: 'Theme: ${Themes.themeMode(context)}');
                     },
                   ),
                 ],
