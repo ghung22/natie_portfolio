@@ -13,7 +13,7 @@ import 'package:natie_portfolio/store/common/animation_store.dart';
 import 'animated_view.dart';
 import 'list_view.dart';
 
-enum TextViewPreset { custom, header, subheader, footer }
+enum TextViewPreset { custom, header, subheader, footer, monospace }
 
 // region TextView
 
@@ -81,6 +81,19 @@ class TextView extends StatelessWidget {
        preset = TextViewPreset.footer,
        assert(text != null && textCallback == null || textCallback != null && text == null);
 
+  const TextView.monospace({
+    super.key,
+    this.text,
+    this.textCallback,
+    this.color,
+    this.spaced = false,
+    this.padding = EdgeInsets.zero,
+    this.textAlign = TextAlign.start,
+    this.softWrap = false,
+  }) : style = null,
+       preset = TextViewPreset.monospace,
+       assert(text != null && textCallback == null || textCallback != null && text == null);
+
   TextStyle? _styleByPreset(TextStyle? baseStyle) {
     if (baseStyle == null) {
       if (color == null && !spaced) return null;
@@ -102,6 +115,7 @@ class TextView extends StatelessWidget {
         TextViewPreset.header => Styles.of(context).headerStyle,
         TextViewPreset.subheader => Styles.of(context).subheaderStyle,
         TextViewPreset.footer => Styles.of(context).footerStyle,
+        TextViewPreset.monospace => Styles.of(context).monospaceStyle,
         TextViewPreset.custom => style,
       }),
     );

@@ -22,6 +22,7 @@ class Styles {
   TextStyle get subheaderStyle => TextStyle(color: Theme.of(_context).primaryColor, fontSize: 14);
 
   TextStyle get footerStyle => const TextStyle(color: Colors.black54);
+  TextStyle get monospaceStyle => const TextStyle(fontFamily: Themes.fontMono);
   static const TextStyle spacedTextStyle = TextStyle(letterSpacing: 0.5);
 
   // Widget styles
@@ -29,7 +30,7 @@ class Styles {
   static const TextStyle bannerDescriptionStyle = TextStyle(fontSize: 20, height: 1.5);
   static const TextStyle bannerActionStyle = TextStyle(fontSize: 16);
 
-  static const TextStyle iconBtnErrorStyle = TextStyle(fontFamily: 'monospace');
+  static const TextStyle iconBtnErrorStyle = TextStyle(fontFamily: Themes.fontMono);
   static const TextStyle iconBtnLabelStyle = TextStyle(fontSize: 18, fontWeight: FontWeight.bold);
 
   // Content styles
@@ -63,6 +64,7 @@ class MoreColors {
 class Themes {
   static const fontText = 'sf_text';
   static const fontDisplay = 'sf_display';
+  static const fontMono = 'sf_mono';
 
   static ThemeData get light => _generateTheme(from: ThemeData.light());
 

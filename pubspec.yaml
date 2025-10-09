@@ -153,6 +153,38 @@ flutter:
         - asset: assets/fonts/sf_text_i200.otf
           weight: 200
           style: italic
+    - family: sf_mono
+      fonts:
+        - asset: assets/fonts/sf_mono.otf
+          weight: 400
+        - asset: assets/fonts/sf_mono_w800.otf
+          weight: 800
+        - asset: assets/fonts/sf_mono_w700.otf
+          weight: 700
+        - asset: assets/fonts/sf_mono_w600.otf
+          weight: 600
+        - asset: assets/fonts/sf_mono_w500.otf
+          weight: 500
+        - asset: assets/fonts/sf_mono_w200.otf
+          weight: 200
+        - asset: assets/fonts/sf_mono_i800.otf
+          weight: 800
+          style: italic
+        - asset: assets/fonts/sf_mono_i700.otf
+          weight: 700
+          style: italic
+        - asset: assets/fonts/sf_mono_i600.otf
+          weight: 600
+          style: italic
+        - asset: assets/fonts/sf_mono_i500.otf
+          weight: 500
+          style: italic
+        - asset: assets/fonts/sf_mono_i400.otf
+          weight: 400
+          style: italic
+        - asset: assets/fonts/sf_mono_i200.otf
+          weight: 200
+          style: italic
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
