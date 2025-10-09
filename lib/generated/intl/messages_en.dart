@@ -20,13 +20,13 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'en';
 
-  static String m0(String route) => "No route found for ${route}";
+  static String m0(route) => "No route found for ${route}";
 
-  static String m1(String name) => "Hi! This is\n${name}";
+  static String m1(name) => "Hi! This is\n${name}";
 
-  static String m2(String name) => "Thanks to ${name}, I have learned to…";
+  static String m2(name) => "Thanks to ${name}, I have learned to…";
 
-  static String m3(String name) => "With ${name}, you can…";
+  static String m3(name) => "With ${name}, you can…";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -35,11 +35,17 @@ class MessageLookup extends MessageLookupByLibrary {
     "back": MessageLookupByLibrary.simpleMessage("Back"),
     "completion_date": MessageLookupByLibrary.simpleMessage("Completion date"),
     "contact": MessageLookupByLibrary.simpleMessage("Contact me"),
-    "copyright": MessageLookupByLibrary.simpleMessage("© 2021 Natie Portfolio - Made with Flutter"),
+    "copyright": MessageLookupByLibrary.simpleMessage(
+      "© 2021 Natie Portfolio - Made with Flutter",
+    ),
     "details": MessageLookupByLibrary.simpleMessage("More details"),
-    "experience": MessageLookupByLibrary.simpleMessage("Work experience & Education"),
+    "experience": MessageLookupByLibrary.simpleMessage(
+      "Work experience & Education",
+    ),
     "explore": MessageLookupByLibrary.simpleMessage("Explore more"),
-    "featured_projects": MessageLookupByLibrary.simpleMessage("Featured Projects"),
+    "featured_projects": MessageLookupByLibrary.simpleMessage(
+      "Featured Projects",
+    ),
     "home": MessageLookupByLibrary.simpleMessage("Home"),
     "host": MessageLookupByLibrary.simpleMessage("Reference"),
     "language": MessageLookupByLibrary.simpleMessage("Language"),

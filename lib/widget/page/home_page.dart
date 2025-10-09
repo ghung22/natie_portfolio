@@ -1,6 +1,7 @@
 // ignore: avoid_web_libraries_in_flutter
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:go_router/go_router.dart';
 import 'package:natie_portfolio/data/model/project.dart';
 import 'package:natie_portfolio/global/mixin.dart';
 import 'package:natie_portfolio/global/router.dart';
@@ -102,7 +103,7 @@ class _HomePageState extends State<HomePage> with PostFrameMixin {
                             constraints: const BoxConstraints(maxWidth: Dimens.pageContentMaxWidth),
                             child: ProjectBanner(
                               project: p,
-                              onAction: () => Navigator.of(context).pushNamed(Routes.project, arguments: p),
+                              onAction: () => context.go(Routes.project, extra: p),
                               isHomePage: true,
                             ),
                           ),

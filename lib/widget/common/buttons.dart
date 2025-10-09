@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:go_router/go_router.dart';
 import 'package:natie_portfolio/global/dimens.dart';
 import 'package:natie_portfolio/global/strings.dart';
 import 'package:natie_portfolio/global/styles.dart';
@@ -152,10 +153,10 @@ class BackBtn extends StatelessWidget {
   Widget build(BuildContext context) {
     return Builder(
       builder: (context) {
-        if (!Navigator.of(context).canPop()) return const Nothing();
+        if (!context.canPop()) return const Nothing();
         return IconBtn(
           tooltipText: AppLocalizations.of(context)!.back,
-          onPressed: () => Navigator.of(context).pop(),
+          onPressed: () => context.pop(),
           ignoreScreenSize: false,
           child: const Icon(Icons.arrow_back_ios_new),
         );

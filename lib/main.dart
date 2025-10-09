@@ -63,9 +63,8 @@ class _NatiePortfolioState extends State<NatiePortfolio> {
       builder: (context, constraints) {
         return Observer(
           builder: (_) {
-            rt.Router.init(context);
             context.read<DimenStore>().updateScreenSize(Size(constraints.maxWidth, constraints.maxHeight));
-            return MaterialApp(
+            return MaterialApp.router(
               title: Strings.of(context).title,
               debugShowCheckedModeBanner: true,
               // Theme
@@ -77,8 +76,7 @@ class _NatiePortfolioState extends State<NatiePortfolio> {
               localizationsDelegates: AppLocalizations.localizationsDelegates,
               supportedLocales: AppLocalizations.supportedLocales,
               // Pages
-              initialRoute: Debug.isProduction ? rt.Routes.home : rt.Routes.debug,
-              onGenerateRoute: rt.Router.generateRoute,
+              routerConfig: rt.Routes.router,
             );
           },
         );

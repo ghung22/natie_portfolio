@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:go_router/go_router.dart';
 import 'package:natie_portfolio/data/model/bio.dart';
 import 'package:natie_portfolio/data/model/project.dart';
 import 'package:natie_portfolio/global/dimens.dart';
@@ -272,7 +273,11 @@ class ProjectBanner extends StatelessWidget {
     title: TextView(text: project.title),
     description: Observer(
       builder: (context) {
-        return TextView(text: Strings.of(context).isEn ? project.description : project.descriptionVi, spaced: true, softWrap: true);
+        return TextView(
+          text: Strings.of(context).isEn ? project.description : project.descriptionVi,
+          spaced: true,
+          softWrap: true,
+        );
       },
     ),
     imageUrls: project.imageUrls,
@@ -415,7 +420,7 @@ class BioBanner extends StatelessWidget {
               child: AnimatedHover(
                 scaleOnHover: 1.2,
                 duration: Vars.animationFast,
-                onPressed: () => Navigator.of(context).pushNamed(Routes.about),
+                onPressed: () => context.go(Routes.about),
                 child: Hero(
                   tag: '${Routes.about}/avatar',
                   child: DecoratedBox(

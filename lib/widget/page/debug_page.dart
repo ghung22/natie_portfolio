@@ -1,7 +1,10 @@
 // ignore: avoid_web_libraries_in_flutter
+import 'dart:convert';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:go_router/go_router.dart';
 import 'package:natie_portfolio/global/dimens.dart';
 import 'package:natie_portfolio/global/mixin.dart';
 import 'package:natie_portfolio/global/router.dart';
@@ -10,7 +13,6 @@ import 'package:natie_portfolio/global/styles.dart';
 import 'package:natie_portfolio/store/data/bio_store.dart';
 import 'package:natie_portfolio/store/data/project_store.dart';
 import 'package:natie_portfolio/store/global/dimen_store.dart';
-import 'package:natie_portfolio/widget/common/banner_item.dart';
 import 'package:natie_portfolio/widget/common/buttons.dart';
 import 'package:natie_portfolio/widget/common/content_item.dart';
 import 'package:natie_portfolio/widget/common/list_view.dart';
@@ -95,12 +97,8 @@ class _DebugPageState extends State<DebugPage> with PostFrameMixin {
           runSpacing: Dimens.projectItemPadding,
           children: Routes.list.map((r) {
             return ElevatedBtn(
-              onPressed: () => Navigator.pushNamed(
-                context,
-                r,
-                arguments: r == Routes.project ? _projectStore?.projects.first : null,
-              ),
-              child: TextView(text: r),
+              onPressed: () => context.go(r, extra: r == Routes.project ? _projectStore?.projects.first : null),
+              child: TextView(text: r, color: Theme.of(context).colorScheme.onSurface),
             );
           }).toList(),
         ),
@@ -123,7 +121,10 @@ class _DebugPageState extends State<DebugPage> with PostFrameMixin {
               child: CardItem(
                 hoverFeedback: true,
                 color: Colors.amber,
-                child: TextView(text: 'Org'),
+                child: TextView(
+                  text: 'Org',
+                  style: TextStyle(backgroundColor: Colors.grey),
+                ),
               ),
             ),
             for (var i = .5; i < 3; i += .5)
@@ -133,7 +134,10 @@ class _DebugPageState extends State<DebugPage> with PostFrameMixin {
                 child: CardItem(
                   hoverFeedback: true,
                   color: MoreColors.lighter(Colors.amber, magnitude: i),
-                  child: TextView(text: 'L-$i'),
+                  child: TextView(
+                    text: 'L-$i',
+                    style: TextStyle(color: Colors.white, backgroundColor: Colors.black54),
+                  ),
                 ),
               ),
             for (var i = .5; i < 3; i += .5)
@@ -143,7 +147,10 @@ class _DebugPageState extends State<DebugPage> with PostFrameMixin {
                 child: CardItem(
                   hoverFeedback: true,
                   color: MoreColors.darker(Colors.amber, magnitude: i),
-                  child: TextView(text: 'D-$i'),
+                  child: TextView(
+                    text: 'D-$i',
+                    style: TextStyle(color: Colors.black, backgroundColor: Colors.white60),
+                  ),
                 ),
               ),
           ],

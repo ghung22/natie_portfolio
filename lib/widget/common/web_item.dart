@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:go_router/go_router.dart';
 import 'package:natie_portfolio/data/model/bio.dart';
 import 'package:natie_portfolio/data/model/project.dart';
 import 'package:natie_portfolio/global/dimens.dart';
@@ -156,21 +157,21 @@ class _WebFooterState extends State<WebFooter> with PostFrameMixin {
         TextBtn(
           hoverFeedback: false,
           padding: const EdgeInsets.symmetric(vertical: Dimens.btnPaddingVertical),
-          onPressed: () => Navigator.of(context).pushNamed(Routes.home),
+          onPressed: () => context.go(Routes.home),
           textStyle: TextStyle(color: Theme.of(context).colorScheme.onSurface),
           child: TextView(text: AppLocalizations.of(context)!.home, textAlign: TextAlign.start),
         ),
         TextBtn(
           hoverFeedback: false,
           padding: const EdgeInsets.symmetric(vertical: Dimens.btnPaddingVertical),
-          onPressed: () => Navigator.of(context).pushNamed(Routes.about),
+          onPressed: () => context.go(Routes.about),
           textStyle: TextStyle(color: Theme.of(context).colorScheme.onSurface),
           child: TextView(text: AppLocalizations.of(context)!.about_me, textAlign: TextAlign.start),
         ),
         TextBtn(
           hoverFeedback: false,
           padding: const EdgeInsets.symmetric(vertical: Dimens.btnPaddingVertical),
-          onPressed: () => Navigator.of(context).pushNamed(Routes.projects),
+          onPressed: () => context.go(Routes.projects),
           textStyle: TextStyle(color: Theme.of(context).colorScheme.onSurface),
           child: TextView(text: AppLocalizations.of(context)!.projects, textAlign: TextAlign.start),
         ),
@@ -195,7 +196,7 @@ class _WebFooterState extends State<WebFooter> with PostFrameMixin {
               return TextBtn(
                 hoverFeedback: false,
                 padding: const EdgeInsets.symmetric(vertical: Dimens.btnPaddingVertical),
-                onPressed: () => Navigator.of(context).pushNamed(Routes.project, arguments: p),
+                onPressed: () => context.go(Routes.project, extra: p),
                 textStyle: TextStyle(color: Theme.of(context).colorScheme.onSurface),
                 child: TextView(text: p.title, textAlign: TextAlign.start),
               );

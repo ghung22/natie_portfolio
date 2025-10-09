@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:natie_portfolio/data/model/experience.dart';
 import 'package:natie_portfolio/data/model/score.dart';
@@ -175,9 +176,7 @@ class ProjectMiniItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return CardItem(
       onPressed: () {
-        Navigator.of(
-          context,
-        ).pushNamed(Routes.project, arguments: <String, dynamic>{'project': project, 'disableAnimation': true});
+        context.go(Routes.project, extra: <String, dynamic>{'project': project, 'disableAnimation': true});
       },
       color: project.color,
       child: PaddedRow(
@@ -483,7 +482,7 @@ class BioMiniItem extends StatelessWidget {
               splashFactory: NoSplash.splashFactory,
               hoverColor: Colors.transparent,
               highlightColor: Colors.transparent,
-              onTap: () => Navigator.of(context).pushNamed(Routes.about, arguments: true),
+              onTap: () => context.go(Routes.about, extra: true),
               child: DecoratedBox(
                 decoration: ShapeDecoration(
                   shape: CircleBorder(
@@ -514,7 +513,7 @@ class BioMiniItem extends StatelessWidget {
                 children: [
                   TextBtn(
                     hoverFeedback: false,
-                    onPressed: () => Navigator.of(context).pushNamed(Routes.about, arguments: true),
+                    onPressed: () => context.go(Routes.about, extra: true),
                     padding: EdgeInsets.zero,
                     child: TextView.header(text: bio.name, color: bio.colors.first),
                   ),
