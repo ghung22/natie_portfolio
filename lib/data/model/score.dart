@@ -6,9 +6,10 @@ part 'score.g.dart';
 class Score {
   final String name;
   final double score;
+  final double scoreMax;
   final Map<String, dynamic> customData;
 
-  const Score({this.name = '', this.score = 0, this.customData = const <String, dynamic>{}});
+  const Score({this.name = '', this.score = 0, this.scoreMax = 0, this.customData = const <String, dynamic>{}});
 
   factory Score.fromJson(Map<String, dynamic> json) => _$ScoreFromJson(json);
 

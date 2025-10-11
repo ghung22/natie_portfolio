@@ -95,23 +95,27 @@ class _AnimatedHoverState extends State<AnimatedHover> with SingleTickerProvider
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: _onPressed ?? (_feedback ? () {} : null),
-      mouseCursor: _feedback && _onPressed == null ? MouseCursor.uncontrolled : null,
-      splashFactory: NoSplash.splashFactory,
-      hoverColor: Colors.transparent,
-      highlightColor: Colors.transparent,
-      focusColor: Colors.transparent,
-      onHover: (isHover) {
-        if (!_feedback) return;
-        if (isHover) {
-          _ani.start();
-          widget.onHover?.call();
-        } else {
-          _ani.stop();
-        }
-      },
-      child: AnimatedScale(scale: _ani.willStart ? _scaleOnHover : 1, duration: widget.duration, child: widget.child),
+    return Observer(
+      builder: (context) {
+        return InkWell(
+          onTap: _onPressed ?? (_feedback ? () {} : null),
+          mouseCursor: _feedback && _onPressed == null ? MouseCursor.uncontrolled : null,
+          splashFactory: NoSplash.splashFactory,
+          hoverColor: Colors.transparent,
+          highlightColor: Colors.transparent,
+          focusColor: Colors.transparent,
+          onHover: (isHover) {
+            if (!_feedback) return;
+            if (isHover) {
+              _ani.start();
+              widget.onHover?.call();
+            } else {
+              _ani.stop();
+            }
+          },
+          child: AnimatedScale(scale: _ani.willStart ? _scaleOnHover : 1, duration: widget.duration, child: widget.child),
+        );
+      }
     );
   }
 }

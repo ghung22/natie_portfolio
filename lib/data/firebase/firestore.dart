@@ -16,7 +16,7 @@ class Firestore {
   static const String bio = 'bio';
 
   static Future<void> onDone(String caller, [Object? value]) async {
-    Debug.log(value ?? 'No data', useDebugPrint: true, caller: caller);
+    // Debug.log(value ?? 'No data', useDebugPrint: true, caller: caller);
   }
 
   static Future<QuerySnapshot<Map<String, dynamic>>> onQueryError(

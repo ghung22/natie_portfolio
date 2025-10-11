@@ -3,6 +3,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:go_router/go_router.dart';
 import 'package:natie_portfolio/data/model/bio.dart';
 import 'package:natie_portfolio/data/model/project.dart';
+import 'package:natie_portfolio/global/debug.dart';
 import 'package:natie_portfolio/global/dimens.dart';
 import 'package:natie_portfolio/global/mixin.dart';
 import 'package:natie_portfolio/global/router.dart';
@@ -159,21 +160,24 @@ class _WebFooterState extends State<WebFooter> with PostFrameMixin {
           padding: const EdgeInsets.symmetric(vertical: Dimens.btnPaddingVertical),
           onPressed: () => context.go(Routes.home),
           textStyle: TextStyle(color: Theme.of(context).colorScheme.onSurface),
-          child: TextView(text: AppLocalizations.of(context)!.home, textAlign: TextAlign.start),
+          alignment: AlignmentGeometry.centerLeft,
+          child: TextView(text: AppLocalizations.of(context)!.home),
         ),
         TextBtn(
           hoverFeedback: false,
           padding: const EdgeInsets.symmetric(vertical: Dimens.btnPaddingVertical),
           onPressed: () => context.go(Routes.about),
           textStyle: TextStyle(color: Theme.of(context).colorScheme.onSurface),
-          child: TextView(text: AppLocalizations.of(context)!.about_me, textAlign: TextAlign.start),
+          alignment: AlignmentGeometry.centerLeft,
+          child: TextView(text: AppLocalizations.of(context)!.about_me),
         ),
         TextBtn(
           hoverFeedback: false,
           padding: const EdgeInsets.symmetric(vertical: Dimens.btnPaddingVertical),
           onPressed: () => context.go(Routes.projects),
           textStyle: TextStyle(color: Theme.of(context).colorScheme.onSurface),
-          child: TextView(text: AppLocalizations.of(context)!.projects, textAlign: TextAlign.start),
+          alignment: AlignmentGeometry.centerLeft,
+          child: TextView(text: AppLocalizations.of(context)!.projects),
         ),
       ],
     );
@@ -198,6 +202,7 @@ class _WebFooterState extends State<WebFooter> with PostFrameMixin {
                 padding: const EdgeInsets.symmetric(vertical: Dimens.btnPaddingVertical),
                 onPressed: () => context.go(Routes.project, extra: p),
                 textStyle: TextStyle(color: Theme.of(context).colorScheme.onSurface),
+                alignment: AlignmentGeometry.centerLeft,
                 child: TextView(text: p.title, textAlign: TextAlign.start),
               );
             }),

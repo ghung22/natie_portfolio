@@ -72,6 +72,7 @@ class TextBtn extends StatelessWidget {
   final bool hoverFeedback;
   final VoidCallback? onPressed;
   final EdgeInsetsGeometry padding;
+  final AlignmentGeometry? alignment;
 
   const TextBtn({
     super.key,
@@ -83,6 +84,7 @@ class TextBtn extends StatelessWidget {
       horizontal: Dimens.btnPaddingHorizontal,
       vertical: Dimens.btnPaddingVertical,
     ),
+    this.alignment,
   });
 
   @override
@@ -97,6 +99,7 @@ class TextBtn extends StatelessWidget {
         textStyle: WidgetStateProperty.all(textStyle),
         splashFactory: hoverFeedback ? null : NoSplash.splashFactory,
         overlayColor: hoverFeedback ? null : WidgetStateProperty.all(Colors.transparent),
+        alignment: alignment,
       ),
       onPressed: onPressed,
       child: child,
@@ -130,6 +133,7 @@ class ElevatedBtn extends StatelessWidget {
     return AnimatedLanguageUpdate(
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
+          textStyle: Styles.textBtnLabelStyle,
           backgroundColor: color ?? Theme.of(context).primaryColor,
           padding: padding,
           elevation: elevation,

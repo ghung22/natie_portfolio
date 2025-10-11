@@ -16,7 +16,7 @@ class CountableDouble {
     var v = value;
     for (var i = 0; i < fractionalLength; i++) {
       v *= 10;
-      if ('$v.'.split('.')[1].isEmpty) break;
+      // if ('$v.'.split('.')[1].isEmpty) break;
     }
     return v.floor();
   }

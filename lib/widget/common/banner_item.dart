@@ -374,12 +374,14 @@ class BioBanner extends StatelessWidget {
                   ...bio.scores.map((s) {
                     return AnimatedCountingText(
                       value: s.score,
+                      valueMax: s.scoreMax,
                       color: Colors.white,
                       dimension: Dimens.bioScoreSize,
                       style: Styles.scoreValueStyle,
                       spaced: true,
                       disableAnimation: skipIntro,
                       topSide: TextView(text: s.name, style: Styles.scoreNameStyle, spaced: true),
+                      bottomSide: TextView(text: '/ ${s.scoreMax}', style: Styles.scoreValueMaxStyle, spaced: true),
                     );
                   }),
                 ],
@@ -393,7 +395,7 @@ class BioBanner extends StatelessWidget {
     Widget rightSide = Align(
       alignment: Alignment.bottomRight,
       child: Padding(
-        padding: const EdgeInsets.only(right: Dimens.bioRightSidePadding, bottom: Dimens.bioRightSidePadding),
+        padding: const EdgeInsets.only(right: Dimens.bioRightSidePadding, bottom: Dimens.bioRightSidePadding * 4),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -418,7 +420,7 @@ class BioBanner extends StatelessWidget {
             ConstrainedBox(
               constraints: const BoxConstraints(maxHeight: Dimens.bioHeight),
               child: AnimatedHover(
-                scaleOnHover: 1.2,
+                scaleOnHover: 1.05,
                 duration: Vars.animationFast,
                 onPressed: () => context.go(Routes.about),
                 child: Hero(

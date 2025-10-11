@@ -15,7 +15,7 @@ class SharedPref {
 
   static Future<ThemeMode> getTheme() async {
     final prefs = await instance;
-    final t = prefs.getString(theme) ?? ThemeMode.system.name;
+    final t = prefs.getString(theme) ?? ThemeMode.light.name;
     return ThemeMode.values.firstWhere((tm) => tm.name == t);
   }
 
@@ -26,7 +26,7 @@ class SharedPref {
 
   static Future<Language> getLanguage() async {
     final prefs = await instance;
-    final l = prefs.getString(language) ?? Language.system.name;
+    final l = prefs.getString(language) ?? Language.en.name;
     return Language.values.firstWhere((ln) => ln.name == l);
   }
 

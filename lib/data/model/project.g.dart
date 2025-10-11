@@ -11,14 +11,30 @@ Project _$ProjectFromJson(Map<String, dynamic> json) => Project(
   title: json['title'] as String? ?? '',
   author: json['author'] as String? ?? '',
   authorVi: json['authorVi'] as String? ?? '',
+  tags:
+      (json['tags'] as List<dynamic>?)
+          ?.map((e) => $enumDecode(_$ProjectTagEnumMap, e))
+          .toList() ??
+      const <ProjectTag>[],
   tech: json['tech'] as String? ?? '',
   description: json['description'] as String? ?? '',
   descriptionVi: json['descriptionVi'] as String? ?? '',
-  functionalities: (json['functionalities'] as List<dynamic>?)?.map((e) => e as String).toList() ?? const <String>[],
+  functionalities:
+      (json['functionalities'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList() ??
+      const <String>[],
   functionalitiesVi:
-      (json['functionalitiesVi'] as List<dynamic>?)?.map((e) => e as String).toList() ?? const <String>[],
-  learned: (json['learned'] as List<dynamic>?)?.map((e) => e as String).toList() ?? const <String>[],
-  learnedVi: (json['learnedVi'] as List<dynamic>?)?.map((e) => e as String).toList() ?? const <String>[],
+      (json['functionalitiesVi'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList() ??
+      const <String>[],
+  learned:
+      (json['learned'] as List<dynamic>?)?.map((e) => e as String).toList() ??
+      const <String>[],
+  learnedVi:
+      (json['learnedVi'] as List<dynamic>?)?.map((e) => e as String).toList() ??
+      const <String>[],
   hostUrl: json['hostUrl'] as String? ?? '',
   iconUrl: json['iconUrl'] as String? ?? '',
   imageUrls:
@@ -36,6 +52,7 @@ Map<String, dynamic> _$ProjectToJson(Project instance) => <String, dynamic>{
   'title': instance.title,
   'author': instance.author,
   'authorVi': instance.authorVi,
+  'tags': instance.tags.map((e) => _$ProjectTagEnumMap[e]!).toList(),
   'tech': instance.tech,
   'description': instance.description,
   'descriptionVi': instance.descriptionVi,
@@ -49,4 +66,14 @@ Map<String, dynamic> _$ProjectToJson(Project instance) => <String, dynamic>{
   'colorHex': instance.colorHex,
   'completionTimestamp': instance.completionTimestamp,
   'featured': instance.featured,
+};
+
+const _$ProjectTagEnumMap = {
+  ProjectTag.mobile: 'mobile',
+  ProjectTag.server: 'server',
+  ProjectTag.game: 'game',
+  ProjectTag.hcmus: 'hcmus',
+  ProjectTag.indie: 'indie',
+  ProjectTag.fpt: 'fpt',
+  ProjectTag.teamobi: 'teamobi',
 };

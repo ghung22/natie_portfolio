@@ -220,19 +220,23 @@ class _DebugPageState extends State<DebugPage> with PostFrameMixin {
     _testSect = PaddedColumn(
       padding: const EdgeInsets.symmetric(vertical: Dimens.projectItemPadding),
       children: [
-        Observer(
-          builder: (context) {
-            if (_projectStore == null) return const Nothing();
-            if (_projectStore!.projects.isEmpty) return const Nothing();
-            return PaddedColumn(
-              padding: const EdgeInsets.symmetric(vertical: Dimens.pageContentPaddingHorizontal),
-              paddingStartAndEnd: false,
-              children: [
-                ProjectBanner(project: _projectStore!.projects.first!, isHomePage: true),
-                ProjectBanner(project: _projectStore!.projects.first!),
-              ],
-            );
-          },
+        PaddedColumn(
+          padding: const EdgeInsets.symmetric(vertical: Dimens.pageContentPaddingHorizontal),
+          paddingStartAndEnd: false,
+          children: [
+            ..._projectStore!.projects.values.map((p) {
+              return CardItem(
+                padding: const EdgeInsets.all(Dimens.pageContentPaddingHorizontal),
+                color: Theme.of(context).colorScheme.inverseSurface,
+                child: TextView(
+                  text: JsonEncoder.withIndent('  ').convert(p.toJson()),
+                  color: Theme.of(context).colorScheme.onInverseSurface,
+                  style: Styles.of(context).monospaceStyle.copyWith(fontSize: 9),
+                  softWrap: true,
+                ),
+              );
+            }),
+          ],
         ),
       ],
     );

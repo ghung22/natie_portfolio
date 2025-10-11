@@ -114,9 +114,9 @@ class BioData {
     colorHexes: const [0x00B294],
     imageUrls: const [],
     scores: const [
-      Score(name: 'GPA', score: 3.19),
-      Score(name: 'TOEIC', score: 950),
-      Score(name: 'TOEIC S&W', score: 360),
+      Score(name: 'GPA', score: 3.19, scoreMax: 4),
+      Score(name: 'TOEIC', score: 950, scoreMax: 990),
+      Score(name: 'TOEIC S&W', score: 360, scoreMax: 400),
     ],
   );
 }

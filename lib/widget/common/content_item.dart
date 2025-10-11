@@ -599,7 +599,10 @@ class _BioScoreItemState extends State<BioScoreItem> {
                 ),
                 if (_s.customData['ref'] != null)
                   ElevatedBtn(
-                    child: TextView(text: AppLocalizations.of(context)!.scoreboard),
+                    child: TextView(
+                      text: AppLocalizations.of(context)!.scoreboard,
+                      color: Theme.of(context).colorScheme.onPrimary,
+                    ),
                     onPressed: () => launchUrlString(_s.customData['ref']!, mode: LaunchMode.externalApplication),
                   ),
               ],
@@ -679,6 +682,8 @@ class _BioExperienceItemState extends State<BioExperienceItem> {
                           height: Dimens.bioDetailsExpSize * .75,
                           fit: BoxFit.scaleDown,
                         ),
+                    if (_e.imageUrls?.isEmpty != true)
+                      SizedBox.fromSize(size: Size(Dimens.bioDetailsExpSize * .75, Dimens.bioDetailsExpSize * .75)),
                     PaddedColumn(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       padding: const EdgeInsets.symmetric(vertical: Dimens.bioDetailsExpPaddingVertical),

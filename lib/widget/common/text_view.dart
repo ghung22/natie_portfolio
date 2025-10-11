@@ -229,6 +229,7 @@ class _AnimatedTypingTextState extends State<AnimatedTypingText> with PostFrameM
 
 class AnimatedCountingText extends StatefulWidget {
   final double value;
+  final double valueMax;
   final Color? color;
   final TextStyle? style;
   final bool spaced;
@@ -248,6 +249,7 @@ class AnimatedCountingText extends StatefulWidget {
   const AnimatedCountingText({
     super.key,
     required this.value,
+    required this.valueMax,
     this.color,
     this.style,
     this.spaced = false,
@@ -269,6 +271,7 @@ class AnimatedCountingText extends StatefulWidget {
 
 class _AnimatedCountingTextState extends State<AnimatedCountingText> with PostFrameMixin {
   late CountableDouble _value;
+  late CountableDouble _valueMax;
   Color _color = Colors.transparent;
   late Duration _stepDuration;
 
@@ -290,6 +293,7 @@ class _AnimatedCountingTextState extends State<AnimatedCountingText> with PostFr
   void initState() {
     super.initState();
     _value = CountableDouble(widget.value);
+    _valueMax = CountableDouble(widget.valueMax, fractionalLength: _value.fractionalLength);
     _ani.setDataLimit(lowerLimit: 0, upperLimit: _value.countValue);
     if (widget.disableAnimation) _ani.setData(_value.countValue);
     final stepValue = (_value.countValue / 100).ceil().clamp(1, double.infinity).toInt();
@@ -330,7 +334,7 @@ class _AnimatedCountingTextState extends State<AnimatedCountingText> with PostFr
                   child: Observer(
                     builder: (context) {
                       return TweenAnimationBuilder<double>(
-                        tween: Tween<double>(begin: 0, end: _ani.intData / _value.countValue),
+                        tween: Tween<double>(begin: 0, end: _ani.intData / _valueMax.countValue),
                         curve: Curves.easeInOut,
                         duration: _stepDuration,
                         builder: (context, value, _) {

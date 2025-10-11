@@ -28,7 +28,7 @@ class Dimens {
   static const bannerActionPaddingVertical = 24.0;
   static const bannerContentLeftMaxWidth = 560.0;
   static const bannerContentPadding = 8.0;
-  static const bannerHeight = 500.0;
+  static const bannerHeight = 520.0;
   static const bannerPaddingHorizontal = 24.0;
   static const bannerPaddingVertical = 28.0;
   static const bannerSlideOffset = .1;
@@ -37,7 +37,7 @@ class Dimens {
   static const bioAvatarPadding = bioAvatarBorderSize + 4;
   static const bioHeight = bannerHeight / 2;
   static const bioRightSidePadding = bioAvatarBorderSize * 2;
-  static const bioScoreSize = 116.0;
+  static const bioScoreSize = 132.0;
   static const bioScorePadding = 24.0;
 
   static const bioDetailsContactPadding = bioDetailsContactSize / 4;
@@ -53,8 +53,8 @@ class Dimens {
 
   static const btnElevation = 5.0;
   static const btnIconPaddingHorizontal = btnPaddingHorizontal / 2;
-  static const btnPaddingHorizontal = btnPaddingVertical * 3;
-  static const btnPaddingVertical = 8.0;
+  static const btnPaddingHorizontal = 24.0;
+  static const btnPaddingVertical = 16.0;
   static const btnRadius = 30.0;
 
   static const cardElevation = 8.0;

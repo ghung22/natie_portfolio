@@ -206,11 +206,7 @@ class _AboutPageState extends State<AboutPage> with PostFrameMixin {
             Wrap(
               spacing: Dimens.bioDetailsScorePaddingHorizontal,
               runSpacing: Dimens.bioDetailsScorePaddingVertical,
-              children: [
-                ...bio.scores.map((s) {
-                  return BioScoreItem(s, color: bio.colors.first);
-                }),
-              ],
+              children: [...bio.scores.map((s) => BioScoreItem(s, color: bio.colors.first))],
             ),
           ],
         );
