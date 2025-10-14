@@ -144,7 +144,7 @@ class Themes {
       cardTheme: CardTheme(
         color: surfaceUpperColor,
         elevation: Dimens.cardElevation,
-        shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(Dimens.cardRadius))),
+        shape: Dimens.cardBorder,
       ).data,
       chipTheme: ChipThemeData(
         shape: StadiumBorder(side: BorderSide(color: initialTheme.primaryColor)),
@@ -155,7 +155,7 @@ class Themes {
       popupMenuTheme: PopupMenuThemeData(
         color: from.colorScheme.surface,
         elevation: 5,
-        shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(Dimens.cardRadius))),
+        shape: Dimens.cardBorder,
       ),
     );
   }

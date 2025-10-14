@@ -127,7 +127,7 @@ class _WebFooterState extends State<WebFooter> with PostFrameMixin {
               return Wrap(children: [_navigation, _projects, _contact]);
             }
             return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: Dimens.pageFooterPaddingHorizontal),
+              padding: Dimens.pageFooterPaddingHorizontal,
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -139,7 +139,7 @@ class _WebFooterState extends State<WebFooter> with PostFrameMixin {
             );
           },
         ),
-        const SizedBox(height: Dimens.pageContentPaddingVertical),
+        Dimens.pageContentPaddingVerticalBox,
         TextView.footer(text: AppLocalizations.of(context)!.copyright, softWrap: true),
       ],
     );
@@ -148,15 +148,12 @@ class _WebFooterState extends State<WebFooter> with PostFrameMixin {
   void _initNavigation() {
     _navigation = PaddedColumn(
       crossAxisAlignment: CrossAxisAlignment.start,
-      padding: const EdgeInsets.symmetric(
-        vertical: Dimens.pageContentPaddingVertical,
-        horizontal: Dimens.pageContentPaddingHorizontal,
-      ),
+      padding: Dimens.pageContentPadding,
       children: [
         TextView.header(text: AppLocalizations.of(context)!.navigate_to, color: _color),
         TextBtn(
           hoverFeedback: false,
-          padding: const EdgeInsets.symmetric(vertical: Dimens.btnPaddingVertical),
+          padding: Dimens.btnPaddingVertical,
           onPressed: () => context.go(Routes.home),
           textStyle: TextStyle(color: Theme.of(context).colorScheme.onSurface),
           alignment: AlignmentGeometry.centerLeft,
@@ -164,7 +161,7 @@ class _WebFooterState extends State<WebFooter> with PostFrameMixin {
         ),
         TextBtn(
           hoverFeedback: false,
-          padding: const EdgeInsets.symmetric(vertical: Dimens.btnPaddingVertical),
+          padding: Dimens.btnPaddingVertical,
           onPressed: () => context.go(Routes.about),
           textStyle: TextStyle(color: Theme.of(context).colorScheme.onSurface),
           alignment: AlignmentGeometry.centerLeft,
@@ -172,7 +169,7 @@ class _WebFooterState extends State<WebFooter> with PostFrameMixin {
         ),
         TextBtn(
           hoverFeedback: false,
-          padding: const EdgeInsets.symmetric(vertical: Dimens.btnPaddingVertical),
+          padding: Dimens.btnPaddingVertical,
           onPressed: () => context.go(Routes.projects),
           textStyle: TextStyle(color: Theme.of(context).colorScheme.onSurface),
           alignment: AlignmentGeometry.centerLeft,
@@ -189,16 +186,13 @@ class _WebFooterState extends State<WebFooter> with PostFrameMixin {
         if (p.isEmpty) return const Nothing();
         return PaddedColumn(
           crossAxisAlignment: CrossAxisAlignment.start,
-          padding: const EdgeInsets.symmetric(
-            vertical: Dimens.pageContentPaddingVertical,
-            horizontal: Dimens.pageContentPaddingHorizontal,
-          ),
+          padding: Dimens.pageContentPadding,
           children: [
             TextView.header(text: AppLocalizations.of(context)!.projects, color: _color),
             ...p.values.map((p) {
               return TextBtn(
                 hoverFeedback: false,
-                padding: const EdgeInsets.symmetric(vertical: Dimens.btnPaddingVertical),
+                padding: Dimens.btnPaddingVertical,
                 onPressed: () => context.go(Routes.project, extra: p),
                 textStyle: TextStyle(color: Theme.of(context).colorScheme.onSurface),
                 alignment: AlignmentGeometry.centerLeft,
@@ -217,10 +211,7 @@ class _WebFooterState extends State<WebFooter> with PostFrameMixin {
         final b = _bioStore?.bio ?? const Bio();
         return PaddedColumn(
           crossAxisAlignment: CrossAxisAlignment.start,
-          padding: const EdgeInsets.symmetric(
-            vertical: Dimens.pageContentPaddingVertical,
-            horizontal: Dimens.pageContentPaddingHorizontal,
-          ),
+          padding: Dimens.pageContentPadding,
           children: [
             TextView.header(text: AppLocalizations.of(context)!.contact, color: _color),
             Wrap(
@@ -237,7 +228,7 @@ class _WebFooterState extends State<WebFooter> with PostFrameMixin {
                           message: k,
                           child: ElevatedBtn(
                             color: Theme.of(context).colorScheme.surface,
-                            padding: const EdgeInsets.all(Dimens.cardPadding),
+                            padding: Dimens.cardPadding,
                             onPressed: () => launchUrlString(v, mode: LaunchMode.externalApplication),
                             child: SvgImageView(
                               Vars.assets[k.toLowerCase()] ?? '',
@@ -269,10 +260,7 @@ class _WebFooterState extends State<WebFooter> with PostFrameMixin {
           color: Themes.isDarkMode(context)
               ? MoreColors.darker(_color, magnitude: 1)
               : MoreColors.lighter(_color, magnitude: 2),
-          padding: const EdgeInsets.symmetric(
-            horizontal: Dimens.pageContentPaddingHorizontal,
-            vertical: Dimens.pageFooterPaddingVertical,
-          ),
+          padding: Dimens.pageContentPadding,
           child: _body,
         );
       },

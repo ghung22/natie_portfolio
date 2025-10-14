@@ -77,10 +77,7 @@ class _ProjectsPageState extends State<ProjectsPage> with PostFrameMixin {
     _body = SingleChildScrollView(
       controller: _scrollController,
       child: PaddedColumn(
-        padding: const EdgeInsets.symmetric(
-          horizontal: Dimens.pageContentPaddingHorizontal,
-          vertical: Dimens.pageContentPaddingVertical,
-        ),
+        padding: Dimens.pageContentPadding,
         children: [
           _featured,
           _others,
@@ -96,14 +93,14 @@ class _ProjectsPageState extends State<ProjectsPage> with PostFrameMixin {
         if (_projectStore == null) return const Nothing();
         final p = _projectStore!.projects.getFeatured(widget.tags);
         return PaddedColumn(
-          padding: const EdgeInsets.symmetric(vertical: Dimens.projectItemPadding),
+          padding: Dimens.projectItemPaddingVertical,
           children: [
             TextView.header(text: AppLocalizations.of(context)!.featured_projects),
             ...p.map((p) {
               return CardItem(
                 color: p.color,
                 child: ConstrainedBox(
-                  constraints: const BoxConstraints(maxWidth: Dimens.pageContentMaxWidth),
+                  constraints: Dimens.pageContentMaxWidth,
                   child: ProjectBanner(
                     project: p,
                     onAction: () => context.go(Routes.project, extra: p),
@@ -124,14 +121,14 @@ class _ProjectsPageState extends State<ProjectsPage> with PostFrameMixin {
         if (_projectStore == null) return const Nothing();
         final p = _projectStore!.projects.getOthers(widget.tags);
         return PaddedColumn(
-          padding: const EdgeInsets.symmetric(vertical: Dimens.projectItemPadding),
+          padding: Dimens.projectItemPaddingVertical,
           children: [
             TextView.header(text: AppLocalizations.of(context)!.more_projects),
             ...p.map((p) {
               return CardItem(
                 color: p.color,
                 child: ConstrainedBox(
-                  constraints: const BoxConstraints(maxWidth: Dimens.pageContentMaxWidth),
+                  constraints: Dimens.pageContentMaxWidth,
                   child: ProjectBanner(
                     project: p,
                     onAction: () => context.go(Routes.project, extra: p),

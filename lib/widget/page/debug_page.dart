@@ -72,7 +72,7 @@ class _DebugPageState extends State<DebugPage> with PostFrameMixin {
     _initTestSect();
     _body = SingleChildScrollView(
       child: PaddedColumn(
-        padding: const EdgeInsets.symmetric(vertical: Dimens.pageContentPaddingHorizontal),
+        padding: Dimens.pageContentPadding,
         children: [
           // Navigation
           _navSect,
@@ -89,7 +89,7 @@ class _DebugPageState extends State<DebugPage> with PostFrameMixin {
 
   void _initNavSect() {
     _navSect = PaddedColumn(
-      padding: const EdgeInsets.symmetric(vertical: Dimens.projectItemPadding),
+      padding: Dimens.projectItemPaddingVertical,
       children: [
         TextView.header(text: AppLocalizations.of(context)!.navigate_to),
         Wrap(
@@ -108,7 +108,7 @@ class _DebugPageState extends State<DebugPage> with PostFrameMixin {
 
   void _initInfoSect() {
     _infoSect = PaddedColumn(
-      padding: const EdgeInsets.symmetric(vertical: Dimens.projectItemPadding),
+      padding: Dimens.projectItemPaddingVertical,
       children: [
         TextView.header(text: 'Debug information'),
         Wrap(
@@ -161,7 +161,7 @@ class _DebugPageState extends State<DebugPage> with PostFrameMixin {
           children: [
             CardItem(
               child: PaddedColumn(
-                padding: const EdgeInsets.symmetric(vertical: Dimens.projectItemPadding),
+                padding: Dimens.projectItemPaddingVertical,
                 children: [
                   TextView.subheader(text: 'Platform'),
                   const TextView(text: (kIsWeb ? 'Web' : 'Mobile')),
@@ -171,7 +171,7 @@ class _DebugPageState extends State<DebugPage> with PostFrameMixin {
             ),
             CardItem(
               child: PaddedColumn(
-                padding: const EdgeInsets.symmetric(vertical: Dimens.projectItemPadding),
+                padding: Dimens.projectItemPaddingVertical,
                 children: [
                   TextView.subheader(text: 'States'),
                   TextView(
@@ -194,7 +194,7 @@ class _DebugPageState extends State<DebugPage> with PostFrameMixin {
             ),
             CardItem(
               child: PaddedColumn(
-                padding: const EdgeInsets.symmetric(vertical: Dimens.projectItemPadding),
+                padding: Dimens.projectItemPaddingVertical,
                 children: [
                   TextView.subheader(text: 'Data'),
                   Observer(
@@ -218,15 +218,15 @@ class _DebugPageState extends State<DebugPage> with PostFrameMixin {
 
   void _initTestSect() {
     _testSect = PaddedColumn(
-      padding: const EdgeInsets.symmetric(vertical: Dimens.projectItemPadding),
+      padding: Dimens.projectItemPaddingVertical,
       children: [
         PaddedColumn(
-          padding: const EdgeInsets.symmetric(vertical: Dimens.pageContentPaddingHorizontal),
+          padding: Dimens.pageContentPadding,
           paddingStartAndEnd: false,
           children: [
             ..._projectStore!.projects.values.map((p) {
               return CardItem(
-                padding: const EdgeInsets.all(Dimens.pageContentPaddingHorizontal),
+                padding: Dimens.pageContentPadding,
                 color: Theme.of(context).colorScheme.inverseSurface,
                 child: TextView(
                   text: JsonEncoder.withIndent('  ').convert(p.toJson()),

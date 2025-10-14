@@ -352,7 +352,7 @@ class _AnimatedCountingTextState extends State<AnimatedCountingText> with PostFr
               Opacity(
                 opacity: 0,
                 child: Padding(
-                  padding: const EdgeInsets.all(Dimens.cardPadding),
+                  padding: Dimens.cardPadding,
                   child: PaddedColumn(
                     padding: widget.padding,
                     children: [
@@ -370,7 +370,7 @@ class _AnimatedCountingTextState extends State<AnimatedCountingText> with PostFr
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.all(Dimens.cardPadding),
+                padding: Dimens.cardPadding,
                 child: PaddedColumn(
                   padding: widget.padding,
                   mainAxisAlignment: MainAxisAlignment.center,

@@ -80,17 +80,17 @@ class _HomePageState extends State<HomePage> with PostFrameMixin {
         builder: (context) {
           if (_projectStore!.projects.isEmpty) return const Nothing();
           return PaddedColumn(
-            padding: const EdgeInsets.symmetric(vertical: Dimens.projectItemPadding),
+            padding: Dimens.projectItemPaddingVertical,
             paddingStartAndEnd: false,
             children: [
               // Welcome banner
               IgnorePadding(child: BioBanner(bio: _bioStore!.bio)),
-              const SizedBox(height: Dimens.projectItemPadding),
+              Dimens.projectItemPaddingBox,
 
               // Featured projects
               TextView.header(text: AppLocalizations.of(context)!.featured_projects),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: Dimens.pageContentPaddingHorizontal),
+                padding: Dimens.pageContentPaddingHorizontal,
                 child: Wrap(
                   spacing: Dimens.projectItemPadding,
                   runSpacing: Dimens.projectItemPadding,
@@ -100,7 +100,7 @@ class _HomePageState extends State<HomePage> with PostFrameMixin {
                         (p) => CardItem(
                           color: p.color,
                           child: ConstrainedBox(
-                            constraints: const BoxConstraints(maxWidth: Dimens.pageContentMaxWidth),
+                            constraints: Dimens.pageContentMaxWidth,
                             child: ProjectBanner(
                               project: p,
                               onAction: () => context.go(Routes.project, extra: p),
@@ -123,7 +123,7 @@ class _HomePageState extends State<HomePage> with PostFrameMixin {
   void _initDrawer() {
     _drawer = Drawer(
       child: Padding(
-        padding: const EdgeInsets.all(Dimens.drawerPadding),
+        padding: Dimens.drawerPadding,
         child: CardItem(
           child: Observer(
             builder: (context) {
@@ -136,7 +136,7 @@ class _HomePageState extends State<HomePage> with PostFrameMixin {
                         child: PaddedColumn(
                           mainAxisAlignment: MainAxisAlignment.end,
                           crossAxisAlignment: CrossAxisAlignment.start,
-                          padding: const EdgeInsets.symmetric(vertical: Dimens.drawerItemPadding),
+                          padding: Dimens.drawerItemPadding,
                           children: [
                             // App icon
                             TextView.header(
@@ -147,14 +147,14 @@ class _HomePageState extends State<HomePage> with PostFrameMixin {
                         ),
                       ),
                       const Padding(
-                        padding: EdgeInsets.symmetric(vertical: Dimens.drawerItemPadding),
+                        padding: Dimens.drawerItemPadding,
                         child: BioMiniItem(),
                       ),
                     ],
                   ),
                   ...p.values.map((p) {
                     return Padding(
-                      padding: const EdgeInsets.symmetric(vertical: Dimens.drawerItemPadding),
+                      padding: Dimens.drawerItemPadding,
                       child: ProjectMiniItem(p),
                     );
                   }),

@@ -38,7 +38,7 @@ class CardItem extends StatefulWidget {
   const CardItem({
     super.key,
     required this.child,
-    this.padding = const EdgeInsets.all(Dimens.cardPadding),
+    this.padding = Dimens.cardPadding,
     this.color,
     this.onPressed,
     this.onHover,
@@ -114,10 +114,7 @@ class _IntlListItemState extends State<IntlListItem> {
               textAlign: TextAlign.center,
               spaced: true,
               softWrap: true,
-              padding: const EdgeInsets.symmetric(
-                horizontal: Dimens.projectDetailsFuncPadding,
-                vertical: Dimens.projectDetailsFuncPadding,
-              ),
+              padding: Dimens.projectDetailsFuncPadding,
             ),
           ),
         );
@@ -186,7 +183,7 @@ class ProjectMiniItem extends StatelessWidget {
       child: PaddedRow(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,
-        padding: const EdgeInsets.symmetric(horizontal: Dimens.projectItemContentPadding),
+        padding: Dimens.projectItemContentPaddingHorizontal,
         children: [
           Container(
             decoration: const BoxDecoration(shape: BoxShape.circle, color: Colors.white),
@@ -194,7 +191,7 @@ class ProjectMiniItem extends StatelessWidget {
               builder: (context) {
                 if (project.iconUrl.isEmpty) {
                   return ClipRRect(
-                    borderRadius: const BorderRadius.all(Radius.circular(Dimens.roundedImageRadius)),
+                    borderRadius: Dimens.roundedImageRadius,
                     child: Container(
                       color: Colors.white,
                       width: Dimens.projectItemIconSize,
@@ -215,10 +212,7 @@ class ProjectMiniItem extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
-              padding: const EdgeInsets.symmetric(
-                horizontal: Dimens.projectItemContentPadding,
-                vertical: Dimens.projectItemContentPadding,
-              ),
+              padding: Dimens.projectItemContentPadding,
               children: [
                 TextView.header(text: project.title, color: Colors.white),
                 Observer(
@@ -286,7 +280,7 @@ class _ProjectTimestampItemState extends State<ProjectTimestampItem> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     TextView.header(text: AppLocalizations.of(context)!.completion_date, color: _p.color),
-                    const SizedBox(height: Dimens.projectDetailsFuncPadding),
+                    Dimens.projectDetailsFuncPaddingBox,
                     TextView(
                       text: DateFormat.yMMMM(
                         Strings.of(context).language.name,
@@ -350,7 +344,7 @@ class _ProjectAuthorItemState extends State<ProjectAuthorItem> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     TextView.header(text: AppLocalizations.of(context)!.author, color: _p.color),
-                    const SizedBox(height: Dimens.projectDetailsFuncPadding),
+                    Dimens.projectDetailsFuncPaddingBox,
                     TextView(text: author, spaced: true),
                   ],
                 ),
@@ -408,7 +402,7 @@ class _HostUrlItemState extends State<HostUrlItem> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     TextView.header(text: AppLocalizations.of(context)!.host, color: _p.color),
-                    const SizedBox(height: Dimens.projectDetailsFuncPadding),
+                    Dimens.projectDetailsFuncPaddingBox,
                     TextBtn(
                       hoverFeedback: false,
                       textStyle: TextStyle(color: _p.color),
@@ -460,7 +454,7 @@ class TechItem extends StatelessWidget {
       child: CardItem(
         hoverFeedback: true,
         color: Colors.white,
-        padding: const EdgeInsets.all(Dimens.projectDetailsTechPaddingInternal),
+        padding: Dimens.projectDetailsTechPaddingInternal,
         child: SvgImageView(src, height: Dimens.projectDetailsTechSize, fit: BoxFit.fitHeight),
       ),
     );
@@ -483,7 +477,7 @@ class BioMiniItem extends StatelessWidget {
         return PaddedRow(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.center,
-          padding: const EdgeInsets.symmetric(horizontal: Dimens.drawerPadding),
+          padding: Dimens.drawerPaddingHorizontal,
           children: [
             InkWell(
               splashFactory: NoSplash.splashFactory,
@@ -497,7 +491,7 @@ class BioMiniItem extends StatelessWidget {
                   ),
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.all(Dimens.bioAvatarPadding),
+                  padding: Dimens.bioAvatarPadding,
                   child: FittedBox(
                     child: CircleImageView(
                       bio.avatarUrl,
@@ -513,10 +507,7 @@ class BioMiniItem extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
-                padding: const EdgeInsets.symmetric(
-                  horizontal: Dimens.projectItemContentPadding,
-                  vertical: Dimens.projectItemContentPadding,
-                ),
+                padding: Dimens.projectItemContentPadding,
                 children: [
                   TextBtn(
                     hoverFeedback: false,
@@ -538,7 +529,7 @@ class BioMiniItem extends StatelessWidget {
                                 message: k,
                                 child: ElevatedBtn(
                                   color: Theme.of(context).colorScheme.surface,
-                                  padding: const EdgeInsets.all(Dimens.cardPadding),
+                                  padding: Dimens.cardPadding,
                                   onPressed: () => launchUrlString(v, mode: LaunchMode.externalApplication),
                                   child: SvgImageView(
                                     Vars.assets[k.toLowerCase()] ?? '',
@@ -680,7 +671,7 @@ class _BioExperienceItemState extends State<BioExperienceItem> {
                     ),
                 PaddedRow(
                   crossAxisAlignment: CrossAxisAlignment.center,
-                  padding: const EdgeInsets.symmetric(horizontal: Dimens.bioDetailsExpPaddingHorizontal),
+                  padding: Dimens.bioDetailsExpPaddingHorizontal,
                   children: [
                     if (_e.imageUrls?.isEmpty == true)
                         ImageView(
@@ -693,7 +684,7 @@ class _BioExperienceItemState extends State<BioExperienceItem> {
                       SizedBox.fromSize(size: Size(Dimens.bioDetailsExpSize * .75, Dimens.bioDetailsExpSize * .75)),
                     PaddedColumn(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      padding: const EdgeInsets.symmetric(vertical: Dimens.bioDetailsExpPaddingVertical),
+                      padding: Dimens.bioDetailsExpPaddingVertical,
                       children: [
                         TextView(
                           text: name,

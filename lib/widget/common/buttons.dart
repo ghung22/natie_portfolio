@@ -53,7 +53,7 @@ class IconBtn extends StatelessWidget {
         return TextButton.icon(
           style: TextButton.styleFrom(
             foregroundColor: color ?? Theme.of(context).colorScheme.onSurface,
-            padding: const EdgeInsets.symmetric(horizontal: Dimens.btnIconPaddingHorizontal),
+            padding: Dimens.btnIconPaddingHorizontal,
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(Dimens.btnRadius)),
             textStyle: Styles.iconBtnLabelStyle,
           ),
@@ -80,10 +80,7 @@ class TextBtn extends StatelessWidget {
     this.textStyle,
     this.hoverFeedback = true,
     this.onPressed,
-    this.padding = const EdgeInsets.symmetric(
-      horizontal: Dimens.btnPaddingHorizontal,
-      vertical: Dimens.btnPaddingVertical,
-    ),
+    this.padding = Dimens.btnPadding,
     this.alignment,
   });
 
@@ -121,10 +118,7 @@ class ElevatedBtn extends StatelessWidget {
     this.color,
     this.elevation = Dimens.btnElevation,
     this.onPressed,
-    this.padding = const EdgeInsets.symmetric(
-      horizontal: Dimens.btnPaddingHorizontal,
-      vertical: Dimens.btnPaddingVertical,
-    ),
+    this.padding = Dimens.btnPadding,
     this.circular = false,
   });
 

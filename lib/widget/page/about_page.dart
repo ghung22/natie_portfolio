@@ -76,7 +76,7 @@ class _AboutPageState extends State<AboutPage> with PostFrameMixin {
     _body = SingleChildScrollView(
       controller: _scrollController,
       child: PaddedColumn(
-        padding: const EdgeInsets.symmetric(vertical: Dimens.bioDetailsPaddingVertical),
+        padding: Dimens.bioDetailsPaddingVertical,
         children: [
           _header,
           _scores,
@@ -105,7 +105,7 @@ class _AboutPageState extends State<AboutPage> with PostFrameMixin {
             TableRow(
               children: [
                 ConstrainedBox(
-                  constraints: const BoxConstraints(maxHeight: Dimens.bioHeight),
+                  constraints: Dimens.bioHeight,
                   child: Builder(
                     builder: (context) {
                       final ava = DecoratedBox(
@@ -115,7 +115,7 @@ class _AboutPageState extends State<AboutPage> with PostFrameMixin {
                           ),
                         ),
                         child: Padding(
-                          padding: const EdgeInsets.all(Dimens.bioAvatarPadding),
+                          padding: Dimens.bioAvatarPadding,
                           child: FittedBox(
                             child: CircleImageView(
                               bio.avatarUrl,
@@ -132,10 +132,7 @@ class _AboutPageState extends State<AboutPage> with PostFrameMixin {
                   ),
                 ),
                 PaddedColumn(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: Dimens.bioDetailsPaddingHorizontal,
-                    vertical: Dimens.bioDetailsPaddingVertical,
-                  ),
+                  padding: Dimens.bioDetailsPadding,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     TextView(
@@ -150,7 +147,7 @@ class _AboutPageState extends State<AboutPage> with PostFrameMixin {
                     ),
                     TextView.header(text: AppLocalizations.of(context)!.contact),
                     Padding(
-                      padding: const EdgeInsets.only(left: Dimens.bioDetailsPaddingHorizontal),
+                      padding: Dimens.bioDetailsPaddingLeft,
                       child: Wrap(
                         spacing: Dimens.bioDetailsContactPadding,
                         runSpacing: Dimens.bioDetailsContactPadding,
@@ -166,7 +163,7 @@ class _AboutPageState extends State<AboutPage> with PostFrameMixin {
                                     child: ElevatedBtn(
                                       color: Theme.of(context).colorScheme.surface,
                                       onPressed: () => launchUrlString(v, mode: LaunchMode.externalApplication),
-                                      padding: const EdgeInsets.all(Dimens.cardPadding),
+                                      padding: Dimens.cardPadding,
                                       child: SvgImageView(
                                         Vars.assets[k.toLowerCase()] ?? '',
                                         width: Dimens.bioDetailsContactSize,
@@ -197,10 +194,7 @@ class _AboutPageState extends State<AboutPage> with PostFrameMixin {
         if (_bioStore == null) return const Nothing();
         final bio = _bioStore!.bio;
         return PaddedColumn(
-          padding: const EdgeInsets.symmetric(
-            horizontal: Dimens.bioDetailsPaddingHorizontal,
-            vertical: Dimens.bioDetailsPaddingVertical,
-          ),
+          padding: Dimens.bioDetailsPadding,
           children: [
             TextView.header(text: AppLocalizations.of(context)!.scores, color: bio.colors.first),
             Wrap(
@@ -220,10 +214,7 @@ class _AboutPageState extends State<AboutPage> with PostFrameMixin {
         if (_bioStore == null) return const Nothing();
         final bio = _bioStore!.bio;
         return PaddedColumn(
-          padding: const EdgeInsets.symmetric(
-            horizontal: Dimens.bioDetailsPaddingHorizontal,
-            vertical: Dimens.bioDetailsPaddingVertical,
-          ),
+          padding: Dimens.bioDetailsPadding,
           children: [
             TextView.header(text: AppLocalizations.of(context)!.experience, color: bio.colors.first),
             ...bio.experience.map((e) {

@@ -99,7 +99,7 @@ class _BannerItemState extends State<BannerItem> with PostFrameMixin {
     _leftSide = PaddedColumn(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
-      padding: const EdgeInsets.symmetric(vertical: Dimens.bannerContentPadding),
+      padding: Dimens.bannerContentPadding,
       children: [
         if (_title != null)
           Material(
@@ -121,12 +121,9 @@ class _BannerItemState extends State<BannerItem> with PostFrameMixin {
           ),
         if (_action != null)
           Padding(
-            padding: const EdgeInsets.all(Dimens.bannerActionOffset),
+            padding: Dimens.bannerActionOffset,
             child: ElevatedBtn(
-              padding: const EdgeInsets.symmetric(
-                vertical: Dimens.bannerActionPaddingVertical,
-                horizontal: Dimens.bannerActionPaddingHorizontal,
-              ),
+              padding: Dimens.bannerActionPadding,
               onPressed: _onAction,
               color: MoreColors.lighter(_primary),
               child: Material(color: Colors.transparent, textStyle: Styles.bannerActionStyle, child: _action),
@@ -190,11 +187,7 @@ class _BannerItemState extends State<BannerItem> with PostFrameMixin {
         children: [
           Container(width: double.infinity, height: Dimens.bannerHeight, color: _primary),
           ConstrainedBox(
-            constraints: const BoxConstraints(
-              minHeight: Dimens.bannerHeight,
-              maxHeight: Dimens.bannerHeight,
-              maxWidth: Dimens.pageContentMaxWidth,
-            ),
+            constraints: Dimens.bannerConstraint,
             child: Stack(
               children: [
                 // Right side below everything
@@ -219,12 +212,9 @@ class _BannerItemState extends State<BannerItem> with PostFrameMixin {
 
                 // Left side, on top of the right
                 Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: Dimens.bannerPaddingHorizontal,
-                    vertical: Dimens.bannerPaddingVertical,
-                  ),
+                  padding: Dimens.bannerPadding,
                   child: ConstrainedBox(
-                    constraints: const BoxConstraints(maxWidth: Dimens.bannerContentLeftMaxWidth),
+                    constraints: Dimens.bannerContentLeftMaxWidth,
                     child: Builder(
                       builder: (context) {
                         if (widget.leftSide != null) return widget.leftSide!;
@@ -322,7 +312,7 @@ class BioBanner extends StatelessWidget {
     Widget leftSide = PaddedColumn(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
-      padding: const EdgeInsets.symmetric(vertical: Dimens.bannerContentPadding),
+      padding: Dimens.bannerContentPadding,
       children: [
         Observer(
           builder: (context) {
@@ -358,7 +348,7 @@ class BioBanner extends StatelessWidget {
             );
           },
         ),
-        const SizedBox(height: Dimens.bannerContentPadding),
+        Dimens.bannerContentPaddingBox,
         Observer(
           builder: (context) {
             return AnimatedFadeSlide(
@@ -368,7 +358,7 @@ class BioBanner extends StatelessWidget {
               curve: Curves.easeOut,
               child: PaddedRow(
                 crossAxisAlignment: CrossAxisAlignment.center,
-                padding: const EdgeInsets.symmetric(horizontal: Dimens.bioScorePadding),
+                padding: Dimens.bioScorePadding,
                 paddingStartAndEnd: false,
                 children: [
                   ...bio.scores.map((s) {
@@ -395,7 +385,7 @@ class BioBanner extends StatelessWidget {
     Widget rightSide = Align(
       alignment: Alignment.bottomRight,
       child: Padding(
-        padding: const EdgeInsets.only(right: Dimens.bioRightSidePadding, bottom: Dimens.bioRightSidePadding * 4),
+        padding: Dimens.bioPadding,
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -409,16 +399,16 @@ class BioBanner extends StatelessWidget {
                   child: SpeechBubble(
                     color: Colors.white,
                     child: Padding(
-                      padding: const EdgeInsets.all(Dimens.cardPadding),
+                      padding: Dimens.cardPadding,
                       child: TextView(text: AppLocalizations.of(context)!.see_more, color: Colors.black),
                     ),
                   ),
                 );
               },
             ),
-            const SizedBox(height: Dimens.bioScorePadding),
+            Dimens.bioScorePaddingBox,
             ConstrainedBox(
-              constraints: const BoxConstraints(maxHeight: Dimens.bioHeight),
+              constraints: Dimens.bioHeight,
               child: AnimatedHover(
                 scaleOnHover: 1.05,
                 duration: Vars.animationFast,
@@ -432,7 +422,7 @@ class BioBanner extends StatelessWidget {
                       ),
                     ),
                     child: Padding(
-                      padding: const EdgeInsets.all(Dimens.bioAvatarPadding),
+                      padding: Dimens.bioAvatarPadding,
                       child: CircleImageView(
                         bio.avatarUrl,
                         onFinish: () {

@@ -78,7 +78,7 @@ class _ProjectPageState extends State<ProjectPage> with PostFrameMixin {
       controller: _scrollController,
       child: PaddedColumn(
         paddingStartAndEnd: false,
-        padding: const EdgeInsets.symmetric(vertical: Dimens.projectDetailsPaddingVertical),
+        padding: Dimens.projectDetailsPaddingVertical,
         children: [
           // Banner
           ProjectBanner(project: _p),
@@ -86,20 +86,17 @@ class _ProjectPageState extends State<ProjectPage> with PostFrameMixin {
           // Time, author & images
           Container(
             width: double.infinity,
-            padding: const EdgeInsets.symmetric(
-              horizontal: Dimens.projectDetailsPaddingHorizontal,
-              vertical: Dimens.projectDetailsPaddingVertical,
-            ),
+            padding: Dimens.projectDetailsPadding,
             color: Themes.isDarkMode(context)
                 ? MoreColors.darker(_p.color, magnitude: 1)
                 : MoreColors.lighter(_p.color, magnitude: 2),
             child: PaddedColumn(
-              padding: const EdgeInsets.symmetric(vertical: Dimens.projectDetailsPaddingVertical),
+              padding: Dimens.projectDetailsPaddingVertical,
               paddingStartAndEnd: false,
               children: [
                 Wrap(
-                  spacing: Dimens.projectDetailsFuncPadding,
-                  runSpacing: Dimens.projectDetailsFuncPadding,
+                  spacing: Dimens.projectDetailsFuncPaddingValue,
+                  runSpacing: Dimens.projectDetailsFuncPaddingValue,
                   children: [ProjectTimestampItem(_p), ProjectAuthorItem(_p)],
                 ),
                 Center(child: HostUrlItem(_p)),
@@ -135,28 +132,35 @@ class _ProjectPageState extends State<ProjectPage> with PostFrameMixin {
 
           // Functionalities
           if (_p.functionalities.isNotEmpty || _p.functionalities.isNotEmpty)
-            TextView.header(text: AppLocalizations.of(context)!.what_you_can_do(_p.title), color: _p.color),
-          Wrap(
-            spacing: Dimens.projectDetailsFuncPadding,
-            runSpacing: Dimens.projectDetailsFuncPadding,
-            children: List.generate(
-              min(_p.functionalities.length, _p.functionalitiesVi.length),
-              (i) => FunctionalityItem(_p, i),
+            Container(
+              width: double.infinity,
+              padding: Dimens.projectDetailsPadding,
+              child: PaddedColumn(
+                padding: Dimens.projectDetailsPaddingVertical,
+                paddingStartAndEnd: false,
+                children: [
+                  TextView.header(text: AppLocalizations.of(context)!.what_you_can_do(_p.title), color: _p.color),
+                  Wrap(
+                    spacing: Dimens.projectDetailsFuncPaddingValue,
+                    runSpacing: Dimens.projectDetailsFuncPaddingValue,
+                    children: List.generate(
+                      min(_p.functionalities.length, _p.functionalitiesVi.length),
+                          (i) => FunctionalityItem(_p, i),
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ),
 
           // Technology used
           Container(
             width: double.infinity,
-            padding: const EdgeInsets.symmetric(
-              horizontal: Dimens.projectDetailsPaddingHorizontal,
-              vertical: Dimens.projectDetailsPaddingVertical,
-            ),
+            padding: Dimens.projectDetailsPadding,
             color: Themes.isDarkMode(context)
                 ? MoreColors.darker(_p.color, magnitude: 1)
                 : MoreColors.lighter(_p.color, magnitude: 2),
             child: PaddedColumn(
-              padding: const EdgeInsets.symmetric(vertical: Dimens.projectDetailsPaddingVertical),
+              padding: Dimens.projectDetailsPaddingVertical,
               paddingStartAndEnd: false,
               children: [
                 TextView.header(text: AppLocalizations.of(context)!.tech_used, color: _p.color),
@@ -174,12 +178,23 @@ class _ProjectPageState extends State<ProjectPage> with PostFrameMixin {
 
           // Learned
           if (_p.learned.isNotEmpty || _p.learnedVi.isNotEmpty)
-            TextView.header(text: AppLocalizations.of(context)!.what_i_learned(_p.title), color: _p.color),
-          Wrap(
-            spacing: Dimens.projectDetailsFuncPadding,
-            runSpacing: Dimens.projectDetailsFuncPadding,
-            children: List.generate(min(_p.learned.length, _p.learnedVi.length), (i) => LearnedItem(_p, i)),
-          ),
+            Container(
+              width: double.infinity,
+              padding: Dimens.projectDetailsPadding,
+              child: PaddedColumn(
+                padding: Dimens.projectDetailsPaddingVertical,
+                paddingStartAndEnd: false,
+                children: [
+                  TextView.header(text: AppLocalizations.of(context)!.what_i_learned(_p.title), color: _p.color),
+                  Wrap(
+                    spacing: Dimens.projectDetailsFuncPaddingValue,
+                    runSpacing: Dimens.projectDetailsFuncPaddingValue,
+                    children: List.generate(min(_p.learned.length, _p.learnedVi.length), (i) => LearnedItem(_p, i)),
+                  ),
+                ],
+              ),
+            ),
+
           WebFooter(color: _p.color),
         ],
       ),

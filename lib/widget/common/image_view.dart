@@ -105,7 +105,7 @@ class RoundedImageView extends StatelessWidget {
     this.height,
     this.fit = BoxFit.contain,
     this.onFinish,
-    this.borderRadius = const BorderRadius.all(Radius.circular(Dimens.roundedImageRadius)),
+    this.borderRadius = Dimens.roundedImageRadius,
   });
 
   @override
