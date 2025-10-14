@@ -33,7 +33,8 @@ class Routes {
         path: project,
         builder: (context, state) {
           if (state.extra is! Project && state.extra is! Map<String, dynamic>) {
-            throw 'Type ${state.extra.runtimeType} is not valid';
+            debugPrint('Type ${state.extra.runtimeType} is not valid');
+            return const ProjectsPage();
           }
           if (state.extra is Project) {
             return ProjectPage(project: state.extra as Project);
@@ -43,7 +44,7 @@ class Routes {
           }
         },
       ),
-      GoRoute(path: projects, builder: (context, state) => const ProjectsPage()),
+      GoRoute(path: projects, builder: (context, state) => ProjectsPage(tags: state.extra as List<ProjectTag>?)),
       GoRoute(
         path: debug,
         builder: (context, state) {
@@ -57,85 +58,4 @@ class Routes {
       ),
     ],
   );
-}
-
-class Router {
-  static BuildContext? _context;
-
-  static void init(BuildContext context) => _context = context;
-
-  static Route<dynamic>? generateRoute(RouteSettings settings) {
-    try {
-      switch (settings.name) {
-        case Routes.home:
-          return AnimatedPageRoute(builder: (_) => Builder(builder: (context) => const HomePage()));
-        case Routes.about:
-          return AnimatedPageRoute(
-            builder: (_) => Builder(
-              builder: (context) {
-                if (settings.arguments != null) {
-                  return AboutPage(disableAnimation: settings.arguments as bool);
-                }
-                return const AboutPage();
-              },
-            ),
-          );
-        case Routes.project:
-          if (settings.arguments is! Project && settings.arguments is! Map<String, dynamic>) {
-            throw 'Type ${settings.arguments.runtimeType} is not valid';
-          }
-          return AnimatedPageRoute(
-            builder: (_) => Builder(
-              builder: (context) {
-                if (settings.arguments is Project) {
-                  return ProjectPage(project: settings.arguments as Project);
-                } else {
-                  final args = settings.arguments as Map<String, dynamic>;
-                  return ProjectPage(project: args['project'], disableAnimation: args['disableAnimation']);
-                }
-              },
-            ),
-          );
-        case Routes.projects:
-          return AnimatedPageRoute(builder: (_) => Builder(builder: (context) => const ProjectsPage()));
-
-        case Routes.debug:
-          if (Debug.isProduction) {
-            debugPrint('Debug page is not available in production');
-            return generateRoute(RouteSettings(name: Routes.home, arguments: settings.arguments));
-          }
-          return AnimatedPageRoute(
-            builder: (_) => Builder(
-              builder: (context) {
-                return const HomePage();
-                // return const DebugPage();
-              },
-            ),
-          );
-        default:
-          if (_context == null) {
-            debugPrint('Context is null');
-            return generateRoute(RouteSettings(name: Routes.home, arguments: settings.arguments));
-          }
-          Snackbars.showSnackbar(
-            _context!,
-            SnackbarType.negative,
-            AppLocalizations.of(_context!)!.route_unknown(settings.name ?? ''),
-          );
-          return null;
-      }
-    } catch (e) {
-      Debug.log('Error navigating to ${settings.name}: $e', useDebugPrint: true);
-      return null;
-    }
-  }
-}
-
-class AnimatedPageRoute extends MaterialPageRoute {
-  final Duration duration;
-
-  AnimatedPageRoute({required super.builder, this.duration = Vars.animationSluggish});
-
-  @override
-  Duration get transitionDuration => duration;
 }

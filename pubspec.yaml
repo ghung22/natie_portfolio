@@ -84,6 +84,12 @@ flutter:
     - assets/contact/
     - assets/fonts/
     - assets/tech/
+    - assets/screenshots/apum/
+    - assets/screenshots/lettutor/
+    - assets/screenshots/lms/
+    - assets/screenshots/moodle/
+    - assets/screenshots/nieflat/
+    - assets/screenshots/nienote/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

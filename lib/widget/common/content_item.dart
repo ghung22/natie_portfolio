@@ -43,7 +43,7 @@ class CardItem extends StatefulWidget {
     this.onPressed,
     this.onHover,
     this.hoverFeedback = false,
-    this.hoverScale = 1.2,
+    this.hoverScale = 1.05,
     this.hoverAnimationSpeed = Vars.animationFast,
   });
 
@@ -135,11 +135,15 @@ class _IntlListItemState extends State<IntlListItem> {
           if (!_visibleAni.willStart) _visibleAni.start();
         }
       },
-      child: AnimatedFadeSlide(
-        offset: _visibleAni.willStart ? Offset.zero : const Offset(0, -Dimens.projectDetailsFuncOffset),
-        opacity: _visibleAni.willStart ? 1 : 0,
-        duration: Vars.animationFast,
-        child: _contentCard,
+      child: Observer(
+        builder: (context) {
+          return AnimatedFadeSlide(
+            offset: _visibleAni.willStart ? Offset.zero : const Offset(0, -Dimens.projectDetailsFuncOffset),
+            opacity: _visibleAni.willStart ? 1 : 0,
+            duration: Vars.animationFast,
+            child: _contentCard,
+          );
+        }
       ),
     );
   }
@@ -189,10 +193,13 @@ class ProjectMiniItem extends StatelessWidget {
             child: Builder(
               builder: (context) {
                 if (project.iconUrl.isEmpty) {
-                  return Container(
-                    color: Colors.white,
-                    width: Dimens.projectItemIconSize,
-                    height: Dimens.projectItemIconSize,
+                  return ClipRRect(
+                    borderRadius: const BorderRadius.all(Radius.circular(Dimens.roundedImageRadius)),
+                    child: Container(
+                      color: Colors.white,
+                      width: Dimens.projectItemIconSize,
+                      height: Dimens.projectItemIconSize,
+                    ),
                   );
                 }
                 return RoundedImageView(
@@ -647,6 +654,7 @@ class _BioExperienceItemState extends State<BioExperienceItem> {
         var major = _e.majorVi ?? _e.major;
         if (isEn) major = _e.major ?? _e.majorVi;
         return CardItem(
+          onPressed: () => context.go(Routes.projects, extra: _e.projectFilter),
           child: ConstrainedBox(
             constraints: const BoxConstraints(minHeight: Dimens.bioDetailsExpSize),
             child: Stack(
@@ -674,8 +682,7 @@ class _BioExperienceItemState extends State<BioExperienceItem> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   padding: const EdgeInsets.symmetric(horizontal: Dimens.bioDetailsExpPaddingHorizontal),
                   children: [
-                    if (_e.imageUrls != null)
-                      if (_e.imageUrls!.isNotEmpty)
+                    if (_e.imageUrls?.isEmpty == true)
                         ImageView(
                           _e.imageUrls![0],
                           width: Dimens.bioDetailsExpSize * .75,

@@ -134,7 +134,8 @@ class _ProjectPageState extends State<ProjectPage> with PostFrameMixin {
           ),
 
           // Functionalities
-          TextView.header(text: AppLocalizations.of(context)!.what_you_can_do(_p.title), color: _p.color),
+          if (_p.functionalities.isNotEmpty || _p.functionalities.isNotEmpty)
+            TextView.header(text: AppLocalizations.of(context)!.what_you_can_do(_p.title), color: _p.color),
           Wrap(
             spacing: Dimens.projectDetailsFuncPadding,
             runSpacing: Dimens.projectDetailsFuncPadding,
@@ -172,7 +173,8 @@ class _ProjectPageState extends State<ProjectPage> with PostFrameMixin {
           ),
 
           // Learned
-          TextView.header(text: AppLocalizations.of(context)!.what_i_learned(_p.title), color: _p.color),
+          if (_p.learned.isNotEmpty || _p.learnedVi.isNotEmpty)
+            TextView.header(text: AppLocalizations.of(context)!.what_i_learned(_p.title), color: _p.color),
           Wrap(
             spacing: Dimens.projectDetailsFuncPadding,
             runSpacing: Dimens.projectDetailsFuncPadding,

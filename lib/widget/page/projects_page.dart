@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:go_router/go_router.dart';
+import 'package:natie_portfolio/data/model/project.dart';
 import 'package:natie_portfolio/global/mixin.dart';
 import 'package:natie_portfolio/global/router.dart';
 import 'package:natie_portfolio/global/vars.dart';
@@ -19,7 +20,9 @@ import 'package:provider/provider.dart';
 import '../../l10n/app_localizations.dart';
 
 class ProjectsPage extends StatefulWidget {
-  const ProjectsPage({super.key});
+  final List<ProjectTag>? tags;
+
+  const ProjectsPage({super.key, this.tags});
 
   @override
   State<ProjectsPage> createState() => _ProjectsPageState();
@@ -91,7 +94,7 @@ class _ProjectsPageState extends State<ProjectsPage> with PostFrameMixin {
     _featured = Observer(
       builder: (context) {
         if (_projectStore == null) return const Nothing();
-        final p = _projectStore!.projects.featured;
+        final p = _projectStore!.projects.getFeatured(widget.tags);
         return PaddedColumn(
           padding: const EdgeInsets.symmetric(vertical: Dimens.projectItemPadding),
           children: [
@@ -119,7 +122,7 @@ class _ProjectsPageState extends State<ProjectsPage> with PostFrameMixin {
     _others = Observer(
       builder: (context) {
         if (_projectStore == null) return const Nothing();
-        final p = _projectStore!.projects.others;
+        final p = _projectStore!.projects.getOthers(widget.tags);
         return PaddedColumn(
           padding: const EdgeInsets.symmetric(vertical: Dimens.projectItemPadding),
           children: [
