@@ -24,7 +24,7 @@ class AppLocalizationsVi extends AppLocalizations {
   String get contact => 'Liên hệ';
 
   @override
-  String get copyright => '© 2021 Natie Portfolio - Lập trình sử dụng Flutter';
+  String get copyright => '© 2026 Natie Portfolio - Lập trình sử dụng Flutter';
 
   @override
   String get details => 'Chi tiết';

@@ -36,7 +36,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "completion_date": MessageLookupByLibrary.simpleMessage("Ngày hoàn thành"),
     "contact": MessageLookupByLibrary.simpleMessage("Liên hệ"),
     "copyright": MessageLookupByLibrary.simpleMessage(
-      "© 2021 Natie Portfolio - Lập trình sử dụng Flutter",
+      "© 2026 Natie Portfolio - Lập trình sử dụng Flutter",
     ),
     "details": MessageLookupByLibrary.simpleMessage("Chi tiết"),
     "experience": MessageLookupByLibrary.simpleMessage(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:natie_portfolio/data/model/experience.dart';
+import 'package:natie_portfolio/data/model/project.dart';
 
 import 'score.dart';
 
@@ -109,7 +110,8 @@ class BioData {
         'An aspiring mobile developer who is passionate about building apps for the modern world, with a focus on UX/UI.',
     descriptionVi:
         'Một lập trình viên di động đầy tham vọng với niềm đam mê trong việc xây dựng các ứng dụng di động hiện đại, tập trung vào tối ưu UX/UI.',
-    avatarUrl: '',
+    contact: {'GitHub': 'https://github.com/ghung22', 'Gmail': 'mailto:ghung22.fortune@gmail.com'},
+    avatarUrl: 'https://i.imgur.com/LCOYr8O.jpeg',
     birthdayTimestamp: DateTime(2000, 01, 02).millisecondsSinceEpoch,
     colorHexes: const [0x00B294],
     imageUrls: const [],
@@ -118,5 +120,39 @@ class BioData {
       Score(name: 'TOEIC', score: 950, scoreMax: 990),
       Score(name: 'TOEIC S&W', score: 360, scoreMax: 400),
     ],
+    experience: [hcmus, fpt, teamobi],
+  );
+
+  static Experience hcmus = Experience(
+    name: 'Ho Chi Minh University of Science',
+    nameVi: 'Trường đại học Khoa học tự nhiên TP.HCM',
+    timeStart: DateTime(2018),
+    timeEnd: DateTime(2022),
+    major: 'Computer Science - Software Engineering',
+    majorVi: 'Công nghệ thông tin - Kỹ thuật phần mềm',
+    imageUrls: ['https://i.imgur.com/6llAwcc.png', 'https://i.imgur.com/nqcutY6.jpg'],
+    projectFilter: [ProjectTag.hcmus],
+  );
+
+  static Experience fpt = Experience(
+    name: 'FPT Software',
+    nameVi: 'Công ty TNHH Phần mềm FPT',
+    timeStart: DateTime(2021, 6),
+    timeEnd: DateTime(2021, 9),
+    major: 'Mobile Developer Intern',
+    majorVi: 'Thực tập viên Lập trình viên di động',
+    imageUrls: ['https://i.imgur.com/QGBdFR0.png', 'https://i.imgur.com/FxV61QJ.png'],
+    projectFilter: [ProjectTag.fpt],
+  );
+
+  static Experience teamobi = Experience(
+    name: 'TeaMobi',
+    nameVi: 'Công ty TNHH TeaMobi',
+    timeStart: DateTime(2022, 10),
+    timeEnd: DateTime(2026, 2),
+    major: 'Fullstack Junior Developer',
+    majorVi: 'Lập trình viên Fullstack Junior',
+    imageUrls: ['http://gomobi.vn/home/app/view/images/logo.png'],
+    projectFilter: [ProjectTag.teamobi],
   );
 }

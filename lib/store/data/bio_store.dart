@@ -1,6 +1,6 @@
 import 'package:mobx/mobx.dart';
-import 'package:natie_portfolio/data/firebase/bio_service.dart';
 import 'package:natie_portfolio/data/model/bio.dart';
+import 'package:natie_portfolio/data/services/firestore_service.dart';
 import 'package:natie_portfolio/global/debug.dart';
 
 part 'bio_store.g.dart';
@@ -12,11 +12,11 @@ abstract class _BioStore with Store {
   Bio bio = const Bio();
 
   @action
-  Future<void> getBio() async => bio = await BioService.getBio();
+  Future<void> getBio() async => bio = await FirestoreService.getBio();
 
   @action
   Future<void> uploadHardData() async {
-    await BioService.setBio(BioData.value);
+    await FirestoreService.setBio(BioData.value);
     Debug.log('Upload complete');
   }
 }

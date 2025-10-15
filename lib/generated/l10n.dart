@@ -84,10 +84,10 @@ class S {
     return Intl.message('Contact me', name: 'contact', desc: '', args: []);
   }
 
-  /// `© 2021 Natie Portfolio - Made with Flutter`
+  /// `© 2026 Natie Portfolio - Made with Flutter`
   String get copyright {
     return Intl.message(
-      '© 2021 Natie Portfolio - Made with Flutter',
+      '© 2026 Natie Portfolio - Made with Flutter',
       name: 'copyright',
       desc: '',
       args: [],

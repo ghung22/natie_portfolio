@@ -125,7 +125,7 @@ abstract class AppLocalizations {
   /// No description provided for @copyright.
   ///
   /// In en, this message translates to:
-  /// **'© 2021 Natie Portfolio - Made with Flutter'**
+  /// **'© 2026 Natie Portfolio - Made with Flutter'**
   String get copyright;
 
   /// No description provided for @details.

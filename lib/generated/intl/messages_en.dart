@@ -36,7 +36,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "completion_date": MessageLookupByLibrary.simpleMessage("Completion date"),
     "contact": MessageLookupByLibrary.simpleMessage("Contact me"),
     "copyright": MessageLookupByLibrary.simpleMessage(
-      "© 2021 Natie Portfolio - Made with Flutter",
+      "© 2026 Natie Portfolio - Made with Flutter",
     ),
     "details": MessageLookupByLibrary.simpleMessage("More details"),
     "experience": MessageLookupByLibrary.simpleMessage(

@@ -24,7 +24,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get contact => 'Contact me';
 
   @override
-  String get copyright => '© 2021 Natie Portfolio - Made with Flutter';
+  String get copyright => '© 2026 Natie Portfolio - Made with Flutter';
 
   @override
   String get details => 'More details';

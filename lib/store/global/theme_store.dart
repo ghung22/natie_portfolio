@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
-import 'package:natie_portfolio/data/shared_pref/shared_pref.dart';
+import 'package:natie_portfolio/data/services/shared_pref.dart';
 import 'package:natie_portfolio/global/debug.dart';
 
 part 'theme_store.g.dart';

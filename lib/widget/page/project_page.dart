@@ -145,7 +145,7 @@ class _ProjectPageState extends State<ProjectPage> with PostFrameMixin {
                     runSpacing: Dimens.projectDetailsFuncPaddingValue,
                     children: List.generate(
                       min(_p.functionalities.length, _p.functionalitiesVi.length),
-                          (i) => FunctionalityItem(_p, i),
+                      (i) => FunctionalityItem(_p, i),
                     ),
                   ),
                 ],
