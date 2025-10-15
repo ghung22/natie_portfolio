@@ -67,7 +67,8 @@ class MoreColors {
 
   static Color onColorShadow(Color color) => color.computeLuminance() > .5 ? Colors.white : Colors.black;
 
-  static Color? inverse(Color? color) => color?.withValues(red: 255 - color.r, green: 255 - color.g, blue: 255 - color.b);
+  static Color? inverse(Color? color) =>
+      color?.withValues(red: 255 - color.r, green: 255 - color.g, blue: 255 - color.b);
 }
 
 class Themes {
@@ -95,7 +96,11 @@ class Themes {
   static bool isDarkMode(BuildContext context) => themeMode(context) == ThemeMode.dark;
 
   static ThemeData _generateTheme({required ThemeData from}) {
-    final initialTheme = ThemeData(colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.amber), fontFamily: fontText, textTheme: from.textTheme);
+    final initialTheme = ThemeData(
+      colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.amber),
+      fontFamily: fontText,
+      textTheme: from.textTheme,
+    );
     final isLight = from.brightness == Brightness.light;
     final surfaceLowerColor = isLight ? from.scaffoldBackgroundColor : MoreColors.gray28;
     final surfaceUpperColor = isLight ? from.colorScheme.surface : MoreColors.gray36;
@@ -141,22 +146,14 @@ class Themes {
         unselectedItemColor: from.colorScheme.onSurface.withValues(alpha: .5),
       ),
       bottomSheetTheme: BottomSheetThemeData(backgroundColor: from.colorScheme.surface),
-      cardTheme: CardTheme(
-        color: surfaceUpperColor,
-        elevation: Dimens.cardElevation,
-        shape: Dimens.cardBorder,
-      ).data,
+      cardTheme: CardTheme(color: surfaceUpperColor, elevation: Dimens.cardElevation, shape: Dimens.cardBorder).data,
       chipTheme: ChipThemeData(
         shape: StadiumBorder(side: BorderSide(color: initialTheme.primaryColor)),
         backgroundColor: initialTheme.primaryColor.withValues(alpha: .25),
         selectedColor: initialTheme.primaryColor.withValues(alpha: .75),
       ),
       drawerTheme: from.drawerTheme.copyWith(backgroundColor: Colors.transparent, width: Dimens.drawerWidth),
-      popupMenuTheme: PopupMenuThemeData(
-        color: from.colorScheme.surface,
-        elevation: 5,
-        shape: Dimens.cardBorder,
-      ),
+      popupMenuTheme: PopupMenuThemeData(color: from.colorScheme.surface, elevation: 5, shape: Dimens.cardBorder),
     );
   }
 }

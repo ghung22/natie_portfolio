@@ -113,9 +113,13 @@ class _AnimatedHoverState extends State<AnimatedHover> with SingleTickerProvider
               _ani.stop();
             }
           },
-          child: AnimatedScale(scale: _ani.willStart ? _scaleOnHover : 1, duration: widget.duration, child: widget.child),
+          child: AnimatedScale(
+            scale: _ani.willStart ? _scaleOnHover : 1,
+            duration: widget.duration,
+            child: widget.child,
+          ),
         );
-      }
+      },
     );
   }
 }

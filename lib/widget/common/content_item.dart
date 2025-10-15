@@ -140,7 +140,7 @@ class _IntlListItemState extends State<IntlListItem> {
             duration: Vars.animationFast,
             child: _contentCard,
           );
-        }
+        },
       ),
     );
   }
@@ -674,12 +674,12 @@ class _BioExperienceItemState extends State<BioExperienceItem> {
                   padding: Dimens.bioDetailsExpPaddingHorizontal,
                   children: [
                     if (_e.imageUrls?.isEmpty == true)
-                        ImageView(
-                          _e.imageUrls![0],
-                          width: Dimens.bioDetailsExpSize * .75,
-                          height: Dimens.bioDetailsExpSize * .75,
-                          fit: BoxFit.scaleDown,
-                        ),
+                      ImageView(
+                        _e.imageUrls![0],
+                        width: Dimens.bioDetailsExpSize * .75,
+                        height: Dimens.bioDetailsExpSize * .75,
+                        fit: BoxFit.scaleDown,
+                      ),
                     if (_e.imageUrls?.isEmpty != true)
                       SizedBox.fromSize(size: Size(Dimens.bioDetailsExpSize * .75, Dimens.bioDetailsExpSize * .75)),
                     PaddedColumn(

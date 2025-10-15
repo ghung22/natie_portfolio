@@ -41,7 +41,10 @@ class Routes {
           }
         },
       ),
-      GoRoute(path: projects, builder: (context, state) => ProjectsPage(tags: state.extra as List<ProjectTag>?)),
+      GoRoute(
+        path: projects,
+        builder: (context, state) => ProjectsPage(tags: state.extra as List<ProjectTag>?),
+      ),
       GoRoute(
         path: debug,
         builder: (context, state) {
