@@ -145,13 +145,15 @@ class ElevatedBtn extends StatelessWidget {
 // region Leading buttons
 
 class BackBtn extends StatelessWidget {
-  const BackBtn({super.key});
+  final GlobalKey<ScaffoldState> scaffoldKey;
+
+  const BackBtn({super.key, required this.scaffoldKey});
 
   @override
   Widget build(BuildContext context) {
     return Builder(
       builder: (context) {
-        if (!context.canPop()) return const Nothing();
+        if (!context.canPop()) return NavBtn(scaffoldKey: scaffoldKey);
         return IconBtn(
           tooltipText: AppLocalizations.of(context)!.back,
           onPressed: () => context.pop(),

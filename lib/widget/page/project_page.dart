@@ -7,6 +7,7 @@ import 'package:natie_portfolio/global/mixin.dart';
 import 'package:natie_portfolio/global/router.dart';
 import 'package:natie_portfolio/global/styles.dart';
 import 'package:natie_portfolio/global/vars.dart';
+import 'package:natie_portfolio/global/widgets.dart';
 import 'package:natie_portfolio/store/common/animation_store.dart';
 import 'package:natie_portfolio/store/global/dimen_store.dart';
 import 'package:natie_portfolio/widget/common/banner_item.dart';
@@ -36,6 +37,7 @@ class ProjectPage extends StatefulWidget {
 class _ProjectPageState extends State<ProjectPage> with PostFrameMixin {
   late Project _p;
 
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
   PreferredSizeWidget _appBar = const WebAppBar();
   Widget _body = const Nothing();
 
@@ -54,7 +56,7 @@ class _ProjectPageState extends State<ProjectPage> with PostFrameMixin {
 
   void _initAppBar() {
     _appBar = WebAppBar(
-      leading: const BackBtn(),
+      leading: BackBtn(scaffoldKey: _scaffoldKey),
       title: Observer(
         builder: (context) {
           return AnimatedOpacity(
@@ -209,13 +211,14 @@ class _ProjectPageState extends State<ProjectPage> with PostFrameMixin {
     return Builder(
       builder: (context) {
         if (widget.disableAnimation) {
-          return Scaffold(appBar: _appBar, body: _body);
+          return Scaffold(key: _scaffoldKey, appBar: _appBar, drawer: Widgets.of(context).drawer, body: _body);
         }
         return Stack(
           children: [
             Hero(
               tag: '${Routes.project}/${_p.id}/banner',
               child: Scaffold(
+                key: _scaffoldKey,
                 backgroundColor: Colors.transparent,
                 appBar: AppBar(
                   toolbarOpacity: 0,
@@ -223,6 +226,7 @@ class _ProjectPageState extends State<ProjectPage> with PostFrameMixin {
                   elevation: 0,
                   leading: const Nothing(),
                 ),
+                drawer: Widgets.of(context).drawer,
                 body: Observer(
                   builder: (context) {
                     return AnimatedOpacity(

@@ -2,11 +2,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:go_router/go_router.dart';
-import 'package:natie_portfolio/data/model/project.dart';
 import 'package:natie_portfolio/global/mixin.dart';
 import 'package:natie_portfolio/global/router.dart';
 import 'package:natie_portfolio/global/strings.dart';
 import 'package:natie_portfolio/global/vars.dart';
+import 'package:natie_portfolio/global/widgets.dart';
 import 'package:natie_portfolio/store/common/animation_store.dart';
 import 'package:natie_portfolio/store/data/bio_store.dart';
 import 'package:natie_portfolio/store/data/project_store.dart';
@@ -34,7 +34,6 @@ class _HomePageState extends State<HomePage> with PostFrameMixin {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   PreferredSizeWidget _appBar = const WebAppBar();
   Widget _body = const Nothing();
-  Widget _drawer = const Nothing();
 
   final _scrollController = ScrollController();
   final _introAni = AnimationStore();
@@ -49,7 +48,6 @@ class _HomePageState extends State<HomePage> with PostFrameMixin {
       _bioStore = context.read<BioStore>();
       _initAppBar();
       _initBody();
-      _initDrawer();
       setState(() {});
       _introAni.start();
     });
@@ -120,59 +118,12 @@ class _HomePageState extends State<HomePage> with PostFrameMixin {
     );
   }
 
-  void _initDrawer() {
-    _drawer = Drawer(
-      child: Padding(
-        padding: Dimens.drawerPadding,
-        child: CardItem(
-          child: Observer(
-            builder: (context) {
-              final p = _projectStore?.projects ?? Projects();
-              return ListView(
-                children: [
-                  Stack(
-                    children: [
-                      DrawerHeader(
-                        child: PaddedColumn(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          padding: Dimens.drawerItemPadding,
-                          children: [
-                            // App icon
-                            TextView.header(
-                              text: AppLocalizations.of(context)!.projects,
-                              color: Theme.of(context).primaryColor,
-                            ),
-                          ],
-                        ),
-                      ),
-                      const Padding(
-                        padding: Dimens.drawerItemPadding,
-                        child: BioMiniItem(),
-                      ),
-                    ],
-                  ),
-                  ...p.values.map((p) {
-                    return Padding(
-                      padding: Dimens.drawerItemPadding,
-                      child: ProjectMiniItem(p),
-                    );
-                  }),
-                ],
-              );
-            },
-          ),
-        ),
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
       appBar: _appBar,
-      drawer: _drawer,
+      drawer: Widgets.of(context).drawer,
       body: SizedBox(
         width: window.screen.width.toDouble(),
         child: AnimatedFadeSlide(

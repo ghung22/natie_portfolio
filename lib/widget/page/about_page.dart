@@ -5,6 +5,7 @@ import 'package:natie_portfolio/global/router.dart';
 import 'package:natie_portfolio/global/strings.dart';
 import 'package:natie_portfolio/global/styles.dart';
 import 'package:natie_portfolio/global/vars.dart';
+import 'package:natie_portfolio/global/widgets.dart';
 import 'package:natie_portfolio/store/common/animation_store.dart';
 import 'package:natie_portfolio/store/data/bio_store.dart';
 import 'package:natie_portfolio/widget/common/buttons.dart';
@@ -29,6 +30,7 @@ class AboutPage extends StatefulWidget {
 }
 
 class _AboutPageState extends State<AboutPage> with PostFrameMixin {
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
   PreferredSizeWidget _appBar = const WebAppBar();
   Widget _body = const Nothing();
   Widget _header = const Nothing();
@@ -51,7 +53,7 @@ class _AboutPageState extends State<AboutPage> with PostFrameMixin {
 
   void _initAppBar() {
     _appBar = WebAppBar(
-      leading: const BackBtn(),
+      leading: BackBtn(scaffoldKey: _scaffoldKey),
       title: Observer(
         builder: (context) {
           final _ = Strings.of(context).language;
@@ -233,6 +235,6 @@ class _AboutPageState extends State<AboutPage> with PostFrameMixin {
     _initAppBar();
     _initBody();
 
-    return Scaffold(appBar: _appBar, body: _body);
+    return Scaffold(key: _scaffoldKey, appBar: _appBar, drawer: Widgets.of(context).drawer, body: _body);
   }
 }

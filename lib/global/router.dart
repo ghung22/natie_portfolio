@@ -1,16 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:natie_portfolio/data/model/project.dart';
-import 'package:natie_portfolio/widget/common/helper/snackbar.dart';
 import 'package:natie_portfolio/widget/page/about_page.dart';
 import 'package:natie_portfolio/widget/page/debug_page.dart';
 import 'package:natie_portfolio/widget/page/home_page.dart';
 import 'package:natie_portfolio/widget/page/project_page.dart';
 import 'package:natie_portfolio/widget/page/projects_page.dart';
 
-import '../l10n/app_localizations.dart';
 import 'debug.dart';
-import 'vars.dart';
 
 class Routes {
   static const home = '/';

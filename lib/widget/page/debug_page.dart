@@ -10,6 +10,7 @@ import 'package:natie_portfolio/global/mixin.dart';
 import 'package:natie_portfolio/global/router.dart';
 import 'package:natie_portfolio/global/strings.dart';
 import 'package:natie_portfolio/global/styles.dart';
+import 'package:natie_portfolio/global/widgets.dart';
 import 'package:natie_portfolio/store/data/bio_store.dart';
 import 'package:natie_portfolio/store/data/project_store.dart';
 import 'package:natie_portfolio/store/global/dimen_store.dart';
@@ -31,6 +32,7 @@ class DebugPage extends StatefulWidget {
 }
 
 class _DebugPageState extends State<DebugPage> with PostFrameMixin {
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
   PreferredSizeWidget _appBar = const WebAppBar();
   Widget _body = const Nothing();
   Widget _navSect = const Nothing();
@@ -54,7 +56,7 @@ class _DebugPageState extends State<DebugPage> with PostFrameMixin {
 
   void _initAppBar() {
     _appBar = WebAppBar(
-      leading: const BackBtn(),
+      leading: BackBtn(scaffoldKey: _scaffoldKey),
       title: Observer(
         builder: (context) {
           return TextView(textCallback: () => '${context.read<DimenStore>().size}');
@@ -247,7 +249,9 @@ class _DebugPageState extends State<DebugPage> with PostFrameMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       appBar: _appBar,
+      drawer: Widgets.of(context).drawer,
       body: SizedBox(width: window.screen.width.toDouble(), child: _body),
     );
   }
