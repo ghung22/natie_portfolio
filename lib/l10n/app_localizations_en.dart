@@ -57,6 +57,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get navigation => 'Navigation';
 
   @override
+  String get now => 'Now';
+
+  @override
   String get projects => 'My projects';
 
   @override

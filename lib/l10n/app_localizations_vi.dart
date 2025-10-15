@@ -57,6 +57,9 @@ class AppLocalizationsVi extends AppLocalizations {
   String get navigation => 'Điều hướng';
 
   @override
+  String get now => 'Hiện tại';
+
+  @override
   String get projects => 'Các đề tài của tôi';
 
   @override

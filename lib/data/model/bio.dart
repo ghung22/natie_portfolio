@@ -126,8 +126,8 @@ class BioData {
   static Experience hcmus = Experience(
     name: 'Ho Chi Minh University of Science',
     nameVi: 'Trường đại học Khoa học tự nhiên TP.HCM',
-    timeStart: DateTime(2018),
-    timeEnd: DateTime(2022),
+    timeStart: DateTime(2018, 10),
+    timeEnd: DateTime(2022, 10),
     major: 'Computer Science - Software Engineering',
     majorVi: 'Công nghệ thông tin - Kỹ thuật phần mềm',
     imageUrls: ['https://i.imgur.com/6llAwcc.png', 'https://i.imgur.com/nqcutY6.jpg'],

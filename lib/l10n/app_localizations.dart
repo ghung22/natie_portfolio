@@ -188,6 +188,12 @@ abstract class AppLocalizations {
   /// **'Navigation'**
   String get navigation;
 
+  /// No description provided for @now.
+  ///
+  /// In en, this message translates to:
+  /// **'Now'**
+  String get now;
+
   /// No description provided for @projects.
   ///
   /// In en, this message translates to:

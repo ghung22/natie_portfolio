@@ -159,6 +159,11 @@ class S {
     return Intl.message('Navigation', name: 'navigation', desc: '', args: []);
   }
 
+  /// `Now`
+  String get now {
+    return Intl.message('Now', name: 'now', desc: '', args: []);
+  }
+
   /// `My projects`
   String get projects {
     return Intl.message('My projects', name: 'projects', desc: '', args: []);

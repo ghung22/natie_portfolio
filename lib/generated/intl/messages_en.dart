@@ -52,6 +52,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "more_projects": MessageLookupByLibrary.simpleMessage("More projects"),
     "navigate_to": MessageLookupByLibrary.simpleMessage("Navigate to"),
     "navigation": MessageLookupByLibrary.simpleMessage("Navigation"),
+    "now": MessageLookupByLibrary.simpleMessage("Now"),
     "projects": MessageLookupByLibrary.simpleMessage("My projects"),
     "route_unknown": m0,
     "scoreboard": MessageLookupByLibrary.simpleMessage("See scoreboard"),

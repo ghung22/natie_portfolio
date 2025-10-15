@@ -52,6 +52,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "more_projects": MessageLookupByLibrary.simpleMessage("Các đề tài khác"),
     "navigate_to": MessageLookupByLibrary.simpleMessage("Đi đến trang"),
     "navigation": MessageLookupByLibrary.simpleMessage("Điều hướng"),
+    "now": MessageLookupByLibrary.simpleMessage("Hiện tại"),
     "projects": MessageLookupByLibrary.simpleMessage("Các đề tài của tôi"),
     "route_unknown": m0,
     "scoreboard": MessageLookupByLibrary.simpleMessage("Xem bảng điểm"),

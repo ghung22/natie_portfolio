@@ -691,7 +691,7 @@ class _BioExperienceItemState extends State<BioExperienceItem> {
                           style: styles.headerStyle.copyWith(color: _c ?? theme.primaryColor),
                         ),
                         TextView(
-                          text: _e.time,
+                          text: _e.getTimeRangeStr(context),
                           style: styles.subheaderStyle.copyWith(
                             color: (_c ?? theme.colorScheme.onSurface).withValues(alpha: .8),
                             fontWeight: FontWeight.bold,
