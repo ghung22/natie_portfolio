@@ -35,11 +35,17 @@ class MessageLookup extends MessageLookupByLibrary {
     "back": MessageLookupByLibrary.simpleMessage("Back"),
     "completion_date": MessageLookupByLibrary.simpleMessage("Completion date"),
     "contact": MessageLookupByLibrary.simpleMessage("Contact me"),
-    "copyright": MessageLookupByLibrary.simpleMessage("© 2026 Natie Portfolio - Made with Flutter"),
+    "copyright": MessageLookupByLibrary.simpleMessage(
+      "© 2026 Natie Portfolio - Made with Flutter",
+    ),
     "details": MessageLookupByLibrary.simpleMessage("More details"),
-    "experience": MessageLookupByLibrary.simpleMessage("Work experience & Education"),
+    "experience": MessageLookupByLibrary.simpleMessage(
+      "Work experience & Education",
+    ),
     "explore": MessageLookupByLibrary.simpleMessage("Explore more"),
-    "featured_projects": MessageLookupByLibrary.simpleMessage("Featured Projects"),
+    "featured_projects": MessageLookupByLibrary.simpleMessage(
+      "Featured Projects",
+    ),
     "home": MessageLookupByLibrary.simpleMessage("Home"),
     "host": MessageLookupByLibrary.simpleMessage("Reference"),
     "language": MessageLookupByLibrary.simpleMessage("Language"),

@@ -7,9 +7,13 @@ part of 'countable_double.dart';
 // **************************************************************************
 
 CountableDouble _$CountableDoubleFromJson(Map<String, dynamic> json) =>
-    CountableDouble((json['value'] as num).toDouble(), fractionalLength: (json['fractionalLength'] as num?)?.toInt());
+    CountableDouble(
+      (json['value'] as num).toDouble(),
+      fractionalLength: (json['fractionalLength'] as num?)?.toInt(),
+    );
 
-Map<String, dynamic> _$CountableDoubleToJson(CountableDouble instance) => <String, dynamic>{
-  'value': instance.value,
-  'fractionalLength': instance.fractionalLength,
-};
+Map<String, dynamic> _$CountableDoubleToJson(CountableDouble instance) =>
+    <String, dynamic>{
+      'value': instance.value,
+      'fractionalLength': instance.fractionalLength,
+    };

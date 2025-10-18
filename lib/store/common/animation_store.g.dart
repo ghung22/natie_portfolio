@@ -12,10 +12,15 @@ mixin _$AnimationStore on _AnimationStore, Store {
   Computed<bool>? _$intDataMaxedComputed;
 
   @override
-  bool get intDataMaxed =>
-      (_$intDataMaxedComputed ??= Computed<bool>(() => super.intDataMaxed, name: '_AnimationStore.intDataMaxed')).value;
+  bool get intDataMaxed => (_$intDataMaxedComputed ??= Computed<bool>(
+    () => super.intDataMaxed,
+    name: '_AnimationStore.intDataMaxed',
+  )).value;
 
-  late final _$willStartAtom = Atom(name: '_AnimationStore.willStart', context: context);
+  late final _$willStartAtom = Atom(
+    name: '_AnimationStore.willStart',
+    context: context,
+  );
 
   @override
   bool get willStart {
@@ -30,7 +35,10 @@ mixin _$AnimationStore on _AnimationStore, Store {
     });
   }
 
-  late final _$intDataAtom = Atom(name: '_AnimationStore.intData', context: context);
+  late final _$intDataAtom = Atom(
+    name: '_AnimationStore.intData',
+    context: context,
+  );
 
   @override
   int get intData {
@@ -45,11 +53,16 @@ mixin _$AnimationStore on _AnimationStore, Store {
     });
   }
 
-  late final _$_AnimationStoreActionController = ActionController(name: '_AnimationStore', context: context);
+  late final _$_AnimationStoreActionController = ActionController(
+    name: '_AnimationStore',
+    context: context,
+  );
 
   @override
   void start() {
-    final _$actionInfo = _$_AnimationStoreActionController.startAction(name: '_AnimationStore.start');
+    final _$actionInfo = _$_AnimationStoreActionController.startAction(
+      name: '_AnimationStore.start',
+    );
     try {
       return super.start();
     } finally {
@@ -59,7 +72,9 @@ mixin _$AnimationStore on _AnimationStore, Store {
 
   @override
   void stop() {
-    final _$actionInfo = _$_AnimationStoreActionController.startAction(name: '_AnimationStore.stop');
+    final _$actionInfo = _$_AnimationStoreActionController.startAction(
+      name: '_AnimationStore.stop',
+    );
     try {
       return super.stop();
     } finally {
@@ -69,7 +84,9 @@ mixin _$AnimationStore on _AnimationStore, Store {
 
   @override
   void setDataLimit({int? lowerLimit, int? upperLimit}) {
-    final _$actionInfo = _$_AnimationStoreActionController.startAction(name: '_AnimationStore.setDataLimit');
+    final _$actionInfo = _$_AnimationStoreActionController.startAction(
+      name: '_AnimationStore.setDataLimit',
+    );
     try {
       return super.setDataLimit(lowerLimit: lowerLimit, upperLimit: upperLimit);
     } finally {
@@ -79,7 +96,9 @@ mixin _$AnimationStore on _AnimationStore, Store {
 
   @override
   void setData(int data) {
-    final _$actionInfo = _$_AnimationStoreActionController.startAction(name: '_AnimationStore.setData');
+    final _$actionInfo = _$_AnimationStoreActionController.startAction(
+      name: '_AnimationStore.setData',
+    );
     try {
       return super.setData(data);
     } finally {
@@ -89,7 +108,9 @@ mixin _$AnimationStore on _AnimationStore, Store {
 
   @override
   void increment() {
-    final _$actionInfo = _$_AnimationStoreActionController.startAction(name: '_AnimationStore.increment');
+    final _$actionInfo = _$_AnimationStoreActionController.startAction(
+      name: '_AnimationStore.increment',
+    );
     try {
       return super.increment();
     } finally {
@@ -99,7 +120,9 @@ mixin _$AnimationStore on _AnimationStore, Store {
 
   @override
   void decrement() {
-    final _$actionInfo = _$_AnimationStoreActionController.startAction(name: '_AnimationStore.decrement');
+    final _$actionInfo = _$_AnimationStoreActionController.startAction(
+      name: '_AnimationStore.decrement',
+    );
     try {
       return super.decrement();
     } finally {
@@ -109,7 +132,9 @@ mixin _$AnimationStore on _AnimationStore, Store {
 
   @override
   void reset() {
-    final _$actionInfo = _$_AnimationStoreActionController.startAction(name: '_AnimationStore.reset');
+    final _$actionInfo = _$_AnimationStoreActionController.startAction(
+      name: '_AnimationStore.reset',
+    );
     try {
       return super.reset();
     } finally {

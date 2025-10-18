@@ -28,8 +28,15 @@ class Styles {
 
   // Widget styles
   static const TextStyle bannerTitleStyle = TextStyle(fontSize: 64, fontWeight: FontWeight.bold);
-  static const TextStyle bannerDescriptionStyle = TextStyle(fontSize: 20, height: 1.5);
+  static const TextStyle bannerDescriptionStyle = TextStyle(fontSize: 20, height: 1.5, overflow: TextOverflow.ellipsis);
+  static const TextStyle bannerTitleSmallStyle = TextStyle(fontSize: 48, fontWeight: FontWeight.bold);
+  static const TextStyle bannerDescriptionSmallStyle = TextStyle(
+    fontSize: 15,
+    height: 1.5,
+    overflow: TextOverflow.ellipsis,
+  );
   static const TextStyle bannerActionStyle = TextStyle(fontSize: 16);
+  static const TextStyle bannerActionSmallStyle = TextStyle(fontSize: 12);
 
   static const TextStyle iconBtnErrorStyle = TextStyle(fontFamily: Themes.fontMono);
   static const TextStyle iconBtnLabelStyle = TextStyle(fontSize: 18, fontWeight: FontWeight.bold);

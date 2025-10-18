@@ -24,16 +24,37 @@ class Dimens {
   static bool isLarge(BuildContext context) => screenSize(context) == ScreenSize.large;
 
   static const bannerActionOffset = EdgeInsets.all(16.0);
+  static const bannerActionOffsetSmall = EdgeInsets.all(12.0);
   static const bannerActionPadding = EdgeInsets.symmetric(vertical: 24.0, horizontal: 36.0);
-  static const bannerContentLeftMaxWidth = BoxConstraints(maxWidth: 560.0);
-  static const bannerContentPadding = EdgeInsets.symmetric(vertical: 8.0);
-  static const bannerContentPaddingBox = SizedBox(height: 8.0);
+  static const bannerActionPaddingSmall = EdgeInsets.symmetric(vertical: 18.0, horizontal: 27.0);
+  static const _bannerContentPaddingValue = 8.0;
+  static const bannerContentPadding = EdgeInsets.symmetric(vertical: _bannerContentPaddingValue);
+  static const bannerContentPaddingBox = SizedBox(height: _bannerContentPaddingValue);
   static const bannerHeight = 520.0;
+  static const _bannerLeftSideHeight = bannerHeight * 4 / 5;
+  static const _bannerRightSideHeight = bannerHeight;
+  static const bannerHeightDouble =
+      (_bannerLeftSideHeight + _bannerRightSideHeight + 28.0 + _bannerContentPaddingValue) * 4 / 5;
   static const bannerPadding = EdgeInsets.symmetric(horizontal: 24.0, vertical: 28.0);
   static const bannerSlideOffset = .1;
   static const bannerConstraint = BoxConstraints(
     minHeight: bannerHeight,
     maxHeight: bannerHeight,
+    maxWidth: _pageContentMaxWidth,
+  );
+  static const bannerConstraintDouble = BoxConstraints(
+    minHeight: bannerHeightDouble,
+    maxHeight: bannerHeightDouble,
+    maxWidth: _pageContentMaxWidth,
+  );
+  static const bannerLeftSideConstraint = BoxConstraints(
+    minHeight: _bannerLeftSideHeight,
+    maxHeight: _bannerLeftSideHeight,
+    maxWidth: 390.0,
+  );
+  static const bannerRightSideConstraint = BoxConstraints(
+    minHeight: _bannerRightSideHeight,
+    maxHeight: _bannerRightSideHeight,
     maxWidth: _pageContentMaxWidth,
   );
 
@@ -44,6 +65,26 @@ class Dimens {
   static const bioScoreSize = 132.0;
   static const bioScorePadding = EdgeInsets.symmetric(horizontal: 24.0);
   static const bioScorePaddingBox = SizedBox(height: 24.0);
+  static const bioConstraint = BoxConstraints(
+    minHeight: bannerHeight * 1.5,
+    maxHeight: bannerHeight * 1.5,
+    maxWidth: _pageContentMaxWidth,
+  );
+  static const bioConstraintDouble = BoxConstraints(
+    minHeight: bannerHeightDouble * 1.5,
+    maxHeight: bannerHeightDouble * 1.5,
+    maxWidth: _pageContentMaxWidth,
+  );
+  static const bioLeftSideConstraint = BoxConstraints(
+    minHeight: _bannerLeftSideHeight * 1.5,
+    maxHeight: _bannerLeftSideHeight * 1.5,
+    maxWidth: 600.0,
+  );
+  static const bioRightSideConstraint = BoxConstraints(
+    minHeight: _bannerRightSideHeight * 1.5,
+    maxHeight: _bannerRightSideHeight * 1.5,
+    maxWidth: _pageContentMaxWidth,
+  );
 
   static const bioDetailsContactPadding = bioDetailsContactSize / 4;
   static const bioDetailsContactSize = 48.0;

@@ -29,6 +29,7 @@ part 'project.g.dart';
 class Project {
   String id;
   String title;
+  String titleVi;
   String author;
   String authorVi;
   List<ProjectTag> tags;
@@ -49,6 +50,7 @@ class Project {
   Project({
     this.id = '',
     this.title = '',
+    this.titleVi = '',
     this.author = '',
     this.authorVi = '',
     this.tags = const <ProjectTag>[],
@@ -158,7 +160,8 @@ class ProjectData {
 
   static Project aPum = Project(
     id: 'a_pum',
-    title: 'aPum',
+    title: 'aPum - Image Gallery',
+    titleVi: 'aPum - Quản Lý Ảnh',
     author: 'Nguyễn Gia Hưng',
     tags: [ProjectTag.mobile, ProjectTag.hcmus],
     tech: 'android,java,sqlite,ml_kit',
@@ -231,7 +234,8 @@ class ProjectData {
 
   static Project lms = Project(
     id: 'lms',
-    title: 'LMS',
+    title: 'Learning Management System',
+    titleVi: 'Hệ thống Quản lý Học tập',
     author: 'Intern project team at FPT Software',
     authorVi: 'Nhóm dự án thực tập tại FPT Software',
     tags: [ProjectTag.mobile, ProjectTag.fpt],
@@ -294,6 +298,7 @@ class ProjectData {
   static Project nieNote = Project(
     id: 'nie_note',
     title: 'Nie Note',
+    titleVi: 'Nie Note',
     author: 'Nguyễn Gia Hưng',
     tags: [ProjectTag.mobile, ProjectTag.indie],
     tech: 'android,java,sqlite,markdown',
@@ -359,6 +364,7 @@ class ProjectData {
   static Project nieFlat = Project(
     id: 'nie_flat',
     title: 'Nie Flat',
+    titleVi: 'Nie Flat',
     author: 'Nguyễn Gia Hưng',
     tags: [ProjectTag.mobile, ProjectTag.indie],
     tech: 'android,java,firebase',
@@ -431,6 +437,7 @@ class ProjectData {
   static Project letTutor = Project(
     id: 'let_tutor',
     title: 'LetTutor Clone',
+    titleVi: 'LetTutor Clone',
     author: 'Nguyễn Gia Hưng',
     tags: [ProjectTag.mobile, ProjectTag.hcmus],
     tech: 'flutter,jitsi',
@@ -502,6 +509,7 @@ class ProjectData {
   static Project moodleMobile = Project(
     id: 'moodle_mobile',
     title: 'Moodle Mobile',
+    titleVi: 'Moodle Mobile',
     author: 'University graduation project',
     authorVi: 'Đồ án tốt nghiệp đại học',
     tags: [ProjectTag.mobile, ProjectTag.hcmus],
@@ -573,6 +581,7 @@ class ProjectData {
   static Project teaMobiAvatarLand = Project(
     id: 'tea_al',
     title: 'Avatar Land',
+    titleVi: 'Avatar Land',
     author: 'TeaMobi',
     authorVi: 'TeaMobi',
     tags: [ProjectTag.game, ProjectTag.server, ProjectTag.teamobi],
@@ -623,6 +632,7 @@ class ProjectData {
   static Project teaMobiNro = Project(
     id: 'tea_nro',
     title: 'Ngoc Rong Online',
+    titleVi: 'Ngọc Rồng Online',
     author: 'TeaMobi',
     authorVi: 'TeaMobi',
     tags: [ProjectTag.game, ProjectTag.server, ProjectTag.teamobi],
@@ -657,6 +667,7 @@ class ProjectData {
   static Project teaMobiAvatarBum = Project(
     id: 'tea_ab',
     title: 'Avatar Bum',
+    titleVi: 'Avatar Bùm',
     author: 'TeaMobi',
     authorVi: 'TeaMobi',
     tags: [ProjectTag.game, ProjectTag.server, ProjectTag.teamobi],
@@ -691,6 +702,7 @@ class ProjectData {
   static Project teaMobiStpt = Project(
     id: 'tea_stpt',
     title: 'Son Thuy Phan Tranh',
+    titleVi: 'Sơn Thuỷ Phân Tranh',
     author: 'TeaMobi',
     authorVi: 'TeaMobi',
     tags: [ProjectTag.game, ProjectTag.server, ProjectTag.teamobi],
@@ -715,6 +727,7 @@ class ProjectData {
   static Project teaMobiNhanGia = Project(
     id: 'tea_ccng',
     title: 'Ninja War',
+    titleVi: 'Cuộc Chiến Nhẫn Giả',
     author: 'TeaMobi',
     authorVi: 'TeaMobi',
     tags: [ProjectTag.game, ProjectTag.server, ProjectTag.teamobi],

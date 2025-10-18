@@ -108,22 +108,24 @@ class _ProjectPageState extends State<ProjectPage> with PostFrameMixin {
                     final w = dimenStore.width;
                     return CarouselSlider(
                       items: _p.imageUrls.map((url) {
-                        return InkWell(
-                          onTap: () => launchUrlString(url, mode: LaunchMode.externalApplication),
-                          child: RoundedImageView(url),
-                        );
+                        return RoundedImageView(url);
+                        // return InkWell(
+                        //   onTap: () => launchUrlString(url, mode: LaunchMode.externalApplication),
+                        //   child: RoundedImageView(url),
+                        // );
                       }).toList(),
                       options: CarouselOptions(
                         height: Dimens.projectDetailsImgHeight,
                         pageSnapping: false,
                         viewportFraction: (Dimens.projectDetailsImgWidth + Dimens.projectDetailsImgPadding) / w,
-                        enableInfiniteScroll: false,
+                        enableInfiniteScroll: true,
                         padEnds: false,
                         autoPlay: true,
                         autoPlayInterval: const Duration(seconds: 5),
                         autoPlayAnimationDuration: Vars.animationFast,
                         pauseAutoPlayOnManualNavigate: true,
                         pauseAutoPlayOnTouch: true,
+                        scrollPhysics: const NeverScrollableScrollPhysics(),
                       ),
                     );
                   },

@@ -35,11 +35,17 @@ class MessageLookup extends MessageLookupByLibrary {
     "back": MessageLookupByLibrary.simpleMessage("Quay lại"),
     "completion_date": MessageLookupByLibrary.simpleMessage("Ngày hoàn thành"),
     "contact": MessageLookupByLibrary.simpleMessage("Liên hệ"),
-    "copyright": MessageLookupByLibrary.simpleMessage("© 2026 Natie Portfolio - Lập trình sử dụng Flutter"),
+    "copyright": MessageLookupByLibrary.simpleMessage(
+      "© 2026 Natie Portfolio - Lập trình sử dụng Flutter",
+    ),
     "details": MessageLookupByLibrary.simpleMessage("Chi tiết"),
-    "experience": MessageLookupByLibrary.simpleMessage("Kinh nghiệm làm việc & Học tập"),
+    "experience": MessageLookupByLibrary.simpleMessage(
+      "Kinh nghiệm làm việc & Học tập",
+    ),
     "explore": MessageLookupByLibrary.simpleMessage("Khám phá thêm"),
-    "featured_projects": MessageLookupByLibrary.simpleMessage("Các đề tài Nổi bật"),
+    "featured_projects": MessageLookupByLibrary.simpleMessage(
+      "Các đề tài Nổi bật",
+    ),
     "home": MessageLookupByLibrary.simpleMessage("Trang chủ"),
     "host": MessageLookupByLibrary.simpleMessage("Tham khảo"),
     "language": MessageLookupByLibrary.simpleMessage("Ngôn ngữ"),
@@ -52,7 +58,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "scoreboard": MessageLookupByLibrary.simpleMessage("Xem bảng điểm"),
     "scores": MessageLookupByLibrary.simpleMessage("Điểm số học tập"),
     "search": MessageLookupByLibrary.simpleMessage("Tìm kiếm"),
-    "see_more": MessageLookupByLibrary.simpleMessage("Nhấn vào tôi để biết thêm"),
+    "see_more": MessageLookupByLibrary.simpleMessage(
+      "Nhấn vào tôi để biết thêm",
+    ),
     "tech_used": MessageLookupByLibrary.simpleMessage("Công nghệ sử dụng:"),
     "theme": MessageLookupByLibrary.simpleMessage("Chủ đề"),
     "welcome": m1,

@@ -27,6 +27,7 @@ class TextView extends StatelessWidget {
   final EdgeInsets padding;
   final TextAlign textAlign;
   final bool softWrap;
+  final int? maxLines;
   final TextViewPreset preset;
 
   const TextView({
@@ -39,6 +40,7 @@ class TextView extends StatelessWidget {
     this.padding = EdgeInsets.zero,
     this.textAlign = TextAlign.start,
     this.softWrap = false,
+    this.maxLines,
     this.preset = TextViewPreset.custom,
   }) : assert(text != null && textCallback == null || textCallback != null && text == null);
 
@@ -51,6 +53,7 @@ class TextView extends StatelessWidget {
     this.padding = EdgeInsets.zero,
     this.textAlign = TextAlign.start,
     this.softWrap = false,
+    this.maxLines,
   }) : style = null,
        preset = TextViewPreset.header,
        assert(text != null && textCallback == null || textCallback != null && text == null);
@@ -64,6 +67,7 @@ class TextView extends StatelessWidget {
     this.padding = EdgeInsets.zero,
     this.textAlign = TextAlign.start,
     this.softWrap = false,
+    this.maxLines,
   }) : style = null,
        preset = TextViewPreset.subheader,
        assert(text != null && textCallback == null || textCallback != null && text == null);
@@ -77,6 +81,7 @@ class TextView extends StatelessWidget {
     this.padding = EdgeInsets.zero,
     this.textAlign = TextAlign.start,
     this.softWrap = false,
+    this.maxLines,
   }) : style = null,
        preset = TextViewPreset.footer,
        assert(text != null && textCallback == null || textCallback != null && text == null);
@@ -90,6 +95,7 @@ class TextView extends StatelessWidget {
     this.padding = EdgeInsets.zero,
     this.textAlign = TextAlign.start,
     this.softWrap = false,
+    this.maxLines,
   }) : style = null,
        preset = TextViewPreset.monospace,
        assert(text != null && textCallback == null || textCallback != null && text == null);
@@ -111,6 +117,7 @@ class TextView extends StatelessWidget {
       text ?? textCallback!(),
       textAlign: textAlign,
       softWrap: softWrap,
+      maxLines: maxLines ?? 1000,
       style: _styleByPreset(switch (preset) {
         TextViewPreset.header => Styles.of(context).headerStyle,
         TextViewPreset.subheader => Styles.of(context).subheaderStyle,

@@ -9,19 +9,33 @@ part of 'project.dart';
 Project _$ProjectFromJson(Map<String, dynamic> json) => Project(
   id: json['id'] as String? ?? '',
   title: json['title'] as String? ?? '',
+  titleVi: json['titleVi'] as String? ?? '',
   author: json['author'] as String? ?? '',
   authorVi: json['authorVi'] as String? ?? '',
   tags:
-      (json['tags'] as List<dynamic>?)?.map((e) => $enumDecode(_$ProjectTagEnumMap, e)).toList() ??
+      (json['tags'] as List<dynamic>?)
+          ?.map((e) => $enumDecode(_$ProjectTagEnumMap, e))
+          .toList() ??
       const <ProjectTag>[],
   tech: json['tech'] as String? ?? '',
   description: json['description'] as String? ?? '',
   descriptionVi: json['descriptionVi'] as String? ?? '',
-  functionalities: (json['functionalities'] as List<dynamic>?)?.map((e) => e as String).toList() ?? const <String>[],
+  functionalities:
+      (json['functionalities'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList() ??
+      const <String>[],
   functionalitiesVi:
-      (json['functionalitiesVi'] as List<dynamic>?)?.map((e) => e as String).toList() ?? const <String>[],
-  learned: (json['learned'] as List<dynamic>?)?.map((e) => e as String).toList() ?? const <String>[],
-  learnedVi: (json['learnedVi'] as List<dynamic>?)?.map((e) => e as String).toList() ?? const <String>[],
+      (json['functionalitiesVi'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList() ??
+      const <String>[],
+  learned:
+      (json['learned'] as List<dynamic>?)?.map((e) => e as String).toList() ??
+      const <String>[],
+  learnedVi:
+      (json['learnedVi'] as List<dynamic>?)?.map((e) => e as String).toList() ??
+      const <String>[],
   hostUrl: json['hostUrl'] as String? ?? '',
   iconUrl: json['iconUrl'] as String? ?? '',
   imageUrls:
@@ -37,6 +51,7 @@ Project _$ProjectFromJson(Map<String, dynamic> json) => Project(
 Map<String, dynamic> _$ProjectToJson(Project instance) => <String, dynamic>{
   'id': instance.id,
   'title': instance.title,
+  'titleVi': instance.titleVi,
   'author': instance.author,
   'authorVi': instance.authorVi,
   'tags': instance.tags.map((e) => _$ProjectTagEnumMap[e]!).toList(),

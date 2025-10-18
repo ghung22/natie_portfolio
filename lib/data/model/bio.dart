@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:natie_portfolio/data/model/experience.dart';
 import 'package:natie_portfolio/data/model/project.dart';
+import 'package:natie_portfolio/global/vars.dart';
 
 import 'score.dart';
 
@@ -111,7 +112,7 @@ class BioData {
     descriptionVi:
         'Một lập trình viên di động đầy tham vọng với niềm đam mê trong việc xây dựng các ứng dụng di động hiện đại, tập trung vào tối ưu UX/UI.',
     contact: {'GitHub': 'https://github.com/ghung22', 'Gmail': 'mailto:ghung22.fortune@gmail.com'},
-    avatarUrl: 'https://i.imgur.com/LCOYr8O.jpeg',
+    avatarUrl: Vars.assets['avatar'] ?? 'https://i.imgur.com/LCOYr8O.jpeg',
     birthdayTimestamp: DateTime(2000, 01, 02).millisecondsSinceEpoch,
     colorHexes: const [0x00B294],
     imageUrls: const [],
