@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 class Vars {
   static const animationBlink = Duration(milliseconds: 25);
   static const animationFlash = Duration(milliseconds: 75);
@@ -5,6 +7,9 @@ class Vars {
   static const animationFast = Duration(milliseconds: 300);
   static const animationSlow = Duration(milliseconds: 600);
   static const animationSluggish = Duration(milliseconds: 1200);
+
+  static final globalScaffoldKey = GlobalKey<ScaffoldState>();
+  static final navigatorKey = GlobalKey<NavigatorState>();
 
   static const _assetRoot = '.'; // ''assets';
   static const _assetBio = '$_assetRoot/bio';
@@ -16,6 +21,8 @@ class Vars {
 
     'fit': '$_assetBrand/fit.png',
     'hcmus': '$_assetBrand/hcmus.png',
+    'vn': '$_assetBrand/vn.png',
+    'en': '$_assetBrand/us.png',
 
     'github': '$_assetContact/github.png',
     'gmail': '$_assetContact/gmail.png',

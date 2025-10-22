@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:go_router/go_router.dart';
 import 'package:natie_portfolio/data/model/bio.dart';
 import 'package:natie_portfolio/data/model/project.dart';
 import 'package:natie_portfolio/global/dimens.dart';
 import 'package:natie_portfolio/global/mixin.dart';
-import 'package:natie_portfolio/global/router.dart';
+import 'package:natie_portfolio/global/routes.dart';
 import 'package:natie_portfolio/global/styles.dart';
 import 'package:natie_portfolio/global/vars.dart';
 import 'package:natie_portfolio/store/data/bio_store.dart';
@@ -154,7 +153,7 @@ class _WebFooterState extends State<WebFooter> with PostFrameMixin {
         TextBtn(
           hoverFeedback: false,
           padding: Dimens.btnPaddingVertical,
-          onPressed: () => context.go(Routes.home),
+          onPressed: () => Routes.routemaster.push(Routes.home),
           textStyle: TextStyle(color: Theme.of(context).colorScheme.onSurface),
           alignment: AlignmentGeometry.centerLeft,
           child: TextView(text: AppLocalizations.of(context)!.home),
@@ -162,7 +161,7 @@ class _WebFooterState extends State<WebFooter> with PostFrameMixin {
         TextBtn(
           hoverFeedback: false,
           padding: Dimens.btnPaddingVertical,
-          onPressed: () => context.go(Routes.about),
+          onPressed: () => Routes.routemaster.push(Routes.about),
           textStyle: TextStyle(color: Theme.of(context).colorScheme.onSurface),
           alignment: AlignmentGeometry.centerLeft,
           child: TextView(text: AppLocalizations.of(context)!.about_me),
@@ -170,7 +169,7 @@ class _WebFooterState extends State<WebFooter> with PostFrameMixin {
         TextBtn(
           hoverFeedback: false,
           padding: Dimens.btnPaddingVertical,
-          onPressed: () => context.go(Routes.projects),
+          onPressed: () => Routes.routemaster.push(Routes.project),
           textStyle: TextStyle(color: Theme.of(context).colorScheme.onSurface),
           alignment: AlignmentGeometry.centerLeft,
           child: TextView(text: AppLocalizations.of(context)!.projects),
@@ -193,7 +192,7 @@ class _WebFooterState extends State<WebFooter> with PostFrameMixin {
               return TextBtn(
                 hoverFeedback: false,
                 padding: Dimens.btnPaddingVertical,
-                onPressed: () => context.go(Routes.project, extra: p),
+                onPressed: () => Routes.routemaster.push('${Routes.project}/${p.id}'),
                 textStyle: TextStyle(color: Theme.of(context).colorScheme.onSurface),
                 alignment: AlignmentGeometry.centerLeft,
                 child: TextView(text: p.title, textAlign: TextAlign.start),
@@ -264,6 +263,52 @@ class _WebFooterState extends State<WebFooter> with PostFrameMixin {
           child: _body,
         );
       },
+    );
+  }
+}
+
+class WebDrawer extends StatelessWidget {
+  const WebDrawer({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Drawer(
+      child: Padding(
+        padding: Dimens.drawerPadding,
+        child: CardItem(
+          child: Observer(
+            builder: (context) {
+              final p = context.read<ProjectStore>().projects;
+              return ListView(
+                children: [
+                  Stack(
+                    children: [
+                      DrawerHeader(
+                        child: PaddedColumn(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          padding: Dimens.drawerItemPadding,
+                          children: [
+                            // App icon
+                            TextView.header(
+                              text: AppLocalizations.of(context)!.projects,
+                              color: Theme.of(context).primaryColor,
+                            ),
+                          ],
+                        ),
+                      ),
+                      const Padding(padding: Dimens.drawerItemPadding, child: BioMiniItem()),
+                    ],
+                  ),
+                  ...p.values.map((p) {
+                    return Padding(padding: Dimens.drawerItemPadding, child: ProjectMiniItem(p));
+                  }),
+                ],
+              );
+            },
+          ),
+        ),
+      ),
     );
   }
 }

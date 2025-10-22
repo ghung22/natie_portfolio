@@ -1,12 +1,10 @@
 // ignore: avoid_web_libraries_in_flutter
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:go_router/go_router.dart';
 import 'package:natie_portfolio/global/mixin.dart';
-import 'package:natie_portfolio/global/router.dart';
+import 'package:natie_portfolio/global/routes.dart';
 import 'package:natie_portfolio/global/strings.dart';
 import 'package:natie_portfolio/global/vars.dart';
-import 'package:natie_portfolio/global/widgets.dart';
 import 'package:natie_portfolio/store/common/animation_store.dart';
 import 'package:natie_portfolio/store/data/bio_store.dart';
 import 'package:natie_portfolio/store/data/project_store.dart';
@@ -31,7 +29,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> with PostFrameMixin {
-  final _scaffoldKey = GlobalKey<ScaffoldState>();
   PreferredSizeWidget _appBar = const WebAppBar();
   Widget _body = const Nothing();
 
@@ -55,7 +52,7 @@ class _HomePageState extends State<HomePage> with PostFrameMixin {
 
   void _initAppBar() {
     _appBar = WebAppBar(
-      leading: NavBtn(scaffoldKey: _scaffoldKey),
+      leading: NavBtn(),
       title: Observer(
         builder: (context) {
           final _ = Strings.of(context).language;
@@ -101,7 +98,7 @@ class _HomePageState extends State<HomePage> with PostFrameMixin {
                             constraints: Dimens.pageContentMaxWidth,
                             child: ProjectBanner(
                               project: p,
-                              onAction: () => context.go(Routes.project, extra: p),
+                              onAction: () => Routes.routemaster.push('${Routes.project}/${p.id}'),
                               isHomePage: true,
                             ),
                           ),
@@ -121,9 +118,7 @@ class _HomePageState extends State<HomePage> with PostFrameMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: _scaffoldKey,
       appBar: _appBar,
-      drawer: Widgets.of(context).drawer,
       body: SizedBox(
         width: window.screen.width.toDouble(),
         child: AnimatedFadeSlide(

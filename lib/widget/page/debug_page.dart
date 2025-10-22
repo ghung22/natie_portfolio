@@ -4,13 +4,11 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:go_router/go_router.dart';
 import 'package:natie_portfolio/global/dimens.dart';
 import 'package:natie_portfolio/global/mixin.dart';
-import 'package:natie_portfolio/global/router.dart';
+import 'package:natie_portfolio/global/routes.dart';
 import 'package:natie_portfolio/global/strings.dart';
 import 'package:natie_portfolio/global/styles.dart';
-import 'package:natie_portfolio/global/widgets.dart';
 import 'package:natie_portfolio/store/data/bio_store.dart';
 import 'package:natie_portfolio/store/data/project_store.dart';
 import 'package:natie_portfolio/store/global/dimen_store.dart';
@@ -32,7 +30,6 @@ class DebugPage extends StatefulWidget {
 }
 
 class _DebugPageState extends State<DebugPage> with PostFrameMixin {
-  final _scaffoldKey = GlobalKey<ScaffoldState>();
   PreferredSizeWidget _appBar = const WebAppBar();
   Widget _body = const Nothing();
   Widget _navSect = const Nothing();
@@ -56,10 +53,10 @@ class _DebugPageState extends State<DebugPage> with PostFrameMixin {
 
   void _initAppBar() {
     _appBar = WebAppBar(
-      leading: BackBtn(scaffoldKey: _scaffoldKey),
+      leading: BackBtn(),
       title: Observer(
         builder: (context) {
-          return TextView(textCallback: () => '${context.read<DimenStore>().size}');
+          return TextView(text: '${context.read<DimenStore>().size}');
         },
       ),
       actions: const [LanguageBtn(), ThemeBtn()],
@@ -99,7 +96,10 @@ class _DebugPageState extends State<DebugPage> with PostFrameMixin {
           runSpacing: Dimens.projectItemPadding,
           children: Routes.list.map((r) {
             return ElevatedBtn(
-              onPressed: () => context.go(r, extra: r == Routes.project ? _projectStore?.projects.first : null),
+              onPressed: () => Routes.routemaster.push(
+                r,
+                queryParameters: {'id': r == Routes.project ? _projectStore?.projects.first?.id ?? '' : ''},
+              ),
               child: TextView(text: r, color: Theme.of(context).colorScheme.onSurface),
             );
           }).toList(),
@@ -249,9 +249,7 @@ class _DebugPageState extends State<DebugPage> with PostFrameMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: _scaffoldKey,
       appBar: _appBar,
-      drawer: Widgets.of(context).drawer,
       body: SizedBox(width: window.screen.width.toDouble(), child: _body),
     );
   }

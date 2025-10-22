@@ -1,10 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:go_router/go_router.dart';
 import 'package:natie_portfolio/global/dimens.dart';
+import 'package:natie_portfolio/global/routes.dart';
 import 'package:natie_portfolio/global/strings.dart';
 import 'package:natie_portfolio/global/styles.dart';
+import 'package:natie_portfolio/global/vars.dart';
 import 'package:natie_portfolio/store/global/language_store.dart';
 import 'package:natie_portfolio/store/global/theme_store.dart';
 import 'package:natie_portfolio/widget/common/animated_view.dart';
@@ -12,7 +13,6 @@ import 'package:natie_portfolio/widget/common/text_view.dart';
 import 'package:provider/provider.dart';
 
 import '../../l10n/app_localizations.dart';
-import 'content_item.dart';
 import 'image_view.dart';
 
 class IconBtn extends StatelessWidget {
@@ -145,18 +145,20 @@ class ElevatedBtn extends StatelessWidget {
 // region Leading buttons
 
 class BackBtn extends StatelessWidget {
-  final GlobalKey<ScaffoldState> scaffoldKey;
+  final GlobalKey<ScaffoldState>? scaffoldKey;
 
-  const BackBtn({super.key, required this.scaffoldKey});
+  const BackBtn({super.key, this.scaffoldKey});
 
   @override
   Widget build(BuildContext context) {
     return Builder(
       builder: (context) {
-        if (!context.canPop()) return NavBtn(scaffoldKey: scaffoldKey);
+        if (Routes.alwaysUseNavigationDrawer || !Routes.routemaster.history.canGoBack) {
+          return NavBtn(scaffoldKey: scaffoldKey);
+        }
         return IconBtn(
           tooltipText: AppLocalizations.of(context)!.back,
-          onPressed: () => context.pop(),
+          onPressed: () => Routes.routemaster.pop(),
           ignoreScreenSize: false,
           child: const Icon(Icons.arrow_back_ios_new),
         );
@@ -166,15 +168,21 @@ class BackBtn extends StatelessWidget {
 }
 
 class NavBtn extends StatelessWidget {
-  final GlobalKey<ScaffoldState> scaffoldKey;
+  final GlobalKey<ScaffoldState>? scaffoldKey;
 
-  const NavBtn({super.key, required this.scaffoldKey});
+  const NavBtn({super.key, this.scaffoldKey});
 
   @override
   Widget build(BuildContext context) {
     return IconBtn(
       tooltipText: AppLocalizations.of(context)!.navigation,
-      onPressed: () => scaffoldKey.currentState!.openDrawer(),
+      onPressed: () {
+        if (scaffoldKey != null) {
+          scaffoldKey!.currentState!.openDrawer();
+        } else {
+          Vars.globalScaffoldKey.currentState!.openDrawer();
+        }
+      },
       ignoreScreenSize: false,
       child: const Icon(Icons.menu_rounded),
     );
@@ -186,9 +194,6 @@ class NavBtn extends StatelessWidget {
 // region Trailing buttons
 
 class LanguageBtn extends StatelessWidget {
-  final enImageUrl = 'https://flagcdn.com/w20/us.png';
-  final viImageUrl = 'https://flagcdn.com/w20/vn.png';
-
   const LanguageBtn({super.key});
 
   @override
@@ -200,7 +205,7 @@ class LanguageBtn extends StatelessWidget {
         return IconBtn(
           tooltipText: AppLocalizations.of(context)!.language,
           child: ImageView(
-            isEn ? enImageUrl : viImageUrl,
+            (isEn ? Vars.assets['en'] : Vars.assets['vn']) ?? '',
             width: Dimens.iconBtnSize,
             errorWidget: Text(isEn ? Language.en.name : Language.vi.name, style: Styles.iconBtnErrorStyle),
           ),

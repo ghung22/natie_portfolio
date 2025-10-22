@@ -1,18 +1,15 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:go_router/go_router.dart';
 import 'package:natie_portfolio/data/model/bio.dart';
 import 'package:natie_portfolio/data/model/project.dart';
 import 'package:natie_portfolio/global/dimens.dart';
 import 'package:natie_portfolio/global/mixin.dart';
-import 'package:natie_portfolio/global/router.dart';
+import 'package:natie_portfolio/global/routes.dart';
 import 'package:natie_portfolio/global/strings.dart';
 import 'package:natie_portfolio/global/styles.dart';
 import 'package:natie_portfolio/global/vars.dart';
 import 'package:natie_portfolio/store/common/animation_store.dart';
-import 'package:natie_portfolio/store/global/theme_store.dart';
-import 'package:provider/provider.dart';
 import 'package:speech_bubble/speech_bubble.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 
@@ -241,7 +238,9 @@ class _BannerItemState extends State<BannerItem> with PostFrameMixin {
                 },
               );
           return Container(
-            width: double.infinity, height: bannerHeight, color: _primary,
+            width: double.infinity,
+            height: bannerHeight,
+            color: _primary,
             child: Padding(
               padding: Dimens.bannerPadding,
               child: Stack(
@@ -451,7 +450,7 @@ class BioBanner extends StatelessWidget {
               child: AnimatedHover(
                 scaleOnHover: 1.05,
                 duration: Vars.animationFast,
-                onPressed: () => context.go(Routes.about),
+                onPressed: () => Routes.routemaster.push(Routes.about),
                 child: Hero(
                   tag: '${Routes.about}/avatar',
                   child: DecoratedBox(

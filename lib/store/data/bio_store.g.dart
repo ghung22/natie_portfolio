@@ -24,20 +24,14 @@ mixin _$BioStore on _BioStore, Store {
     });
   }
 
-  late final _$getBioAsyncAction = AsyncAction(
-    '_BioStore.getBio',
-    context: context,
-  );
+  late final _$getBioAsyncAction = AsyncAction('_BioStore.getBio', context: context);
 
   @override
   Future<void> getBio() {
     return _$getBioAsyncAction.run(() => super.getBio());
   }
 
-  late final _$uploadHardDataAsyncAction = AsyncAction(
-    '_BioStore.uploadHardData',
-    context: context,
-  );
+  late final _$uploadHardDataAsyncAction = AsyncAction('_BioStore.uploadHardData', context: context);
 
   @override
   Future<void> uploadHardData() {

@@ -181,14 +181,15 @@ class AnimatedTypingText extends StatefulWidget {
 class _AnimatedTypingTextState extends State<AnimatedTypingText> with PostFrameMixin {
   String _txt = '';
 
-  final AnimationStore _ani = AnimationStore();
+  final AnimationStore _aniTyping = AnimationStore();
+  final AnimationStore _aniBlinking = AnimationStore();
 
-  String get _txtSub => _txt.substring(0, _ani.intData);
+  String get _txtSub => _txt.substring(0, _aniTyping.intData);
 
   String get _txtCursor {
     if (!widget.showCursor) return '';
     if (!widget.blinkingCursor) return '|';
-    bool showing = DateTime.now().millisecond % 1000 < 500;
+    bool showing = _aniBlinking.intData % 2 == 0;
     return showing ? '|' : '';
   }
 
@@ -196,18 +197,24 @@ class _AnimatedTypingTextState extends State<AnimatedTypingText> with PostFrameM
   void initState() {
     super.initState();
     _txt = widget.text ?? widget.textCallback!();
-    _ani.setDataLimit(lowerLimit: 0, upperLimit: _txt.length);
-    if (widget.disableAnimation) _ani.setData(_txt.length);
+    _aniTyping.setDataLimit(lowerLimit: 0, upperLimit: _txt.length);
+    if (widget.disableAnimation) _aniTyping.setData(_txt.length);
     postFrame(() {
-      _ani.start();
+      _aniTyping.start();
       Timer.periodic(widget.stepDuration, (timer) {
         if (!mounted) timer.cancel();
-        if (_ani.intDataMaxed) {
+        if (_aniTyping.intDataMaxed) {
           timer.cancel();
           widget.onDone?.call();
         }
-        _ani.increment();
-        if (_txtSub.contains(RegExp(r'[\s\t\n]$'))) _ani.increment();
+        _aniTyping.increment();
+        if (_txtSub.contains(RegExp(r'[\s\t\n]$'))) _aniTyping.increment();
+      });
+      Timer.periodic(Duration(milliseconds: 500), (timer) {
+        if (!mounted) timer.cancel();
+        if (_aniTyping.intDataMaxed) {
+          _aniBlinking.increment();
+        }
       });
     });
   }

@@ -5,11 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:natie_portfolio/data/services/firestore.dart';
 import 'package:natie_portfolio/global/debug.dart';
+import 'package:natie_portfolio/global/vars.dart';
 import 'package:natie_portfolio/store/global/dimen_store.dart';
+import 'package:natie_portfolio/widget/common/web_item.dart';
 import 'package:provider/provider.dart';
+import 'package:routemaster/routemaster.dart';
 
 import 'firebase_options.dart';
-import 'global/router.dart' as rt;
+import 'global/routes.dart';
 import 'global/strings.dart';
 import 'global/styles.dart';
 import 'l10n/app_localizations.dart';
@@ -76,7 +79,20 @@ class _NatiePortfolioState extends State<NatiePortfolio> {
               localizationsDelegates: AppLocalizations.localizationsDelegates,
               supportedLocales: AppLocalizations.supportedLocales,
               // Pages
-              routerConfig: rt.Routes.router,
+              routerDelegate: RoutemasterDelegate(
+                navigatorKey: Vars.navigatorKey,
+                routesBuilder: (_) => Routes.routeMap,
+                observers: [PortRouteObserver()],
+              ),
+              routeInformationParser: RoutemasterParser(),
+              // Common widgets
+              builder: (_, child) => Overlay(
+                initialEntries: [
+                  OverlayEntry(
+                    builder: (_) => Scaffold(key: Vars.globalScaffoldKey, drawer: const WebDrawer(), body: child),
+                  ),
+                ],
+              ),
             );
           },
         );

@@ -104,7 +104,7 @@ class Themes {
 
   static ThemeData _generateTheme({required ThemeData from}) {
     final initialTheme = ThemeData(
-      colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.amber),
+      colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.orange),
       fontFamily: fontText,
       textTheme: from.textTheme,
     );

@@ -1,12 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:go_router/go_router.dart';
 import 'package:natie_portfolio/data/model/project.dart';
 import 'package:natie_portfolio/global/mixin.dart';
-import 'package:natie_portfolio/global/router.dart';
+import 'package:natie_portfolio/global/routes.dart';
 import 'package:natie_portfolio/global/vars.dart';
-import 'package:natie_portfolio/global/widgets.dart';
 import 'package:natie_portfolio/store/common/animation_store.dart';
 import 'package:natie_portfolio/store/data/project_store.dart';
 import 'package:natie_portfolio/widget/common/banner_item.dart';
@@ -30,7 +28,6 @@ class ProjectsPage extends StatefulWidget {
 }
 
 class _ProjectsPageState extends State<ProjectsPage> with PostFrameMixin {
-  final _scaffoldKey = GlobalKey<ScaffoldState>();
   PreferredSizeWidget _appBar = const WebAppBar();
   Widget _body = const Nothing();
   Widget _featured = const Nothing();
@@ -52,7 +49,7 @@ class _ProjectsPageState extends State<ProjectsPage> with PostFrameMixin {
 
   void _initAppBar() {
     _appBar = WebAppBar(
-      leading: BackBtn(scaffoldKey: _scaffoldKey),
+      leading: BackBtn(),
       title: TextBtn(
         textStyle: Theme.of(context).appBarTheme.titleTextStyle,
         hoverFeedback: false,
@@ -105,7 +102,7 @@ class _ProjectsPageState extends State<ProjectsPage> with PostFrameMixin {
                   constraints: Dimens.pageContentMaxWidth,
                   child: ProjectBanner(
                     project: p,
-                    onAction: () => context.go(Routes.project, extra: p),
+                    onAction: () => Routes.routemaster.push('${Routes.project}/${p.id}'),
                     isHomePage: true,
                   ),
                 ),
@@ -133,7 +130,7 @@ class _ProjectsPageState extends State<ProjectsPage> with PostFrameMixin {
                   constraints: Dimens.pageContentMaxWidth,
                   child: ProjectBanner(
                     project: p,
-                    onAction: () => context.go(Routes.project, extra: p),
+                    onAction: () => Routes.routemaster.push('${Routes.project}/${p.id}'),
                     isHomePage: true,
                   ),
                 ),
@@ -152,6 +149,6 @@ class _ProjectsPageState extends State<ProjectsPage> with PostFrameMixin {
     _initAppBar();
     _initBody();
 
-    return Scaffold(key: _scaffoldKey, appBar: _appBar, drawer: Widgets.of(context).drawer, body: _body);
+    return Scaffold(appBar: _appBar, body: _body);
   }
 }

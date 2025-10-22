@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:natie_portfolio/data/model/experience.dart';
 import 'package:natie_portfolio/data/model/score.dart';
 import 'package:natie_portfolio/global/dimens.dart';
-import 'package:natie_portfolio/global/router.dart';
+import 'package:natie_portfolio/global/routes.dart';
 import 'package:natie_portfolio/global/strings.dart';
 import 'package:natie_portfolio/data/model/project.dart';
 import 'package:natie_portfolio/global/styles.dart';
@@ -177,7 +176,7 @@ class ProjectMiniItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return CardItem(
       onPressed: () {
-        context.go(Routes.project, extra: <String, dynamic>{'project': project, 'disableAnimation': true});
+        Routes.routemaster.push(Routes.project, queryParameters: {'id': project.id, 'disableAnimation': 'true'});
       },
       color: project.color,
       child: PaddedRow(
@@ -483,11 +482,11 @@ class BioMiniItem extends StatelessWidget {
               splashFactory: NoSplash.splashFactory,
               hoverColor: Colors.transparent,
               highlightColor: Colors.transparent,
-              onTap: () => context.go(Routes.about, extra: true),
+              onTap: () => Routes.routemaster.push(Routes.about, queryParameters: {'disableAnimation': 'true'}),
               child: DecoratedBox(
                 decoration: ShapeDecoration(
                   shape: CircleBorder(
-                    side: BorderSide(color: bio.colors.first, width: Dimens.bioAvatarBorderSize),
+                    side: BorderSide(color: Theme.of(context).primaryColor, width: Dimens.bioAvatarBorderSize),
                   ),
                 ),
                 child: Padding(
@@ -511,9 +510,10 @@ class BioMiniItem extends StatelessWidget {
                 children: [
                   TextBtn(
                     hoverFeedback: false,
-                    onPressed: () => context.go(Routes.about, extra: true),
+                    onPressed: () =>
+                        Routes.routemaster.push(Routes.about, queryParameters: {'disableAnimation': 'true'}),
                     padding: EdgeInsets.zero,
-                    child: TextView.header(text: bio.name, color: bio.colors.first),
+                    child: TextView.header(text: bio.name, color: Theme.of(context).primaryColor),
                   ),
                   Wrap(
                     spacing: Dimens.bioDetailsContactPadding,
@@ -645,7 +645,8 @@ class _BioExperienceItemState extends State<BioExperienceItem> {
         var major = _e.majorVi ?? _e.major;
         if (isEn) major = _e.major ?? _e.majorVi;
         return CardItem(
-          onPressed: () => context.go(Routes.projects, extra: _e.projectFilter),
+          onPressed: () =>
+              Routes.routemaster.push(Routes.project, queryParameters: {'filter': ?_e.projectFilter?.join('-')}),
           child: ConstrainedBox(
             constraints: const BoxConstraints(minHeight: Dimens.bioDetailsExpSize),
             child: Stack(

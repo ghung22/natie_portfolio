@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:natie_portfolio/global/debug.dart';
 
 part 'project.g.dart';
 
@@ -129,6 +130,15 @@ class Projects {
 
   List<Project> getOthers(List<ProjectTag>? filter) =>
       values.where((p) => !p.featured && (filter == null || p.tags.toSet().containsAll(filter))).toList();
+
+  Project? get(String id) {
+    try {
+      return values.singleWhere((p0) => p0.id == id);
+    } catch (e) {
+      Debug.log(e);
+      return null;
+    }
+  }
 
   void replaceWith({List<Project>? values, Projects? projects}) {
     if (projects != null) values = projects._v;
@@ -766,7 +776,7 @@ class ProjectData {
     ],
     hostUrl: 'http://ccng.gomobi.vn',
     iconUrl: 'https://ccngdemo.teamobi.com/static/img/LOGO_NEW.png',
-    colorHex: Colors.amber.toARGB32(),
+    colorHex: Colors.orange.toARGB32(),
     completionTimestamp: DateTime(2026).millisecondsSinceEpoch,
     featured: true,
   );
